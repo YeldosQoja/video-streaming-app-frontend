@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    --auto-grid-min-size: 200px;
+    --auto-grid-min-size: 16rem;
   }
 }
 
