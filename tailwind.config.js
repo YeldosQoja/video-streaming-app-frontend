@@ -6,7 +6,12 @@ export default {
   ],
   theme: {
     extend: {
-      
+      gridTemplateColumns: {
+        'auto': 'repeat(auto-fill, minmax(var(--auto-grid-min-size), 1fr))',
+      },
+      gridTemplateRows: {
+        'auto': 'repeat(auto-fill, minmax(var(--auto-grid-min-size), 1fr))',
+      }
     },
   },
   plugins: [],
