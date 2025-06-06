@@ -6,6 +6,7 @@ import Index from "./routes/app";
 import Auth from "./routes/auth";
 import SignIn from "./routes/auth/signin";
 import SignUp from "./routes/auth/signup";
+import Upload from "./routes/app/upload";
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path: "upload",
+    element: <Upload />,
+  }
 ]);
 
 createRoot(document.getElementById("root")!).render(
