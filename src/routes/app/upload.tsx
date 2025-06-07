@@ -5,7 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
 import { formatFileSize } from "../../utils/fileSize";
 import { Separator } from "@radix-ui/react-separator";
 import { Form, FormControl, FormField, FormLabel } from "@radix-ui/react-form";
-import { Dropdown } from "../../components/dropdown";
+import { Select } from "../../components/select";
 
 const categories = [
   { id: 1, label: "Entertainment" },
@@ -169,7 +169,7 @@ export default function Upload() {
                         Category
                       </FormLabel>
                       <FormControl asChild>
-                        <Dropdown
+                        <Select
                           options={categories.map((c) => ({
                             ...c,
                             key: c.id.toString(),
