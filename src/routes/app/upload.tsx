@@ -1,5 +1,5 @@
 import type React from "react";
-import { Upload as IUpload, Video, X } from "lucide-react";
+import { Image, Upload as IUpload, Video, X } from "lucide-react";
 import { useRef, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
 import { formatFileSize } from "../../utils/fileSize";
@@ -28,19 +28,34 @@ const categories = [
 export default function Upload() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
-  
+
   const [selectedCategoryKey, setSelectedCategoryKey] = useState<string>("5");
 
-  const handleSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const [selectedThumbnail, setSelectedThumbnail] = useState<File | null>(null);
+  const thumbnailInputRef = useRef<HTMLInputElement | null>(null);
+
+  const handleSelectVideo = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
       setSelectedFile(file);
-      console.log({ file });
     }
   };
 
   const triggerFileSelection = () => {
     fileInputRef.current?.click();
+  };
+
+  const handleSelectThumbnail = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      setSelectedThumbnail(file);
+    }
+  };
+
+  const triggerThumbnailSelection = () => {
+    thumbnailInputRef.current?.click();
   };
 
   return (
@@ -56,15 +71,15 @@ export default function Upload() {
           </div>
           <div className="flex flex-col justify-center items-center space-y-4 border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-gray-400 transition-colors">
             <div
-              onClick={() => console.log("div clicked")}
+              onClick={triggerFileSelection}
               className="bg-gray-100 rounded-full cursor-pointer p-6">
               <IUpload
                 size={36}
-                className="text-gray-500"
+                className="text-gray-400"
               />
             </div>
             <div className="text-gray-900 text-lg">Select video to upload</div>
-            <div className="text-gray-500 text-base">
+            <div className="text-gray-400 text-base">
               Or drag and drop video files
             </div>
             <input
@@ -73,10 +88,10 @@ export default function Upload() {
               type="file"
               accept="video/"
               className="hidden"
-              onChange={handleSelect}
+              onChange={handleSelectVideo}
             />
             <button
-              className="bg-transparent text-gray-900 border-gray-800 hover:border-gray-900 focus:outline-none rounded-lg border-1 hover:bg-gray-50"
+              className="bg-transparent text-gray-900 text-sm font-semibold border-gray-400 hover:border-gray-400 focus:outline-none rounded-lg border-1 hover:bg-gray-50"
               onClick={triggerFileSelection}>
               Select file
             </button>
@@ -102,7 +117,7 @@ export default function Upload() {
                 <div className="text-gray-900 text-base font-bold">
                   {selectedFile.name}
                 </div>
-                <div className="text-sm text-gray-500">
+                <div className="text-sm text-gray-400">
                   {formatFileSize(selectedFile.size)}
                 </div>
               </div>
@@ -196,8 +211,97 @@ export default function Upload() {
                   </div>
                 </Form>
               </TabsContent>
-              <TabsContent value="thumbnail"></TabsContent>
-              <TabsContent value="settings"></TabsContent>
+              <TabsContent
+                value="thumbnail"
+                className="flex flex-col space-y-4">
+                <div>
+                  <div className="text-gray-900 font-medium">
+                    Upload a thumbnail
+                  </div>
+                  <div className="text-gray-400">
+                    Upload a custom thumbnail that represents your video
+                  </div>
+                </div>
+                {!selectedThumbnail ? (
+                  <div className="flex flex-col justify-center items-center space-y-3 border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-gray-400 transition-colors">
+                    <div
+                      onClick={triggerThumbnailSelection}
+                      className="cursor-pointer">
+                      <Image
+                        size={42}
+                        className="text-gray-400"
+                      />
+                    </div>
+                    <input
+                      ref={thumbnailInputRef}
+                      id="thumbnail-upload"
+                      type="file"
+                      accept="image/"
+                      className="hidden"
+                      onChange={handleSelectThumbnail}
+                    />
+                    <button
+                      className="bg-transparent text-gray-900 text-sm font-semibold border-gray-400 hover:border-gray-400 focus:outline-none rounded-lg border-1 hover:bg-gray-50"
+                      onClick={triggerThumbnailSelection}>
+                      Upload thumbnail
+                    </button>
+                  </div>
+                ) : (
+                  <div className="self-stretch flex p-3 space-x-3 rounded-md border-gray-200 border-x border-y">
+                    <div className="p-3 rounded-md bg-gray-100">
+                      <Image className="text-gray-400 h-6 w-6" />
+                    </div>
+                    <div className="flex flex-col flex-grow">
+                      <div className="text-gray-900 text-base font-bold">
+                        {selectedThumbnail.name}
+                      </div>
+                      <div className="text-sm text-gray-400">
+                        {formatFileSize(selectedThumbnail.size)}
+                      </div>
+                    </div>
+                    <button
+                      className="bg-transparent p-2 self-start border-0 focus:outline-none hover:bg-gray-200"
+                      onClick={() => setSelectedThumbnail(null)}>
+                      <X size={18} />
+                    </button>
+                  </div>
+                )}
+              </TabsContent>
+              <TabsContent value="settings">
+                <Form>
+                  <fieldset>
+                    <legend className="text-gray-900 font-semibold mb-3">
+                      Interaction Settings
+                    </legend>
+                    <FormField
+                      name="comments"
+                      className="flex items-center">
+                      <FormControl
+                        type="checkbox"
+                        asChild>
+                        <input
+                          type="checkbox"
+                          className="mr-2 w-5 h-5 bg-transparent border-gray-900 checked:bg-gray-900 checked:text-white"
+                        />
+                      </FormControl>
+                      <FormLabel className="text-gray-900">
+                        Allow comments
+                      </FormLabel>
+                    </FormField>
+                    <FormField
+                      name="downloads"
+                      className="flex items-center">
+                      <FormControl
+                        type="checkbox"
+                        className="mr-2 w-5 h-5"
+                      />
+                      <FormLabel className="text-gray-900">
+                        Allow downloads
+                      </FormLabel>
+                    </FormField>
+                  </fieldset>
+                </Form>
+              </TabsContent>
             </Tabs>
             <button className="bg-gray-950 text-white font-semibold rounded-md p-3">
               Upload video
