@@ -28,6 +28,8 @@ const categories = [
 export default function Upload() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+  
+  const [selectedCategoryKey, setSelectedCategoryKey] = useState<string>("5");
 
   const handleSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -162,17 +164,24 @@ export default function Upload() {
                   <div className="flex self-stretch space-x-4">
                     <FormField
                       name="category"
-                      className="flex flex-col flex-grow space-y-2">
+                      className="flex flex-col flex-1 space-y-2">
                       <FormLabel className="text-gray-900 font-medium">
                         Category
                       </FormLabel>
                       <FormControl asChild>
-                        <Dropdown options={categories} />
+                        <Dropdown
+                          options={categories.map((c) => ({
+                            ...c,
+                            key: c.id.toString(),
+                          }))}
+                          selectedKey={selectedCategoryKey}
+                          onChange={setSelectedCategoryKey}
+                        />
                       </FormControl>
                     </FormField>
                     <FormField
                       name="tags"
-                      className="flex flex-col flex-grow space-y-2">
+                      className="flex flex-col flex-1 space-y-2">
                       <FormLabel className="text-gray-900 font-medium">
                         Tags
                       </FormLabel>
