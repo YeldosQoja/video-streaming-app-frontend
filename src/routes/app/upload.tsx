@@ -37,8 +37,8 @@ const categories = [
 ];
 
 export default function Upload() {
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const [selectedVideo, setSelectedVideo] = useState<File | null>(null);
+  const videoInputRef = useRef<HTMLInputElement | null>(null);
 
   const [selectedCategoryKey, setSelectedCategoryKey] = useState<string>("5");
 
@@ -51,12 +51,17 @@ export default function Upload() {
   const handleSelectVideo = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      setSelectedFile(file);
+      setSelectedVideo(file);
     }
   };
 
-  const triggerFileSelection = () => {
-    fileInputRef.current?.click();
+  const triggerVideoSelection = () => {
+    videoInputRef.current?.click();
+  };
+
+  const removeSelectedVideo = () => {
+    setSelectedVideo(null);
+    setSelectedThumbnail(null);
   };
 
   const handleSelectThumbnail = (
@@ -74,7 +79,7 @@ export default function Upload() {
 
   return (
     <div className="min-h-screen w-screen flex justify-center items-center">
-      {!selectedFile ? (
+      {!selectedVideo ? (
         <div className="flex flex-col p-3 bg-white rounded-lg min-w-[40%]">
           <div className="flex items-center mb-3">
             <Video
@@ -85,7 +90,7 @@ export default function Upload() {
           </div>
           <div className="flex flex-col justify-center items-center space-y-4 border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-gray-400 transition-colors">
             <div
-              onClick={triggerFileSelection}
+              onClick={triggerVideoSelection}
               className="bg-gray-100 rounded-full cursor-pointer p-6">
               <IUpload
                 size={36}
@@ -97,7 +102,7 @@ export default function Upload() {
               Or drag and drop video files
             </div>
             <input
-              ref={fileInputRef}
+              ref={videoInputRef}
               id="video-upload"
               type="file"
               accept="video/"
@@ -106,8 +111,8 @@ export default function Upload() {
             />
             <button
               className="bg-transparent text-gray-900 text-sm font-semibold border-gray-400 hover:border-gray-400 focus:outline-none rounded-lg border-1 hover:bg-gray-50"
-              onClick={triggerFileSelection}>
-              Select file
+              onClick={triggerVideoSelection}>
+              Select video
             </button>
           </div>
         </div>
@@ -129,15 +134,15 @@ export default function Upload() {
               </div>
               <div className="flex flex-col flex-grow">
                 <div className="text-gray-900 text-base font-bold">
-                  {selectedFile.name}
+                  {selectedVideo.name}
                 </div>
                 <div className="text-sm text-gray-400">
-                  {formatFileSize(selectedFile.size)}
+                  {formatFileSize(selectedVideo.size)}
                 </div>
               </div>
               <button
                 className="bg-transparent p-2 self-start border-0 focus:outline-none hover:bg-gray-200"
-                onClick={() => setSelectedFile(null)}>
+                onClick={removeSelectedVideo}>
                 <X size={18} />
               </button>
             </div>
@@ -173,7 +178,7 @@ export default function Upload() {
                     <FormControl
                       type="text"
                       className="bg-transparent text-gray-950 text-base font-medium rounded-md border-2 border-gray-100 px-2 py-1.5"
-                      defaultValue={selectedFile.name}
+                      defaultValue={selectedVideo.name}
                     />
                   </FormField>
                   <FormField
@@ -293,8 +298,14 @@ export default function Upload() {
                       <Select
                         options={[
                           { label: "Public - Anyone can watch", key: "public" },
-                          { label: "Unlisted - Only people with link", key: "unlisted" },
-                          { label: "Private - Only you can watch", key: "private" },
+                          {
+                            label: "Unlisted - Only people with link",
+                            key: "unlisted",
+                          },
+                          {
+                            label: "Private - Only you can watch",
+                            key: "private",
+                          },
                         ]}
                         selectedKey={selectedPrivacyKey}
                         onChange={setSelectedPrivacyKey}
@@ -329,7 +340,9 @@ export default function Upload() {
                                 />
                               ) : null}
                             </div>
-                            <SelectItemText className="font-semibold">{o.label}</SelectItemText>
+                            <SelectItemText className="font-semibold">
+                              {o.label}
+                            </SelectItemText>
                           </>
                         )}
                       />
