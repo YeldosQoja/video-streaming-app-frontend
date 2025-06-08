@@ -105,7 +105,7 @@ export default function Upload() {
               ref={videoInputRef}
               id="video-upload"
               type="file"
-              accept="video/"
+              accept="video/*"
               className="hidden"
               onChange={handleSelectVideo}
             />
@@ -255,7 +255,7 @@ export default function Upload() {
                       ref={thumbnailInputRef}
                       id="thumbnail-upload"
                       type="file"
-                      accept="image/"
+                      accept="image/*"
                       className="hidden"
                       onChange={handleSelectThumbnail}
                     />
