@@ -3,10 +3,10 @@
 ## Feature TO-DOs
 
 ### Upload
-- [x] Finish up upload form ui (almost completed)
+- [x] Finish up upload form ui
 - [ ] Set up event handlers, form submissions
 - [ ] If possible try to make tab switch by transition animation
-- [ ] Customize or create custom checkboxes
+- [x] Customize or create custom checkboxes
 
 ### Video player
 - [ ] Get familiarized with video.js

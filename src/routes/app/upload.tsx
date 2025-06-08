@@ -1,11 +1,22 @@
 import type React from "react";
-import { Image, Upload as IUpload, Video, X } from "lucide-react";
+import {
+  Check,
+  EyeOff,
+  Globe,
+  Image,
+  Upload as IUpload,
+  Lock,
+  Video,
+  X,
+} from "lucide-react";
 import { useRef, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
 import { formatFileSize } from "../../utils/fileSize";
 import { Separator } from "@radix-ui/react-separator";
 import { Form, FormControl, FormField, FormLabel } from "@radix-ui/react-form";
 import { Select } from "../../components/select";
+import * as Checkbox from "@radix-ui/react-checkbox";
+import { SelectItemText } from "@radix-ui/react-select";
 
 const categories = [
   { id: 1, label: "Entertainment" },
@@ -33,6 +44,9 @@ export default function Upload() {
 
   const [selectedThumbnail, setSelectedThumbnail] = useState<File | null>(null);
   const thumbnailInputRef = useRef<HTMLInputElement | null>(null);
+
+  const [selectedPrivacyKey, setSelectedPrivacyKey] =
+    useState<string>("public");
 
   const handleSelectVideo = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -268,36 +282,94 @@ export default function Upload() {
                 )}
               </TabsContent>
               <TabsContent value="settings">
-                <Form>
-                  <fieldset>
-                    <legend className="text-gray-900 font-semibold mb-3">
+                <Form className="space-y-3">
+                  <FormField
+                    name="privacy"
+                    className="flex flex-col space-y-2">
+                    <FormLabel className="text-gray-900 font-medium">
+                      Privacy
+                    </FormLabel>
+                    <FormControl asChild>
+                      <Select
+                        options={[
+                          { label: "Public - Anyone can watch", key: "public" },
+                          { label: "Unlisted - Only people with link", key: "unlisted" },
+                          { label: "Private - Only you can watch", key: "private" },
+                        ]}
+                        selectedKey={selectedPrivacyKey}
+                        onChange={setSelectedPrivacyKey}
+                        renderItem={(o) => (
+                          <>
+                            <div className="mr-2">
+                              <Check
+                                size={18}
+                                className="text-gray-900"
+                                color={
+                                  o.key !== selectedPrivacyKey
+                                    ? "transparent"
+                                    : undefined
+                                }
+                              />
+                            </div>
+                            <div className="mr-2">
+                              {o.key === "public" ? (
+                                <Globe
+                                  size={18}
+                                  className="text-gray-900"
+                                />
+                              ) : o.key === "unlisted" ? (
+                                <EyeOff
+                                  size={18}
+                                  className="text-gray-900"
+                                />
+                              ) : o.key === "private" ? (
+                                <Lock
+                                  size={18}
+                                  className="text-gray-900"
+                                />
+                              ) : null}
+                            </div>
+                            <SelectItemText className="font-semibold">{o.label}</SelectItemText>
+                          </>
+                        )}
+                      />
+                    </FormControl>
+                  </FormField>
+                  <fieldset className="space-y-2">
+                    <legend className="text-gray-900 font-medium mb-1">
                       Interaction Settings
                     </legend>
                     <FormField
                       name="comments"
                       className="flex items-center">
-                      <FormControl
-                        type="checkbox"
-                        asChild>
-                        <input
-                          type="checkbox"
-                          className="mr-2 w-5 h-5 bg-transparent border-gray-900 checked:bg-gray-900 checked:text-white"
-                        />
-                      </FormControl>
-                      <FormLabel className="text-gray-900">
+                      <Checkbox.Root
+                        className="flex size-[21px] appearance-none items-center justify-center border-2 border-gray-900 rounded bg-transparent data-[state=checked]:bg-gray-900 outline-none p-0"
+                        id="c1">
+                        <Checkbox.Indicator className="text-white">
+                          <Check size={18} />
+                        </Checkbox.Indicator>
+                      </Checkbox.Root>
+                      <label
+                        className="text-base font-medium leading-none text-gray-900 pl-2"
+                        htmlFor="c1">
                         Allow comments
-                      </FormLabel>
+                      </label>
                     </FormField>
                     <FormField
                       name="downloads"
                       className="flex items-center">
-                      <FormControl
-                        type="checkbox"
-                        className="mr-2 w-5 h-5"
-                      />
-                      <FormLabel className="text-gray-900">
+                      <Checkbox.Root
+                        className="flex size-[21px] appearance-none items-center justify-center border-2 border-gray-900 rounded bg-transparent data-[state=checked]:bg-gray-900 outline-none p-0"
+                        id="c1">
+                        <Checkbox.Indicator className="text-white">
+                          <Check size={18} />
+                        </Checkbox.Indicator>
+                      </Checkbox.Root>
+                      <label
+                        className="text-base font-medium leading-none text-gray-900 pl-2"
+                        htmlFor="c1">
                         Allow downloads
-                      </FormLabel>
+                      </label>
                     </FormField>
                   </fieldset>
                 </Form>
