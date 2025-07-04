@@ -2,35 +2,47 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Index from "./routes/app";
-import Auth from "./routes/auth";
-import SignIn from "./routes/auth/signin";
-import SignUp from "./routes/auth/signup";
-import Upload from "./routes/app/upload";
+import AuthLayout from "./routes/public/auth-layout";
+import SignIn from "./routes/public/signin";
+import SignUp from "./routes/public/signup";
+import Upload from "./routes/private/upload";
+import Video from "./routes/private/video";
+import MainLayout from "./routes/private/main-layout";
+import Home from "./routes/private/home";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Index />,
-  },
-  {
-    path: "auth",
-    element: <Auth />,
+    Component: MainLayout,
     children: [
       {
-        path: "signin",
-        element: <SignIn />,
+        index: true,
+        Component: Home,
       },
       {
-        path: "signup",
-        element: <SignUp />,
+        path: ":videoId",
+        Component: Video,
+      },
+      {
+        path: "upload",
+        Component: Upload,
       },
     ],
   },
   {
-    path: "upload",
-    element: <Upload />,
-  }
+    path: "auth",
+    Component: AuthLayout,
+    children: [
+      {
+        path: "signin",
+        Component: SignIn,
+      },
+      {
+        path: "signup",
+        Component: SignUp,
+      },
+    ],
+  },
 ]);
 
 createRoot(document.getElementById("root")!).render(

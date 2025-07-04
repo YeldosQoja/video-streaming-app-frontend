@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 
-export default function Auth() {
+export default function AuthLayout() {
   return (
     <div className="min-h-screen w-screen flex">
       <Outlet />
