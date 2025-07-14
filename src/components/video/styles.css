@@ -1,0 +1,28 @@
+.video-item {
+    display: flex;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 400;
+    color: var(--seconday-text-color);
+}
+
+.video-item-thumbnail {
+  width: 12.5em;
+  height: 7.5em;
+  object-fit: cover;
+  border-radius: 0.5em;
+}
+
+.video-item-title {
+    font-size: inherit;
+    margin-block: 0;
+    color: var(--primary-text-color);
+}
+
+.video-item-author-name, .video-item-author-name:visited {
+    color: inherit;
+}
+
+.video-item-info span + span {
+    margin-left: 0.25rem;
+}

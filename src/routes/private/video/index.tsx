@@ -3,6 +3,8 @@ import "./styles.css";
 import { Share2, Star, ThumbsDown, ThumbsUp } from "lucide-react";
 import comments from "../../../comments.json";
 import { Comment } from "../../../components/comment";
+import videos from "../../../videos.json";
+import { Video as VideoItem } from "../../../components/video";
 
 export default function Video() {
   const { videoId } = useParams();
@@ -27,10 +29,12 @@ export default function Video() {
         </div>
         <div className="top-row">
           <div id="channel">
-            <img
-              src=""
-              className="avatar"
-            />
+            <a href="">
+              <img
+                src=""
+                className="avatar"
+              />
+            </a>
             <div className="channel-info">
               <a
                 id="channel-name"
@@ -93,6 +97,7 @@ export default function Video() {
           </p>
         </div>
         <div className="comments-section">
+          <h2>{`${comments.length} comments`}</h2>
           <ul className="comments-list">
             {comments.map((comment, idx) => (
               <li key={idx}>
@@ -102,7 +107,15 @@ export default function Video() {
           </ul>
         </div>
       </div>
-      <div></div>
+      <div className="secondary">
+        <ul className="video-list">
+          {videos.map((video) => (
+            <li key={video.id}>
+              <VideoItem {...video} />
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }

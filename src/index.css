@@ -1,19 +1,21 @@
 :root {
+  --primary-color: #007bff;
+  --background-color: #f9f9fa;
+  --primary-text-color: #202020;
+  --seconday-text-color: #6c757d;
+
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  color: #202020;
+  color: var(--primary-text-color);
   font-weight: 500;
   line-height: 1.6;
 
   color-scheme: light dark;
-  background-color: #f9f9f9;
+  background-color: var(--background-color);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
-  --primary-color: #007bff;
-  --seconday-text-color: #6c757d;
 }
 
 *,
@@ -29,6 +31,11 @@ body {
 a {
   text-decoration: inherit;
   font-weight: inherit;
+  color: #3ea6ff;
+}
+
+a:visited {
+  color: #3ea6ff;
 }
 
 button {

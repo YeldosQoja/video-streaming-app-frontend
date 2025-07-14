@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 import { useRef, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
-import { formatFileSize } from "../../utils/fileSize";
+import { formatFileSize } from "../../utils/files";
 import { Separator } from "@radix-ui/react-separator";
 import { Form, FormControl, FormField, FormLabel } from "@radix-ui/react-form";
 import { Select } from "../../components/select";

@@ -2,11 +2,11 @@
   margin: 0 auto;
   display: flex;
   max-width: 105rem;
+  padding-top: 2rem;
 }
 
 .primary {
-  padding: 1.5rem;
-  padding-bottom: 0;
+  padding-inline: 1.5rem;
   width: 75%;
 }
 
@@ -39,7 +39,7 @@
 }
 
 .sub-count {
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
   margin: 0;
   color: var(--seconday-text-color);
 }
@@ -98,11 +98,12 @@
   font-size: 0.875rem;
   padding: 0.5rem;
   background-color: #e8e8e8;
-  border-radius: 0.875rem;
+  border-radius: 1em;
   margin-bottom: 1.5rem;
 }
 
 .comments-section {
+  padding-top: 1.5rem;
 }
 
 .comments-list {
@@ -113,4 +114,14 @@
 
 .comments-list li {
   margin-block: 1rem;
+}
+
+.video-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.video-list li {
+  padding: 0;
 }
