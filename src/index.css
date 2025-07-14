@@ -35,22 +35,24 @@ button {
   background-color: var(--primary-color);
   font-weight: inherit;
   font-size: inherit;
+  cursor: pointer;
+  border: none;
 }
 
 h1 {
-  font-size: 1.75rem;
+  font-size: 1.25rem;
   font-weight: bold;
   line-height: 1.2;
 }
 
 h2 {
-  font-size: 1.625em;
+  font-size: 1.125em;
   font-weight: bold;
   line-height: 1.1;
 }
 
 h3 {
-  font-size: 1.2em;
+  font-size: 1.125em;
   font-weight: 700;
   line-height: 1.1;
 }

@@ -19,7 +19,7 @@ export const Comment = ({ username, text, avatarUrl, date }: Props) => {
         />
       </a>
       <div className="comment-details">
-        <div>
+        <div className="comment-top-row">
           <a
             href=""
             className="comment-author-name">{`@${username}`}</a>

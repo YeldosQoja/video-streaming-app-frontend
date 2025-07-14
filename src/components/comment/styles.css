@@ -37,6 +37,9 @@
 
 .comment-action-btn {
   background: transparent;
-  border: none;
   color: var(--seconday-text-color);
+}
+
+.comment-top-row {
+  margin: 0;
 }
