@@ -4,7 +4,7 @@ import { Share2, Star, ThumbsDown, ThumbsUp } from "lucide-react";
 import comments from "../../../comments.json";
 import { Comment } from "../../../components/comment";
 import videos from "../../../videos.json";
-import { Video as VideoItem } from "../../../components/video";
+import { RecommendationVideo } from "../../../components/recommendation-video";
 
 export default function Video() {
   const { videoId } = useParams();
@@ -111,7 +111,7 @@ export default function Video() {
         <ul className="video-list">
           {videos.map((video) => (
             <li key={video.id}>
-              <VideoItem {...video} />
+              <RecommendationVideo {...video} />
             </li>
           ))}
         </ul>

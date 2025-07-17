@@ -17,7 +17,7 @@ type Props = {
   author: Author;
 };
 
-export const Video = ({ title, thumbnailUrl, createdAt, author }: Props) => {
+export const RecommendationVideo = ({ title, thumbnailUrl, createdAt, author }: Props) => {
   return (
     <div className="video-item">
       <a href="">
