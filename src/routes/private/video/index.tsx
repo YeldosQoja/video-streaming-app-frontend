@@ -1,10 +1,9 @@
 import { useParams } from "react-router-dom";
 import "./styles.css";
 import { Share2, Star, ThumbsDown, ThumbsUp } from "lucide-react";
-import comments from "../../../comments.json";
-import { Comment } from "../../../components/comment";
-import videos from "../../../videos.json";
-import { RecommendationVideo } from "../../../components/recommendation-video";
+import comments from "@/comments.json";
+import { Comment, RecommendationVideo } from "@/components";
+import videos from "@/videos.json";
 
 export default function Video() {
   const { videoId } = useParams();

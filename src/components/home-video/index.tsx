@@ -1,5 +1,5 @@
 import "./styles.css";
-import { getRelativeTime } from "../../utils/datetime";
+import { getRelativeTime } from "@/utils/datetime";
 
 type Author = {
   id: number;

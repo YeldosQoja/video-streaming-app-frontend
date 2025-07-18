@@ -1,6 +1,6 @@
 import "./styles.css";
-import videos from "../../../videos.json";
-import { HomeVideo } from "../../../components/home-video";
+import videos from "@/videos.json";
+import { HomeVideo } from "@/components";
 
 const Home = () => {
   return (

@@ -11,10 +11,10 @@ import {
 } from "lucide-react";
 import { useRef, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
-import { formatFileSize } from "../../../utils/files";
+import { formatFileSize } from "@/utils/files";
 import { Separator } from "@radix-ui/react-separator";
 import { Form, FormControl, FormField, FormLabel } from "@radix-ui/react-form";
-import { Select } from "../../../components/select";
+import { Select } from "@/components";
 import * as Checkbox from "@radix-ui/react-checkbox";
 import { SelectItemText } from "@radix-ui/react-select";
 
