@@ -1,8 +1,9 @@
+import "./styles.css";
 import { Outlet } from "react-router-dom";
 
 export default function AuthLayout() {
   return (
-    <div className="min-h-screen w-screen flex">
+    <div className="auth-container">
       <Outlet />
     </div>
   );
