@@ -28,7 +28,7 @@
 }
 
 .comment-date {
-  color: var(--seconday-text-color);
+  color: var(--secondary-text-color);
   font-size: 0.8125rem;
 }
 
@@ -41,7 +41,7 @@
 
 .comment-action-btn {
   background: transparent;
-  color: var(--seconday-text-color);
+  color: var(--secondary-text-color);
 }
 
 .comment-top-row {

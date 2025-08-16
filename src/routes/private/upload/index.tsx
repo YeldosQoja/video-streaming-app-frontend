@@ -1,3 +1,4 @@
+import "./styles.css"
 import type React from "react";
 import {
   Check,
@@ -78,27 +79,27 @@ export default function Upload() {
   };
 
   return (
-    <div className="min-h-screen w-screen flex justify-center items-center">
+    <div className="upload-container">
       {!selectedVideo ? (
-        <div className="flex flex-col p-3 bg-white rounded-lg min-w-[40%]">
-          <div className="flex items-center mb-3">
+        <div className="upload-card">
+          <div className="upload-header">
             <Video
-              size={20}
-              className="mr-2"
+              size={28}
+              className="upload-header-icon"
             />
-            <h4 className="text-gray-900 text-2xl font-semibold">Video File</h4>
+            <h4 className="upload-title">Video File</h4>
           </div>
-          <div className="flex flex-col justify-center items-center space-y-4 border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-gray-400 transition-colors">
+          <div className="upload-dropzone">
             <div
               onClick={triggerVideoSelection}
-              className="bg-gray-100 rounded-full cursor-pointer p-6">
+              className="upload-icon-container">
               <IUpload
                 size={36}
-                className="text-gray-400"
+                className="upload-icon"
               />
             </div>
-            <div className="text-gray-900 text-lg">Select video to upload</div>
-            <div className="text-gray-400 text-base">
+            <div className="upload-text-primary">Select video to upload</div>
+            <div className="upload-text-secondary">
               Or drag and drop video files
             </div>
             <input
@@ -106,100 +107,100 @@ export default function Upload() {
               id="video-upload"
               type="file"
               accept="video/*"
-              className="hidden"
+              className="upload-hidden"
               onChange={handleSelectVideo}
             />
             <button
-              className="bg-transparent text-gray-900 text-sm font-semibold border-gray-400 hover:border-gray-400 focus:outline-none rounded-lg border-1 hover:bg-gray-50"
+              className="upload-button"
               onClick={triggerVideoSelection}>
               Select video
             </button>
           </div>
         </div>
       ) : (
-        <div className="flex flex-col bg-white rounded-lg min-w-[40%]">
-          <div className="flex flex-col p-4 space-y-2">
-            <div className="flex items-center mb-3">
+        <div className="upload-file-card">
+          <div className="upload-file-header">
+            <div className="upload-header">
               <Video
-                size={20}
-                className="mr-2"
+                size={28}
+                className="upload-header-icon"
               />
-              <h4 className="text-gray-900 text-2xl font-semibold">
+              <h4 className="upload-title">
                 Selected File
               </h4>
             </div>
-            <div className="bg-gray-50 self-stretch flex p-3 space-x-3 rounded-md">
-              <div className="p-3 rounded-md bg-blue-100">
-                <Video className="text-blue-700" />
+            <div className="upload-file-info">
+              <div className="upload-file-icon-container">
+                <Video size={24} className="upload-file-icon" />
               </div>
-              <div className="flex flex-col flex-grow">
-                <div className="text-gray-900 text-base font-bold">
+              <div className="upload-file-details">
+                <div className="upload-file-name">
                   {selectedVideo.name}
                 </div>
-                <div className="text-sm text-gray-400">
+                <div className="upload-file-size">
                   {formatFileSize(selectedVideo.size)}
                 </div>
               </div>
               <button
-                className="bg-transparent p-2 self-start border-0 focus:outline-none hover:bg-gray-200"
+                className="upload-remove-button"
                 onClick={removeSelectedVideo}>
                 <X size={18} />
               </button>
             </div>
           </div>
-          <Separator className="bg-gray-200 h-px w-full" />
-          <div className="flex flex-col items-stretch p-4 space-y-4">
+          <Separator className="upload-separator" />
+          <div className="upload-content">
             <Tabs defaultValue="details">
-              <TabsList className="flex bg-gray-100 rounded-md mb-4">
+              <TabsList className="upload-tabs-list">
                 <TabsTrigger
                   value="details"
-                  className="bg-transparent data-[state=active]:bg-white flex-grow rounded-md p-2 text-gray-950 font-semibold m-1 border-0 focus:outline-none">
+                  className="upload-tab-trigger">
                   Details
                 </TabsTrigger>
                 <TabsTrigger
                   value="thumbnail"
-                  className="bg-transparent data-[state=active]:bg-white flex-grow rounded-md p-2 text-gray-950 font-semibold m-1 border-0 focus:outline-none">
+                  className="upload-tab-trigger">
                   Thumbnail
                 </TabsTrigger>
                 <TabsTrigger
                   value="settings"
-                  className="bg-transparent data-[state=active]:bg-white flex-grow rounded-md p-2 text-gray-950 font-semibold m-1 border-0 focus:outline-none">
+                  className="upload-tab-trigger">
                   Settings
                 </TabsTrigger>
               </TabsList>
               <TabsContent value="details">
-                <Form className="flex flex-col space-y-3">
+                <Form className="upload-form">
                   <FormField
                     name="title"
-                    className="flex flex-col space-y-2">
-                    <FormLabel className="text-gray-900 font-medium">
+                    className="upload-form-field">
+                    <FormLabel className="upload-form-label">
                       Title
                     </FormLabel>
                     <FormControl
                       type="text"
-                      className="bg-transparent text-gray-950 text-base font-medium rounded-md border-2 border-gray-100 px-2 py-1.5"
+                      className="upload-form-input"
                       defaultValue={selectedVideo.name}
                     />
                   </FormField>
                   <FormField
                     name="description"
-                    className="flex flex-col space-y-2">
-                    <FormLabel className="text-gray-900 font-medium">
+                    className="upload-form-field">
+                    <FormLabel className="upload-form-label">
                       Description
                     </FormLabel>
                     <FormControl asChild>
                       <textarea
                         maxLength={5000}
-                        className="bg-transparent h-36 text-gray-950 text-base font-medium rounded-md border-2 border-gray-100 p-2 resize-none"
+                        className="upload-form-textarea"
                         placeholder="Tell viewers about your video"
                       />
                     </FormControl>
                   </FormField>
-                  <div className="flex self-stretch space-x-4">
+                  <div className="upload-form-row">
                     <FormField
                       name="category"
-                      className="flex flex-col flex-1 space-y-2">
-                      <FormLabel className="text-gray-900 font-medium">
+                      className="upload-form-field-flex">
+                      <FormLabel className="upload-form-label">
                         Category
                       </FormLabel>
                       <FormControl asChild>
@@ -215,14 +216,14 @@ export default function Upload() {
                     </FormField>
                     <FormField
                       name="tags"
-                      className="flex flex-col flex-1 space-y-2">
-                      <FormLabel className="text-gray-900 font-medium">
+                      className="upload-form-field-flex">
+                      <FormLabel className="upload-form-label">
                         Tags
                       </FormLabel>
                       <FormControl asChild>
                         <input
                           type="text"
-                          className="bg-transparent text-gray-950 text-base font-medium rounded-md border-2 border-gray-100 px-2 py-1.5"
+                          className="upload-form-input"
                           placeholder="Add tags separated by commas"
                         />
                       </FormControl>
@@ -232,23 +233,23 @@ export default function Upload() {
               </TabsContent>
               <TabsContent
                 value="thumbnail"
-                className="flex flex-col space-y-4">
+                className="upload-thumbnail-content">
                 <div>
-                  <div className="text-gray-900 font-medium">
+                  <div className="upload-thumbnail-header">
                     Upload a thumbnail
                   </div>
-                  <div className="text-gray-400">
+                  <div className="upload-thumbnail-description">
                     Upload a custom thumbnail that represents your video
                   </div>
                 </div>
                 {!selectedThumbnail ? (
-                  <div className="flex flex-col justify-center items-center space-y-3 border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-gray-400 transition-colors">
+                  <div className="upload-thumbnail-dropzone">
                     <div
                       onClick={triggerThumbnailSelection}
-                      className="cursor-pointer">
+                      className="upload-thumbnail-icon">
                       <Image
                         size={42}
-                        className="text-gray-400"
+                        className="upload-icon"
                       />
                     </div>
                     <input
@@ -256,30 +257,30 @@ export default function Upload() {
                       id="thumbnail-upload"
                       type="file"
                       accept="image/*"
-                      className="hidden"
+                      className="upload-hidden"
                       onChange={handleSelectThumbnail}
                     />
                     <button
-                      className="bg-transparent text-gray-900 text-sm font-semibold border-gray-400 hover:border-gray-400 focus:outline-none rounded-lg border-1 hover:bg-gray-50"
+                      className="upload-button"
                       onClick={triggerThumbnailSelection}>
                       Upload thumbnail
                     </button>
                   </div>
                 ) : (
-                  <div className="self-stretch flex p-3 space-x-3 rounded-md border-gray-200 border-x border-y">
-                    <div className="p-3 rounded-md bg-gray-100">
-                      <Image className="text-gray-400 h-6 w-6" />
+                  <div className="upload-thumbnail-file">
+                    <div className="upload-thumbnail-icon-container">
+                      <Image className="upload-thumbnail-icon-small" />
                     </div>
-                    <div className="flex flex-col flex-grow">
-                      <div className="text-gray-900 text-base font-bold">
+                    <div className="upload-file-details">
+                      <div className="upload-file-name">
                         {selectedThumbnail.name}
                       </div>
-                      <div className="text-sm text-gray-400">
+                      <div className="upload-file-size">
                         {formatFileSize(selectedThumbnail.size)}
                       </div>
                     </div>
                     <button
-                      className="bg-transparent p-2 self-start border-0 focus:outline-none hover:bg-gray-200"
+                      className="upload-remove-button"
                       onClick={() => setSelectedThumbnail(null)}>
                       <X size={18} />
                     </button>
@@ -287,11 +288,11 @@ export default function Upload() {
                 )}
               </TabsContent>
               <TabsContent value="settings">
-                <Form className="space-y-3">
+                <Form className="upload-settings-form">
                   <FormField
                     name="privacy"
-                    className="flex flex-col space-y-2">
-                    <FormLabel className="text-gray-900 font-medium">
+                    className="upload-form-field">
+                    <FormLabel className="upload-form-label">
                       Privacy
                     </FormLabel>
                     <FormControl asChild>
@@ -311,10 +312,10 @@ export default function Upload() {
                         onChange={setSelectedPrivacyKey}
                         renderItem={(o) => (
                           <>
-                            <div className="mr-2">
+                            <div className="upload-privacy-option">
                               <Check
                                 size={18}
-                                className="text-gray-900"
+                                className="upload-privacy-icon"
                                 color={
                                   o.key !== selectedPrivacyKey
                                     ? "transparent"
@@ -322,25 +323,25 @@ export default function Upload() {
                                 }
                               />
                             </div>
-                            <div className="mr-2">
+                            <div className="upload-privacy-option">
                               {o.key === "public" ? (
                                 <Globe
                                   size={18}
-                                  className="text-gray-900"
+                                  className="upload-privacy-icon"
                                 />
                               ) : o.key === "unlisted" ? (
                                 <EyeOff
                                   size={18}
-                                  className="text-gray-900"
+                                  className="upload-privacy-icon"
                                 />
                               ) : o.key === "private" ? (
                                 <Lock
                                   size={18}
-                                  className="text-gray-900"
+                                  className="upload-privacy-icon"
                                 />
                               ) : null}
                             </div>
-                            <SelectItemText className="font-semibold">
+                            <SelectItemText className="upload-privacy-text">
                               {o.label}
                             </SelectItemText>
                           </>
@@ -348,39 +349,39 @@ export default function Upload() {
                       />
                     </FormControl>
                   </FormField>
-                  <fieldset className="space-y-2">
-                    <legend className="text-gray-900 font-medium mb-1">
+                  <fieldset className="upload-fieldset">
+                    <legend className="upload-legend">
                       Interaction Settings
                     </legend>
                     <FormField
                       name="comments"
-                      className="flex items-center">
+                      className="upload-checkbox-field">
                       <Checkbox.Root
-                        className="flex size-[21px] appearance-none items-center justify-center border-2 border-gray-900 rounded bg-transparent data-[state=checked]:bg-gray-900 outline-none p-0"
+                        className="upload-checkbox-root"
                         id="c1">
-                        <Checkbox.Indicator className="text-white">
+                        <Checkbox.Indicator className="upload-checkbox-indicator">
                           <Check size={18} />
                         </Checkbox.Indicator>
                       </Checkbox.Root>
                       <label
-                        className="text-base font-medium leading-none text-gray-900 pl-2"
+                        className="upload-checkbox-label"
                         htmlFor="c1">
                         Allow comments
                       </label>
                     </FormField>
                     <FormField
                       name="downloads"
-                      className="flex items-center">
+                      className="upload-checkbox-field">
                       <Checkbox.Root
-                        className="flex size-[21px] appearance-none items-center justify-center border-2 border-gray-900 rounded bg-transparent data-[state=checked]:bg-gray-900 outline-none p-0"
-                        id="c1">
-                        <Checkbox.Indicator className="text-white">
+                        className="upload-checkbox-root"
+                        id="c2">
+                        <Checkbox.Indicator className="upload-checkbox-indicator">
                           <Check size={18} />
                         </Checkbox.Indicator>
                       </Checkbox.Root>
                       <label
-                        className="text-base font-medium leading-none text-gray-900 pl-2"
-                        htmlFor="c1">
+                        className="upload-checkbox-label"
+                        htmlFor="c2">
                         Allow downloads
                       </label>
                     </FormField>
@@ -388,7 +389,7 @@ export default function Upload() {
                 </Form>
               </TabsContent>
             </Tabs>
-            <button className="bg-gray-950 text-white font-semibold rounded-md p-3">
+            <button className="upload-submit-button">
               Upload video
             </button>
           </div>

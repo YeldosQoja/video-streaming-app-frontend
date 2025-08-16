@@ -2,7 +2,7 @@
   --primary-color: #007bff;
   --background-color: #f9f9fa;
   --primary-text-color: #202020;
-  --seconday-text-color: #6c757d;
+  --secondary-text-color: #6c757d;
 
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   color: var(--primary-text-color);

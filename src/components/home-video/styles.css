@@ -2,7 +2,7 @@
     display: flex;
     gap: 0.5rem;
     font-size: 0.875rem;
-    color: var(--seconday-text-color);
+    color: var(--secondary-text-color);
 }
 
 .video-thumbnail-container {
