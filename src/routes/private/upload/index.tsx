@@ -1,4 +1,4 @@
-import "./styles.css"
+import "./styles.css";
 import type React from "react";
 import {
   Check,
@@ -8,16 +8,15 @@ import {
   Upload as IUpload,
   Lock,
   Video,
-  X,
 } from "lucide-react";
 import { useRef, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
-import { formatFileSize } from "@/utils/files";
 import { Separator } from "@radix-ui/react-separator";
 import { Form, FormControl, FormField, FormLabel } from "@radix-ui/react-form";
 import { Select } from "@/components";
 import * as Checkbox from "@radix-ui/react-checkbox";
 import { SelectItemText } from "@radix-ui/react-select";
+import { SelectedFileCard } from "@/components/selected-file-card";
 
 const categories = [
   { id: 1, label: "Entertainment" },
@@ -78,77 +77,39 @@ export default function Upload() {
     thumbnailInputRef.current?.click();
   };
 
+  const removeThumbnail = () => {
+    setSelectedThumbnail(null);
+  };
+
   return (
-    <div className="upload-container">
-      {!selectedVideo ? (
-        <div className="upload-card">
+    <div className="upload">
+      <div className="upload-card">
+        <div>
           <div className="upload-header">
             <Video
               size={28}
               className="upload-header-icon"
             />
-            <h4 className="upload-title">Video File</h4>
+            <h4 className="upload-title">
+              {selectedVideo ? "Selected Video" : "Video File"}
+            </h4>
           </div>
-          <div className="upload-dropzone">
-            <div
-              onClick={triggerVideoSelection}
-              className="upload-icon-container">
-              <IUpload
-                size={36}
-                className="upload-icon"
-              />
-            </div>
-            <div className="upload-text-primary">Select video to upload</div>
-            <div className="upload-text-secondary">
-              Or drag and drop video files
-            </div>
-            <input
-              ref={videoInputRef}
-              id="video-upload"
-              type="file"
-              accept="video/*"
-              className="upload-hidden"
-              onChange={handleSelectVideo}
+          {selectedVideo ? (
+            <SelectedFileCard
+              filename={selectedVideo.name}
+              size={selectedVideo.size}
+              renderIcon={() => (
+                <Video
+                  size={24}
+                  className="file-card__icon"
+                />
+              )}
+              onRemove={removeSelectedVideo}
             />
-            <button
-              className="upload-button"
-              onClick={triggerVideoSelection}>
-              Select video
-            </button>
-          </div>
+          ) : null}
         </div>
-      ) : (
-        <div className="upload-file-card">
-          <div className="upload-file-header">
-            <div className="upload-header">
-              <Video
-                size={28}
-                className="upload-header-icon"
-              />
-              <h4 className="upload-title">
-                Selected File
-              </h4>
-            </div>
-            <div className="upload-file-info">
-              <div className="upload-file-icon-container">
-                <Video size={24} className="upload-file-icon" />
-              </div>
-              <div className="upload-file-details">
-                <div className="upload-file-name">
-                  {selectedVideo.name}
-                </div>
-                <div className="upload-file-size">
-                  {formatFileSize(selectedVideo.size)}
-                </div>
-              </div>
-              <button
-                className="upload-remove-button"
-                onClick={removeSelectedVideo}>
-                <X size={18} />
-              </button>
-            </div>
-          </div>
-          <Separator className="upload-separator" />
+        {selectedVideo ? <Separator className="separator" /> : null}
+        {selectedVideo ? (
           <div className="upload-content">
             <Tabs defaultValue="details">
               <TabsList className="upload-tabs-list">
@@ -173,9 +134,7 @@ export default function Upload() {
                   <FormField
                     name="title"
                     className="upload-form-field">
-                    <FormLabel className="upload-form-label">
-                      Title
-                    </FormLabel>
+                    <FormLabel className="upload-form-label">Title</FormLabel>
                     <FormControl
                       type="text"
                       className="upload-form-input"
@@ -217,9 +176,7 @@ export default function Upload() {
                     <FormField
                       name="tags"
                       className="upload-form-field-flex">
-                      <FormLabel className="upload-form-label">
-                        Tags
-                      </FormLabel>
+                      <FormLabel className="upload-form-label">Tags</FormLabel>
                       <FormControl asChild>
                         <input
                           type="text"
@@ -267,24 +224,16 @@ export default function Upload() {
                     </button>
                   </div>
                 ) : (
-                  <div className="upload-thumbnail-file">
-                    <div className="upload-thumbnail-icon-container">
-                      <Image className="upload-thumbnail-icon-small" />
-                    </div>
-                    <div className="upload-file-details">
-                      <div className="upload-file-name">
-                        {selectedThumbnail.name}
-                      </div>
-                      <div className="upload-file-size">
-                        {formatFileSize(selectedThumbnail.size)}
-                      </div>
-                    </div>
-                    <button
-                      className="upload-remove-button"
-                      onClick={() => setSelectedThumbnail(null)}>
-                      <X size={18} />
-                    </button>
-                  </div>
+                  <SelectedFileCard
+                    filename={selectedThumbnail.name}
+                    size={selectedThumbnail.size}
+                    renderIcon={() => (
+                      <Image className="file-card__icon" />
+                    )}
+                    style="outlined"
+                    iconContainerStyle="gray"
+                    onRemove={removeThumbnail}
+                  />
                 )}
               </TabsContent>
               <TabsContent value="settings">
@@ -292,13 +241,14 @@ export default function Upload() {
                   <FormField
                     name="privacy"
                     className="upload-form-field">
-                    <FormLabel className="upload-form-label">
-                      Privacy
-                    </FormLabel>
+                    <FormLabel className="upload-form-label">Privacy</FormLabel>
                     <FormControl asChild>
                       <Select
                         options={[
-                          { label: "Public - Anyone can watch", key: "public" },
+                          {
+                            label: "Public - Anyone can watch",
+                            key: "public",
+                          },
                           {
                             label: "Unlisted - Only people with link",
                             key: "unlisted",
@@ -389,12 +339,38 @@ export default function Upload() {
                 </Form>
               </TabsContent>
             </Tabs>
-            <button className="upload-submit-button">
-              Upload video
+            <button className="upload-submit-button">Upload video</button>
+          </div>
+        ) : (
+          <div className="upload-dropzone">
+            <div
+              onClick={triggerVideoSelection}
+              className="upload-icon-container">
+              <IUpload
+                size={36}
+                className="upload-icon"
+              />
+            </div>
+            <div className="upload-text-primary">Select video to upload</div>
+            <div className="upload-text-secondary">
+              Or drag and drop video files
+            </div>
+            <input
+              ref={videoInputRef}
+              id="video-upload"
+              type="file"
+              accept="video/*"
+              className="upload-hidden"
+              onChange={handleSelectVideo}
+            />
+            <button
+              className="upload-button"
+              onClick={triggerVideoSelection}>
+              Select video
             </button>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }
