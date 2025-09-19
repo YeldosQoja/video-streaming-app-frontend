@@ -1,5 +1,8 @@
 import "./styles.css";
 import { Link } from "react-router-dom";
+import { Label } from "@/components/label";
+import { Input } from "@/components/input";
+import { Button } from "@/components/button";
 
 export default function SignUp() {
   return (
@@ -14,79 +17,57 @@ export default function SignUp() {
             method="POST"
             className="auth-form">
             <div>
-              <label
-                htmlFor="firstName"
-                className="auth-input-label">
-                First name
-              </label>
+              <Label htmlFor="firstName">First name</Label>
               <div>
-                <input
+                <Input
                   type="text"
                   name="firstName"
                   id="firstName"
-                  className="auth-input"
                 />
               </div>
             </div>
-
             <div>
-              <label
-                htmlFor="lastName"
-                className="auth-input-label">
-                Last name
-              </label>
+              <Label htmlFor="lastName">Last name</Label>
               <div>
-                <input
+                <Input
                   type="text"
                   name="lastName"
                   id="lastName"
-                  className="auth-input"
                 />
               </div>
             </div>
 
             <div>
-              <label
-                htmlFor="email"
-                className="auth-input-label">
-                Username
-              </label>
+              <Label htmlFor="email">Username</Label>
               <div>
-                <input
+                <Input
                   id="username"
                   name="username"
                   type="text"
                   required
                   autoComplete="email"
-                  className="auth-input"
                 />
               </div>
             </div>
 
             <div>
-              <label
-                htmlFor="password"
-                className="auth-input-label">
-                Password
-              </label>
+              <Label htmlFor="password">Password</Label>
               <div>
-                <input
+                <Input
                   id="password"
                   name="password"
                   type="password"
                   required
                   autoComplete="current-password"
-                  className="auth-input"
                 />
               </div>
             </div>
 
             <div>
-              <button
+              <Button
                 type="submit"
-                className="auth-btn">
-                Sign up
-              </button>
+                title="Sign up"
+              />
             </div>
           </form>
         </div>

@@ -1,16 +1,16 @@
 :root {
-  --primary-color: #007bff;
-  --background-color: #f9f9fa;
-  --primary-text-color: #202020;
-  --secondary-text-color: #6c757d;
+  --primary-clr: #007bff;
+  --bg-clr: #f9f9fa;
+  --txt-clr: #202020;
+  --secondary-txt-clr: #6c757d;
 
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  color: var(--primary-text-color);
+  color: var(--txt-clr);
   font-weight: 500;
   line-height: 1.6;
 
   color-scheme: light dark;
-  background-color: var(--background-color);
+  background-color: var(--bg-clr);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -39,9 +39,6 @@ a:visited {
 }
 
 button {
-  background-color: var(--primary-color);
-  font-weight: inherit;
-  font-size: inherit;
   cursor: pointer;
   border: none;
 }
@@ -49,21 +46,17 @@ button {
 h1 {
   font-size: 1.25rem;
   font-weight: bold;
-  line-height: 1.2;
+  line-height: 1;
 }
 
 h2 {
   font-size: 1.125rem;
   font-weight: bold;
-  line-height: 1.2;
+  line-height: 1;
 }
 
 h3 {
   font-size: 1rem;
   font-weight: bold;
-  line-height: 1.2;
-}
-
-p {
-  margin: 0;
+  line-height: 1;
 }
