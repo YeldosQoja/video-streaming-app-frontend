@@ -1,0 +1,70 @@
+.select {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: transparent;
+    color: #030712;
+    font-size: 1rem;
+    font-weight: 500;
+    border-radius: 0.375rem;
+    border: 2px solid #f3f4f6;
+    padding: 0.375rem 0.5rem;
+    width: 100%;
+}
+
+.select-trigger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: transparent;
+    color: #030712;
+    font-size: 1rem;
+    font-weight: 500;
+    border-radius: 0.375rem;
+    border: 2px solid #f3f4f6;
+    padding: 0.375rem 0.5rem;
+    width: 100%;
+    cursor: pointer;
+}
+
+.select-trigger:hover {
+    border-color: #d1d5db;
+}
+
+.select-trigger:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.select-icon {
+    color: #030712;
+}
+
+.select-content {
+    background-color: white;
+    width: var(--radix-select-trigger-width);
+    border-radius: 0.375rem;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    padding: 0.25rem;
+}
+
+.select-item {
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    color: #030712;
+    outline: none;
+    border-radius: 0;
+    padding: 0.375rem 0.5rem;
+    user-select: none;
+    cursor: pointer;
+}
+
+.select-item:hover {
+    background-color: #f3f4f6;
+}
+
+.select-item:focus {
+    background-color: #f3f4f6;
+}

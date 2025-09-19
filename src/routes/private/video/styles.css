@@ -45,7 +45,7 @@
 .sub-count {
   font-size: 0.8125rem;
   margin: 0;
-  color: var(--secondary-text-color);
+  color: var(--secondary-txt-clr);
 }
 
 .channel-info {
@@ -80,7 +80,7 @@
   display: flex;
   gap: 0;
   border-radius: 1.5em;
-  background-color: var(--primary-color);
+  background-color: var(--primary-clr);
 }
 
 .btn-group div {

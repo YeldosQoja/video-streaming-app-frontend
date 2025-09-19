@@ -55,6 +55,10 @@
   border-color: #9ca3af;
 }
 
+.upload-dropzone p {
+  margin-block: 0;
+}
+
 .upload-icon-container {
   background-color: #f3f4f6;
   border-radius: 50%;
@@ -64,6 +68,7 @@
 
 .upload-icon {
   color: #9ca3af;
+  display: block;
 }
 
 .upload-text-primary {
@@ -78,7 +83,7 @@
 
 .upload-button {
   background-color: transparent;
-  color: var(--primary-text-color);
+  color: var(--txt-clr);
   font-size: 0.875rem;
   font-weight: 600;
   border: 1px solid #9ca3af;
@@ -135,11 +140,6 @@
   gap: 0.5rem;
 }
 
-.upload-form-label {
-  color: #111827;
-  font-weight: 500;
-}
-
 .upload-form-input {
   background-color: transparent;
   color: #0a0a0a;
@@ -160,19 +160,6 @@
   border: 2px solid #f3f4f6;
   padding: 0.5rem;
   resize: none;
-}
-
-.upload-form-row {
-  display: flex;
-  align-self: stretch;
-  gap: 1rem;
-}
-
-.upload-form-field-flex {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  gap: 0.5rem;
 }
 
 .upload-thumbnail-content {

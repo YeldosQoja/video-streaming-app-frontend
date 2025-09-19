@@ -1,5 +1,6 @@
 import "./styles.css";
 import type React from "react";
+import { useState, useRef } from "react";
 import {
   Check,
   EyeOff,
@@ -9,14 +10,14 @@ import {
   Lock,
   Video,
 } from "lucide-react";
-import { useRef, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
 import { Separator } from "@radix-ui/react-separator";
-import { Form, FormControl, FormField, FormLabel } from "@radix-ui/react-form";
 import { Select } from "@/components";
 import * as Checkbox from "@radix-ui/react-checkbox";
-import { SelectItemText } from "@radix-ui/react-select";
 import { SelectedFileCard } from "@/components/selected-file-card";
+import { Button } from "@/components/button";
+import { Label } from "@/components/label";
+import { Input } from "@/components/input";
 
 const categories = [
   { id: 1, label: "Entertainment" },
@@ -40,12 +41,12 @@ export default function Upload() {
   const [selectedVideo, setSelectedVideo] = useState<File | null>(null);
   const videoInputRef = useRef<HTMLInputElement | null>(null);
 
-  const [selectedCategoryKey, setSelectedCategoryKey] = useState<string>("5");
+  const [selectedCategory, setSelectedCategory] = useState<string>("5");
 
   const [selectedThumbnail, setSelectedThumbnail] = useState<File | null>(null);
   const thumbnailInputRef = useRef<HTMLInputElement | null>(null);
 
-  const [selectedPrivacyKey, setSelectedPrivacyKey] =
+  const [selectedPrivacy, setSelectedPrivacy] =
     useState<string>("public");
 
   const handleSelectVideo = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -130,63 +131,48 @@ export default function Upload() {
                 </TabsTrigger>
               </TabsList>
               <TabsContent value="details">
-                <Form className="upload-form">
-                  <FormField
-                    name="title"
-                    className="upload-form-field">
-                    <FormLabel className="upload-form-label">Title</FormLabel>
-                    <FormControl
+                <form className="upload-form">
+                  <div>
+                    <Label htmlFor="title">Title</Label>
+                    <Input
+                      id="title"
                       type="text"
-                      className="upload-form-input"
                       defaultValue={selectedVideo.name}
                     />
-                  </FormField>
-                  <FormField
-                    name="description"
-                    className="upload-form-field">
-                    <FormLabel className="upload-form-label">
-                      Description
-                    </FormLabel>
-                    <FormControl asChild>
-                      <textarea
-                        maxLength={5000}
-                        className="upload-form-textarea"
-                        placeholder="Tell viewers about your video"
-                      />
-                    </FormControl>
-                  </FormField>
-                  <div className="upload-form-row">
-                    <FormField
-                      name="category"
-                      className="upload-form-field-flex">
-                      <FormLabel className="upload-form-label">
-                        Category
-                      </FormLabel>
-                      <FormControl asChild>
-                        <Select
-                          options={categories.map((c) => ({
-                            ...c,
-                            key: c.id.toString(),
-                          }))}
-                          selectedKey={selectedCategoryKey}
-                          onChange={setSelectedCategoryKey}
-                        />
-                      </FormControl>
-                    </FormField>
-                    <FormField
-                      name="tags"
-                      className="upload-form-field-flex">
-                      <FormLabel className="upload-form-label">Tags</FormLabel>
-                      <FormControl asChild>
-                        <input
-                          type="text"
-                          className="upload-form-input"
-                          placeholder="Add tags separated by commas"
-                        />
-                      </FormControl>
-                    </FormField>
                   </div>
-                </Form>
+                  <div>
+                    <Label htmlFor="description">Description</Label>
+                    <textarea
+                      id="description"
+                      name="description"
+                      maxLength={5000}
+                      className="upload-form-textarea"
+                      placeholder="Tell viewers about your video"
+                    />
+                  </div>
+                  <div>
+                    <div>
+                      <Label htmlFor="category">Category</Label>
+                      <Select
+                        options={categories.map((c) => ({
+                          ...c,
+                          value: c.id.toString(),
+                        }))}
+                        selectedValue={selectedCategory}
+                        onValueChange={setSelectedCategory}
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="tags">Tags</Label>
+                      <Input
+                        id="tags"
+                        name="tags"
+                        type="text"
+                        placeholder="Add tags separated by commas"
+                      />
+                    </div>
+                  </div>
+                </form>
               </TabsContent>
               <TabsContent
                 value="thumbnail"
@@ -227,9 +213,7 @@ export default function Upload() {
                   <SelectedFileCard
                     filename={selectedThumbnail.name}
                     size={selectedThumbnail.size}
-                    renderIcon={() => (
-                      <Image className="file-card__icon" />
-                    )}
+                    renderIcon={() => <Image className="file-card__icon" />}
                     style="outlined"
                     iconContainerStyle="gray"
                     onRemove={removeThumbnail}
@@ -237,106 +221,96 @@ export default function Upload() {
                 )}
               </TabsContent>
               <TabsContent value="settings">
-                <Form className="upload-settings-form">
-                  <FormField
-                    name="privacy"
-                    className="upload-form-field">
-                    <FormLabel className="upload-form-label">Privacy</FormLabel>
-                    <FormControl asChild>
-                      <Select
-                        options={[
-                          {
-                            label: "Public - Anyone can watch",
-                            key: "public",
-                          },
-                          {
-                            label: "Unlisted - Only people with link",
-                            key: "unlisted",
-                          },
-                          {
-                            label: "Private - Only you can watch",
-                            key: "private",
-                          },
-                        ]}
-                        selectedKey={selectedPrivacyKey}
-                        onChange={setSelectedPrivacyKey}
-                        renderItem={(o) => (
-                          <>
-                            <div className="upload-privacy-option">
-                              <Check
+                <form className="upload-settings-form">
+                  <div className="upload-form-field">
+                    <Label htmlFor="privacy">Privacy</Label>
+                    <Select
+                      options={[
+                        {
+                          label: "Public - Anyone can watch",
+                          value: "public",
+                        },
+                        {
+                          label: "Unlisted - Only people with link",
+                          value: "unlisted",
+                        },
+                        {
+                          label: "Private - Only you can watch",
+                          value: "private",
+                        },
+                      ]}
+                      selectedValue={selectedPrivacy}
+                      onValueChange={setSelectedPrivacy}
+                      renderItem={(o) => (
+                        <>
+                          <div className="upload-privacy-option">
+                            <Check
+                              size={18}
+                              className="upload-privacy-icon"
+                              color={
+                                o.value !== selectedPrivacy
+                                  ? "transparent"
+                                  : "#111827"
+                              }
+                            />
+                          </div>
+                          <div className="upload-privacy-option">
+                            {o.value === "public" ? (
+                              <Globe
                                 size={18}
                                 className="upload-privacy-icon"
-                                color={
-                                  o.key !== selectedPrivacyKey
-                                    ? "transparent"
-                                    : undefined
-                                }
                               />
-                            </div>
-                            <div className="upload-privacy-option">
-                              {o.key === "public" ? (
-                                <Globe
-                                  size={18}
-                                  className="upload-privacy-icon"
-                                />
-                              ) : o.key === "unlisted" ? (
-                                <EyeOff
-                                  size={18}
-                                  className="upload-privacy-icon"
-                                />
-                              ) : o.key === "private" ? (
-                                <Lock
-                                  size={18}
-                                  className="upload-privacy-icon"
-                                />
-                              ) : null}
-                            </div>
-                            <SelectItemText className="upload-privacy-text">
-                              {o.label}
-                            </SelectItemText>
-                          </>
-                        )}
-                      />
-                    </FormControl>
-                  </FormField>
+                            ) : o.value === "unlisted" ? (
+                              <EyeOff
+                                size={18}
+                                className="upload-privacy-icon"
+                              />
+                            ) : o.value === "private" ? (
+                              <Lock
+                                size={18}
+                                className="upload-privacy-icon"
+                              />
+                            ) : null}
+                          </div>
+                          <span className="upload-privacy-text">{o.label}</span>
+                        </>
+                      )}
+                    />
+                  </div>
                   <fieldset className="upload-fieldset">
                     <legend className="upload-legend">
                       Interaction Settings
                     </legend>
-                    <FormField
-                      name="comments"
-                      className="upload-checkbox-field">
+                    <div className="upload-checkbox-field">
                       <Checkbox.Root
                         className="upload-checkbox-root"
-                        id="c1">
+                        id="comments">
                         <Checkbox.Indicator className="upload-checkbox-indicator">
                           <Check size={18} />
                         </Checkbox.Indicator>
                       </Checkbox.Root>
                       <label
                         className="upload-checkbox-label"
-                        htmlFor="c1">
+                        htmlFor="comments">
                         Allow comments
                       </label>
-                    </FormField>
-                    <FormField
-                      name="downloads"
-                      className="upload-checkbox-field">
+                    </div>
+                    <div className="upload-checkbox-field">
                       <Checkbox.Root
                         className="upload-checkbox-root"
-                        id="c2">
+                        id="downloads">
                         <Checkbox.Indicator className="upload-checkbox-indicator">
                           <Check size={18} />
                         </Checkbox.Indicator>
                       </Checkbox.Root>
                       <label
                         className="upload-checkbox-label"
-                        htmlFor="c2">
+                        htmlFor="downloads">
                         Allow downloads
                       </label>
-                    </FormField>
+                    </div>
                   </fieldset>
-                </Form>
+                </form>
               </TabsContent>
             </Tabs>
             <button className="upload-submit-button">Upload video</button>
@@ -351,10 +325,10 @@ export default function Upload() {
                 className="upload-icon"
               />
             </div>
-            <div className="upload-text-primary">Select video to upload</div>
-            <div className="upload-text-secondary">
+            <p className="upload-text-primary">Select video to upload</p>
+            <p className="upload-text-secondary">
               Or drag and drop video files
-            </div>
+            </p>
             <input
               ref={videoInputRef}
               id="video-upload"
@@ -363,11 +337,11 @@ export default function Upload() {
               className="upload-hidden"
               onChange={handleSelectVideo}
             />
-            <button
+            <Button
+              title="Select video"
               className="upload-button"
-              onClick={triggerVideoSelection}>
-              Select video
-            </button>
+              onClick={triggerVideoSelection}
+            />
           </div>
         )}
       </div>

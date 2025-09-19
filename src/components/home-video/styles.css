@@ -2,7 +2,7 @@
     display: flex;
     gap: 0.5rem;
     font-size: 0.875rem;
-    color: var(--secondary-text-color);
+    color: var(--secondary-txt-clr);
 }
 
 .video-thumbnail-container {
@@ -28,7 +28,7 @@
 }
 
 .video-title {
-    color: var(--primary-text-color);
+    color: var(--txt-clr);
     margin-top: 0.75rem;
     margin-bottom: 0;
 }
