@@ -19,12 +19,12 @@
 
 .comment-author-name {
   font-weight: 600;
-  color: var(--txt-clr);
+  color: var(--primary-txt-clr);
   margin-right: 0.5rem;
 }
 
 .comment-author-name:visited {
-  color: var(--txt-clr);
+  color: var(--primary-txt-clr);
 }
 
 .comment-date {

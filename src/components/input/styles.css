@@ -1,13 +1,5 @@
 .input {
-  width: 100%;
-  border-width: 0;
-  border-radius: 0.375rem;
-  background-color: var(--bg-clr);
-  padding: 0.375rem 0.75rem;
-  outline: 1px solid rgb(216, 216, 216);
-  outline-offset: -1px;
-  color: gray;
-  line-height: inherit;
+  
 }
 
 .input:focus {

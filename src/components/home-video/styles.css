@@ -28,7 +28,7 @@
 }
 
 .video-title {
-    color: var(--txt-clr);
+    color: var(--primary-txt-clr);
     margin-top: 0.75rem;
     margin-bottom: 0;
 }

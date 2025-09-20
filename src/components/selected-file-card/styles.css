@@ -44,7 +44,7 @@
   padding: 0.5rem;
   border: 0;
   outline: none;
-  color: var(--txt-clr);
+  color: var(--primary-txt-clr);
   transition: background-color 0.15s ease-in-out;
 }
 
