@@ -1,8 +1,11 @@
 :root {
   --bg-clr: #f9f9fa;
   --primary-clr: #007bff;
-  --primary-txt-clr: #202020;
-  --secondary-txt-clr: #6c757d;
+  --secondary-clr: #10b981;
+  --surface-clr: #f3f4f6;
+  --primary-txt-clr: #202020; /* #111827 */
+  --secondary-txt-clr: #6c757d; /* #374151 */
+  /* --border-clr: #6B7280; */
 
   --h1: 1.75rem;
   --h2: 1.25rem;
@@ -10,19 +13,16 @@
   --h4: 1rem;
   --body: 1rem;
   --caption: 0.875rem;
+}
 
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  color: var(--primary-txt-clr);
-  font-weight: 500;
-  line-height: 1.6;
-
-  color-scheme: light dark;
-  background-color: var(--bg-clr);
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+:root[data-theme="dark"] {
+  --bg-clr: #0b0f19;
+  --primary-clr: #007bff;
+  --secondary-clr: #7c3aed;
+  --surface-clr: #1e293b;
+  --primary-txt-clr: #f9fafb;
+  --secondary-txt-clr: #9ca3af;
+  /* --border-clr: #6B7280; */
 }
 
 *,
@@ -33,6 +33,16 @@
 
 body {
   margin: 0 auto;
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  color: var(--primary-txt-clr);
+  font-weight: 500;
+  line-height: 1.6;
+  color-scheme: light dark;
+  background-color: var(--bg-clr);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 a {
@@ -68,7 +78,9 @@ h3 {
   line-height: 1;
 }
 
-input, textarea, .select-trigger {
+input,
+textarea,
+.select-trigger {
   width: 100%;
   border-width: 0;
   border-radius: 0.375rem;
