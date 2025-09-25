@@ -1,6 +1,7 @@
 :root {
   --bg-clr: #f9f9fa;
-  --primary-clr: #007bff;
+  --primary-clr: rgb(0, 123, 255);
+  --primary-container-clr: rgb(0, 123, 255, 0.1);
   --secondary-clr: #10b981;
   --surface-clr: #f3f4f6;
   --primary-txt-clr: #202020; /* #111827 */
