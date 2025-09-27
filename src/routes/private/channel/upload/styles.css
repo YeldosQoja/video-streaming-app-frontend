@@ -1,0 +1,84 @@
+.upload-content {
+  position: fixed;
+  left: 10vw;
+  top: 10vh;
+  right: 10vw;
+  bottom: 10vh;
+  background: var(--surface-container);
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  border-radius: 1.125rem;
+}
+
+.upload-overlay {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.upload-overlay[data-state="open"] {
+  animation: overlayShadow 150ms ease-out;
+}
+
+@keyframes overlayShadow {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.upload-dropzone {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  border: 2px dashed var(--on-surface-variant);
+  border-radius: 0.5rem;
+  padding: 2rem;
+  text-align: center;
+  transition: border-color 0.15s ease-in-out;
+}
+
+.upload-dropzone:hover {
+  border-color: var(--on-surface);
+}
+
+.upload-icon-btn {
+  background: var(--surface-container-high);
+  padding: 1.25rem;
+  border-radius: 50%;
+
+  svg {
+    display: block;
+    color: var(--on-surface-variant);
+  }
+}
+
+.upload-dropzone p {
+  margin-block: 0;
+}
+
+.upload-text-primary {
+  font-size: 1.125rem;
+}
+
+.upload-text-secondary {
+  color: var(--on-surface-variant);
+  font-size: 1rem;
+}
+
+.select-video-btn {
+  background-color: transparent;
+  color: var(--on-surface);
+  border: 1px solid var(--on-surface-variant);
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+}

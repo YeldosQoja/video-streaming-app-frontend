@@ -1,16 +1,19 @@
-import { ButtonHTMLAttributes } from "react";
 import "./styles.css";
+import { ButtonHTMLAttributes, forwardRef } from "react";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   title: string;
 }
 
-export const Button = ({ title, className, ...rest }: ButtonProps) => {
-  return (
-    <button
-      className={`btn ${className || ""}`}
-      {...rest}>
-      {title}
-    </button>
-  );
-};
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ className, title, ...rest }, ref) => {
+    return (
+      <button
+        className={`btn ${className || ""}`}
+        {...rest}
+        ref={ref}>
+        {title}
+      </button>
+    );
+  }
+);

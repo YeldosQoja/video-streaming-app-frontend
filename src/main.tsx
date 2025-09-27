@@ -6,9 +6,10 @@ import AuthLayout from "@/routes/public/auth";
 import SignIn from "@/routes/public/auth/signin";
 import SignUp from "@/routes/public/auth/signup";
 import MainLayout from "@/routes/private";
-import Upload from "@/routes/private/upload";
 import Video from "@/routes/private/video";
 import Home from "@/routes/private/home";
+import ChannelLayout from "./routes/private/channel";
+import Dashboard from "./routes/private/channel/dashboard";
 
 const router = createBrowserRouter([
   {
@@ -20,12 +21,18 @@ const router = createBrowserRouter([
         Component: Home,
       },
       {
-        path: ":videoId",
+        path: "watch/:videoId",
         Component: Video,
       },
+    ],
+  },
+  {
+    path: "channel/:channelId",
+    Component: ChannelLayout,
+    children: [
       {
-        path: "upload",
-        Component: Upload,
+        index: true,
+        Component: Dashboard,
       },
     ],
   },
