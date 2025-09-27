@@ -37,7 +37,7 @@
 }
 
 .forgot-password-link {
-  color: var(--primary-clr);
+  color: var(--primary);
   text-decoration: none;
 }
 
@@ -47,11 +47,11 @@
 
 .auth-footer-text {
   text-align: center;
-  color: var(--secondary-txt-clr);
+  color: var(--on-surface-variant);
 }
 
 .auth-link {
-  color: var(--primary-clr);
+  color: var(--primary);
   text-decoration: none;
   font-weight: bold;
 }

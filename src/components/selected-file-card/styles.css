@@ -9,7 +9,7 @@
 }
 
 .file-card__icon {
-  color: var(--primary-clr);
+  color: var(--primary);
   height: 1.5rem;
   width: 1.5rem;
 }
@@ -44,7 +44,7 @@
   padding: 0.5rem;
   border: 0;
   outline: none;
-  color: var(--primary-txt-clr);
+  color: var(--on-surface);
   transition: background-color 0.15s ease-in-out;
 }
 

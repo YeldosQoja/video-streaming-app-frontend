@@ -3,6 +3,6 @@
 }
 
 .input:focus {
-  outline: 2px solid var(--primary-clr);
+  outline: 2px solid var(--primary);
   outline-offset: -2px;
 }

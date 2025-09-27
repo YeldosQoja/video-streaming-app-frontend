@@ -19,16 +19,16 @@
 
 .comment-author-name {
   font-weight: 600;
-  color: var(--primary-txt-clr);
+  color: var(--on-surface);
   margin-right: 0.5rem;
 }
 
 .comment-author-name:visited {
-  color: var(--primary-txt-clr);
+  color: var(--on-surface);
 }
 
 .comment-date {
-  color: var(--secondary-txt-clr);
+  color: var(--on-surface-variant);
   font-size: 0.8125rem;
 }
 
@@ -41,7 +41,7 @@
 
 .comment-action-btn {
   background: transparent;
-  color: var(--secondary-txt-clr);
+  color: var(--on-surface-variant);
 }
 
 .comment-top-row {

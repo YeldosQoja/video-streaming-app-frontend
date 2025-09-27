@@ -4,7 +4,7 @@
   top: 0;
   height: 100vh;
   width: 240px;
-  background: var(--surface-clr);
+  background: var(--surface-container-lowest);
 }
 
 .sidebar .list {
@@ -30,14 +30,14 @@
 
 .sidebar-item a,
 svg {
-  color: var(--primary-txt-clr);
+  color: var(--on-surface);
 }
 
 .sidebar-item.selected {
-  background: var(--primary-container-clr);
+  background: var(--primary-container);
 
   a,
   svg {
-    color: var(--primary-clr);
+    color: var(--primary);
   }
 }

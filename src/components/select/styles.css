@@ -5,12 +5,12 @@
 }
 
 .select-trigger:focus {
-    outline: 2px solid var(--primary-clr);
+    outline: 2px solid var(--primary);
     outline-offset: -2px;
 }
 
 .select-icon {
-    color: var(--primary-txt-clr);
+    color: var(--on-surface);
     display: block;
 }
 
@@ -27,7 +27,7 @@
     align-items: center;
     font-size: inherit;
     font-weight: inherit;
-    color: var(--primary-txt-clr);
+    color: var(--on-surface);
     border-radius: 0;
     padding: 0.375rem 0.5rem;
     user-select: none;
