@@ -9,7 +9,12 @@
     outline-offset: -2px;
 }
 
-.select-icon {
+.select-trigger .label {
+    flex: 1;
+    text-align: left;
+}
+
+.select-trigger .icon {
     color: var(--on-surface);
     display: block;
 }
@@ -40,4 +45,12 @@
 
 .select-item:focus {
     background-color: #f3f4f6;
+}
+
+.select-item > .item-indicator {
+    color: var(--on-surface);
+}
+
+.select-item > svg {
+    margin-inline: 0.5rem;
 }

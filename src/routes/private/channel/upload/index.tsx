@@ -92,7 +92,7 @@ const Upload = () => {
           {selectedVideo === null ? (
             <>
               <Dialog.Title>Upload Video</Dialog.Title>
-              <div className="upload-dropzone upload-dropzone--video">
+              <div className="upload-dropzone upload-dropzone__video">
                 <button
                   onClick={handleSelectVideo}
                   className="upload-icon-btn">
@@ -115,7 +115,7 @@ const Upload = () => {
                 />
                 <Button
                   title="Select video"
-                  className="select-video-btn"
+                  className="select-file-btn"
                   onClick={handleSelectVideo}
                 />
               </div>
@@ -141,7 +141,9 @@ const Upload = () => {
                   </Tabs.Trigger>
                 </Tabs.List>
                 <Tabs.Content value="details">
-                  <form className="upload-form">
+                  <form
+                    id="upload-form"
+                    className="upload-form">
                     <div>
                       <Label htmlFor="title">Title</Label>
                       <Input
@@ -156,11 +158,11 @@ const Upload = () => {
                         id="description"
                         name="description"
                         maxLength={5000}
-                        className="desc-textarea"
+                        className="textarea__desc"
                         placeholder="Tell viewers about your video"
                       />
                     </div>
-                    <div>
+                    <div className="flex-row">
                       <div>
                         <Label htmlFor="category">Category</Label>
                         <Select
@@ -186,9 +188,9 @@ const Upload = () => {
                 </Tabs.Content>
                 <Tabs.Content value="thumbnail">
                   <h3>Upload a thumbnail</h3>
-                  <div className="upload-text-secondary">
+                  <p className="upload-text-secondary">
                     Upload a custom thumbnail that represents your video
-                  </div>
+                  </p>
                   {!selectedThumbnail ? (
                     <div className="upload-dropzone">
                       <button
@@ -202,10 +204,11 @@ const Upload = () => {
                         type="file"
                         accept="image/*"
                         className="hidden"
+                        form="upload-form"
                         onChange={pickThumbnailFromComputer}
                       />
                       <Button
-                        className="select-video-btn"
+                        className="select-file-btn"
                         title="Select thumbnail"
                         onClick={handleSelectThumbnail}
                       />
@@ -222,101 +225,69 @@ const Upload = () => {
                   )}
                 </Tabs.Content>
                 <Tabs.Content value="settings">
-                  <form className="upload-settings-form">
-                    <div className="upload-form-field">
-                      <Label htmlFor="privacy">Privacy</Label>
-                      <Select
-                        options={[
-                          {
-                            label: "Public - Anyone can watch",
-                            value: "public",
-                          },
-                          {
-                            label: "Unlisted - Only people with link",
-                            value: "unlisted",
-                          },
-                          {
-                            label: "Private - Only you can watch",
-                            value: "private",
-                          },
-                        ]}
-                        selectedValue={selectedPrivacy}
-                        onValueChange={setSelectedPrivacy}
-                        renderItem={(o) => (
-                          <>
-                            <div className="upload-privacy-option">
-                              <Check
-                                size={18}
-                                className="upload-privacy-icon"
-                                color={
-                                  o.value !== selectedPrivacy
-                                    ? "transparent"
-                                    : "#111827"
-                                }
-                              />
-                            </div>
-                            <div className="upload-privacy-option">
-                              {o.value === "public" ? (
-                                <Globe
-                                  size={18}
-                                  className="upload-privacy-icon"
-                                />
-                              ) : o.value === "unlisted" ? (
-                                <EyeOff
-                                  size={18}
-                                  className="upload-privacy-icon"
-                                />
-                              ) : o.value === "private" ? (
-                                <Lock
-                                  size={18}
-                                  className="upload-privacy-icon"
-                                />
-                              ) : null}
-                            </div>
-                            <span className="upload-privacy-text">
-                              {o.label}
-                            </span>
-                          </>
-                        )}
-                      />
+                  <div className="upload-privacy-field">
+                    <Label htmlFor="privacy">Privacy</Label>
+                    <Select
+                      options={[
+                        {
+                          label: "Public - Anyone can watch",
+                          value: "public",
+                          icon: <Globe size={18} />,
+                        },
+                        {
+                          label: "Unlisted - Only people with link",
+                          value: "unlisted",
+                          icon: <EyeOff size={18} />,
+                        },
+                        {
+                          label: "Private - Only you can watch",
+                          value: "private",
+                          icon: <Lock size={18} />,
+                        },
+                      ]}
+                      selectedValue={selectedPrivacy}
+                      onValueChange={setSelectedPrivacy}
+                    />
+                  </div>
+                  <fieldset
+                    className="interaction-settings__fieldset"
+                    form="upload-form">
+                    <legend>Interaction Settings</legend>
+                    <div className="upload-checkbox-field">
+                      <Checkbox.Root
+                        className="upload-checkbox-root"
+                        form="upload-form"
+                        id="allow-comments">
+                        <Checkbox.Indicator asChild>
+                          <Check
+                            size={18}
+                            className="checkbox-indicator-icon"
+                          />
+                        </Checkbox.Indicator>
+                      </Checkbox.Root>
+                      <label htmlFor="allow-comments">Allow comments</label>
                     </div>
-                    <fieldset className="upload-fieldset">
-                      <legend className="upload-legend">
-                        Interaction Settings
-                      </legend>
-                      <div className="upload-checkbox-field">
-                        <Checkbox.Root
-                          className="upload-checkbox-root"
-                          id="comments">
-                          <Checkbox.Indicator className="upload-checkbox-indicator">
-                            <Check size={18} />
-                          </Checkbox.Indicator>
-                        </Checkbox.Root>
-                        <label
-                          className="upload-checkbox-label"
-                          htmlFor="comments">
-                          Allow comments
-                        </label>
-                      </div>
-                      <div className="upload-checkbox-field">
-                        <Checkbox.Root
-                          className="upload-checkbox-root"
-                          id="downloads">
-                          <Checkbox.Indicator className="upload-checkbox-indicator">
-                            <Check size={18} />
-                          </Checkbox.Indicator>
-                        </Checkbox.Root>
-                        <label
-                          className="upload-checkbox-label"
-                          htmlFor="downloads">
-                          Allow downloads
-                        </label>
-                      </div>
-                    </fieldset>
-                  </form>
+                    <div className="upload-checkbox-field">
+                      <Checkbox.Root
+                        className="upload-checkbox-root"
+                        form="upload-form"
+                        id="allow-downloads">
+                        <Checkbox.Indicator asChild>
+                          <Check
+                            size={18}
+                            className="checkbox-indicator-icon"
+                          />
+                        </Checkbox.Indicator>
+                      </Checkbox.Root>
+                      <label htmlFor="allow-downloads">Allow downloads</label>
+                    </div>
+                  </fieldset>
                 </Tabs.Content>
               </Tabs.Root>
-              <Button title="Upload" />
+              <Button
+                title="Upload"
+                className="upload-btn"
+              />
             </>
           )}
         </Dialog.Content>
