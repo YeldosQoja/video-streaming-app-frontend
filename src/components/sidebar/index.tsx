@@ -32,7 +32,7 @@ const Sidebar = ({ items }: Props) => {
               }`}>
               <a onClick={() => handleClick(i)}>
                 {i.icon}
-                {i.label}
+                <span className="sidebar-item-label">{i.label}</span>
               </a>
             </li>
           ))}
