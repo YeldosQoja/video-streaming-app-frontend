@@ -105,6 +105,7 @@
 }
 
 .textarea__desc {
+  width: 100%;
   background-color: transparent;
   height: 9rem;
   color: var(--on-surface);

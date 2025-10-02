@@ -2,6 +2,7 @@ import { Outlet } from "react-router-dom";
 import "./styles.css";
 import Sidebar from "@/components/sidebar";
 import { History, Home, TrendingUp } from "lucide-react";
+import { Header } from "@/components/header";
 
 const HOME_SIDEBAR_ITEMS = [
   {
@@ -24,9 +25,8 @@ const HOME_SIDEBAR_ITEMS = [
 export default function MainLayout() {
   return (
     <div className="main">
-      <Sidebar
-        items={HOME_SIDEBAR_ITEMS}
-      />
+      <Sidebar items={HOME_SIDEBAR_ITEMS} />
+      <Header />
       <Outlet />
     </div>
   );

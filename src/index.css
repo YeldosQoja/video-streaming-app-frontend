@@ -38,6 +38,9 @@
   --h4: 1rem;
   --body: 1rem;
   --caption: 0.875rem;
+
+  --header-height: 4rem;
+  --search-input-width: 28rem;
 }
 
 *,
@@ -96,7 +99,6 @@ h3 {
 input,
 textarea,
 .select-trigger {
-  width: 100%;
   border-width: 0;
   border-radius: 0.375rem;
   padding: 0.375rem 0.75rem;
