@@ -1,8 +1,8 @@
-import { useParams } from "react-router-dom";
 import "./styles.css";
+import { useParams } from "react-router-dom";
 import { Share2, Star, ThumbsDown, ThumbsUp } from "lucide-react";
 import comments from "@/comments.json";
-import { Comment, RecommendationVideo } from "@/components";
+import { Button, Comment, RecommendationVideo } from "@/components";
 import videos from "@/videos.json";
 
 export default function Video() {
@@ -11,64 +11,65 @@ export default function Video() {
   console.log({ videoId });
 
   return (
-    <div className="container">
+    <div className="video">
       <div className="primary">
         <div>
           <video
-            id="player"
+            className="video__player"
             controls
             src={`http://localhost:3000/videos/local/theoffice.mp4`}
           />
-          <h1
-            id="video-title"
-            className="title">
+          <h1 className="video__title">
             Video Title Will Go Here Video Title Will Go Here Video Title Will
             Go Here Video Title Will Go Here Video Title Will Go Here
           </h1>
         </div>
-        <div className="top-row">
-          <div id="channel">
+        <div className="video__details">
+          <div className="video__channel">
             <a href="">
               <img
                 src=""
-                className="avatar"
+                className="video__channel-avatar"
               />
             </a>
-            <div className="channel-info">
+            <div className="video__channel-info">
               <a
-                id="channel-name"
+                className="video__channel-name"
                 href="">
                 yeldos qoja
               </a>
-              <p className="sub-count">365k subscribers</p>
+              <p className="video__sub-count">365k subscribers</p>
             </div>
-            <button className="sub-btn">Subscribe</button>
+            <Button
+              title="Subscribe"
+              className="video__sub-btn"
+            />
           </div>
-          <div className="actions">
-            <div className="btn-group">
+          <div className="video__actions">
+            <div className="video__btn-group">
               <div>
-                <button className="action-btn">
+                <button className="video__action-btn">
                   <ThumbsUp />
                   432
                 </button>
               </div>
               <div>
-                <button className="action-btn">
+                <button className="video__action-btn">
                   <ThumbsDown />
                 </button>
               </div>
             </div>
-            <button className="action-btn">
+            <button className="video__action-btn">
               <Share2 />
               Share
             </button>
-            <button className="action-btn">
+            <button className="video__action-btn">
               <Star />
               Save
             </button>
           </div>
         </div>
-        <div className="desc-section">
+        <div className="video__desc">
           <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut
             consequuntur nulla tenetur nesciunt sapiente cum impedit vero
@@ -95,9 +96,9 @@ export default function Video() {
             optio maxime reiciendis impedit quibusdam.
           </p>
         </div>
-        <div className="comments-section">
+        <div>
           <h2>{`${comments.length} comments`}</h2>
-          <ul className="comments-list">
+          <ul className="video__comments-list">
             {comments.map((comment, idx) => (
               <li key={idx}>
                 <Comment {...comment} />

@@ -13,27 +13,27 @@ export const Comment = ({ username, text, avatarUrl, date }: Props) => {
     <div className="comment">
       <a href="">
         <img
-          className="comment-author-avatar"
+          className="comment__avatar"
           src={avatarUrl}
           alt=""
         />
       </a>
-      <div className="comment-details">
-        <div className="comment-top-row">
+      <div className="comment__details">
+        <div className="comment__top-row">
           <a
             href=""
-            className="comment-author-name">{`@${username}`}</a>
-          <span className="comment-date">{date}</span>
+            className="comment__author">{`@${username}`}</a>
+          <span className="comment__date">{date}</span>
         </div>
-        <p className="comment-text">{text}</p>
-        <div className="comment-actions">
-          <button className="comment-action-btn">
+        <p className="comment__content">{text}</p>
+        <div className="comment__actions">
+          <button className="comment__action-btn">
             <ThumbsUp />
           </button>
-          <button className="comment-action-btn">
+          <button className="comment__action-btn">
             <ThumbsDown />
           </button>
-          <button className="comment-action-btn">Reply</button>
+          <button className="comment__action-btn">Reply</button>
         </div>
       </div>
     </div>

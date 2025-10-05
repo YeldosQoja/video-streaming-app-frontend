@@ -4,46 +4,50 @@
   font-size: 0.875rem;
 }
 
-.comment-author-avatar {
+.comment__avatar {
   width: 2.5rem;
   height: 2.5rem;
   border-radius: 50%;
   background-color: aqua;
 }
 
-.comment-details {
+.comment__details {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: 0.5rem;
 }
 
-.comment-author-name {
+.comment__author {
   font-weight: 600;
   color: var(--on-surface);
   margin-right: 0.5rem;
 }
 
-.comment-author-name:visited {
+.comment__author:visited {
   color: var(--on-surface);
 }
 
-.comment-date {
+.comment__date {
   color: var(--on-surface-variant);
   font-size: 0.8125rem;
 }
 
-.comment-actions {
+.comment__content {
+  margin-block: 0;
+}
+
+.comment__actions {
   display: flex;
   align-items: center;
   font-size: 0.8125rem;
   font-weight: 600;
 }
 
-.comment-action-btn {
+.comment__action-btn {
   background: transparent;
   color: var(--on-surface-variant);
 }
 
-.comment-top-row {
+.comment__top-row {
   margin: 0;
 }
