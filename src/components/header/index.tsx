@@ -5,19 +5,23 @@ import { useSidebar } from "../sidebar";
 import { useDrawer } from "../drawer";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { useCallback } from "react";
+import { useLocation } from "react-router-dom";
 
 export const Header = () => {
   const { toggleSidebar } = useSidebar();
   const { openDrawer } = useDrawer();
   const isMobile = useIsMobile();
+  const location = useLocation();
 
   const handleMenuButtonClick = useCallback(() => {
-    if (isMobile) {
+    const parts = location.pathname.split("/");
+    const route = parts[1];
+    if (isMobile || route === "watch") {
       openDrawer();
     } else {
       toggleSidebar();
     }
-  }, [isMobile, openDrawer, toggleSidebar]);
+  }, [isMobile, openDrawer, toggleSidebar, location]);
 
   return (
     <header className="header">
