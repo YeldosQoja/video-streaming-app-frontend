@@ -7,7 +7,7 @@ import {
   LayoutDashboard,
   Users,
 } from "lucide-react";
-import Sidebar from "@/components/sidebar";
+import { Sidebar, SidebarProvider } from "@/components/sidebar";
 
 const CHANNEL_SIDEBAR_ITEMS = [
   {
@@ -34,12 +34,14 @@ const CHANNEL_SIDEBAR_ITEMS = [
 
 const ChannelLayout = () => {
   return (
-    <div className="channel">
-      <Sidebar items={CHANNEL_SIDEBAR_ITEMS} />
-      <div className="outlet-container">
-        <Outlet />
+    <SidebarProvider>
+      <div className="channel">
+        <Sidebar items={CHANNEL_SIDEBAR_ITEMS} />
+        <div className="outlet-container">
+          <Outlet />
+        </div>
       </div>
-    </div>
+    </SidebarProvider>
   );
 };
 

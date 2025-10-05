@@ -1,4 +1,5 @@
 .sidebar {
+  display: none;
   position: fixed;
   left: 0;
   top: var(--header-height);
@@ -10,7 +11,7 @@
 .sidebar .list {
   width: 100%;
   height: 100%;
-  padding-inline: 0.5rem;
+  padding: 0.5rem;
   margin: 0;
 }
 
@@ -34,7 +35,6 @@
 
 .sidebar-item.selected {
   background: var(--primary-container);
-
   a,
   svg {
     color: var(--primary);
@@ -46,19 +46,50 @@
   font-weight: 400;
 }
 
+@media screen and (min-width: 40rem) {
+  .sidebar {
+    display: block;
+  }
+}
+
 @media screen and (min-width: 80rem) {
   .sidebar {
     width: 15rem;
   }
 
-  .sidebar-item a {
-    padding: 0.25rem 0.5rem;
-    flex-direction: row;
-    column-gap: 0.5rem;
+  .sidebar-item {
+    a {
+      padding: 0.25rem 0.5rem;
+      flex-direction: row;
+      column-gap: 0.5rem;
+    }
+
+    .sidebar-item-label {
+      font-size: var(--body);
+      font-weight: 500;
+    }
   }
 
-  .sidebar-item-label {
-    font-size: var(--body);
-    font-weight: 500;
+  .sidebar.collapsed {
+    width: 5rem;
+  }
+
+  .collapsed .sidebar-item {
+    border-radius: 0.75rem;
+    padding: 0.5rem 0;
+
+    a {
+      padding: 0;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      row-gap: 0.125rem;
+      cursor: pointer;
+    }
+
+    .sidebar-item-label {
+      font-size: 0.75rem;
+      font-weight: 400;
+    }
   }
 }

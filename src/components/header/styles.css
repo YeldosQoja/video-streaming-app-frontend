@@ -25,6 +25,7 @@
 
 .header__menu-btn svg {
     display: block;
+    color: var(--on-surface);
 }
 
 .header__menu-btn:hover {
@@ -45,6 +46,7 @@
 }
 
 .header__search-btn {
+    color: var(--on-surface);
     background: var(--surface-container-highest);
     padding-inline: 0.75rem;
     border-radius: 0 0.375rem 0.375rem 0;

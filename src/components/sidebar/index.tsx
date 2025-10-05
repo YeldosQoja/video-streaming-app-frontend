@@ -1,5 +1,45 @@
 import "./styles.css";
-import { ReactNode, useState } from "react";
+import {
+  createContext,
+  PropsWithChildren,
+  ReactNode,
+  useCallback,
+  useContext,
+  useState,
+} from "react";
+
+type SidebarContextProps = {
+  open: boolean;
+  toggleSidebar: () => void;
+};
+
+const SidebarContext = createContext<SidebarContextProps | null>(null);
+
+const useSidebar = () => {
+  const value = useContext(SidebarContext);
+  if (!value) {
+    throw new Error("useSidebar must be used with a SidebarProvider!");
+  }
+  return value;
+};
+
+const SidebarProvider = ({ children }: PropsWithChildren) => {
+  const [open, setOpen] = useState(false);
+
+  const toggleSidebar = useCallback(() => {
+    setOpen(!open);
+  }, [open]);
+
+  return (
+    <SidebarContext.Provider
+      value={{
+        open,
+        toggleSidebar,
+      }}>
+      {children}
+    </SidebarContext.Provider>
+  );
+};
 
 type MenuItem = {
   key: string;
@@ -14,6 +54,7 @@ type Props = {
 
 const Sidebar = ({ items }: Props) => {
   const [selectedItem, setSelectedItem] = useState<string>();
+  const { open } = useSidebar();
 
   const handleClick = (item: MenuItem) => {
     setSelectedItem(item.key);
@@ -21,7 +62,7 @@ const Sidebar = ({ items }: Props) => {
   };
 
   return (
-    <aside className="sidebar">
+    <aside className={`sidebar ${open ? "" : "collapsed"}`}>
       <nav>
         <ul className="list">
           {items.map((i) => (
@@ -42,4 +83,4 @@ const Sidebar = ({ items }: Props) => {
   );
 };
 
-export default Sidebar;
+export { SidebarProvider, useSidebar, Sidebar };
