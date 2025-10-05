@@ -1,8 +1,9 @@
+import { useIsMobile } from "@/hooks/useIsMobile";
+import { Menu, MenuItem } from "../menu";
 import "./styles.css";
 import {
   createContext,
   PropsWithChildren,
-  ReactNode,
   useCallback,
   useContext,
   useState,
@@ -41,44 +42,28 @@ const SidebarProvider = ({ children }: PropsWithChildren) => {
   );
 };
 
-type MenuItem = {
-  key: string;
-  label: string;
-  icon: ReactNode;
-  onClick?: () => void;
-};
-
-type Props = {
+type SidebarProps = {
   items: MenuItem[];
 };
 
-const Sidebar = ({ items }: Props) => {
-  const [selectedItem, setSelectedItem] = useState<string>();
+const Sidebar = ({ items }: SidebarProps) => {
+  const [selectedValue, setSelectedValue] = useState<string | null>(null);
   const { open } = useSidebar();
+  const isMobile = useIsMobile();
 
   const handleClick = (item: MenuItem) => {
-    setSelectedItem(item.key);
+    setSelectedValue(item.key);
     if (item.onClick) item.onClick();
   };
 
   return (
     <aside className={`sidebar ${open ? "" : "collapsed"}`}>
-      <nav>
-        <ul className="list">
-          {items.map((i) => (
-            <li
-              key={i.key}
-              className={`sidebar-item${
-                selectedItem === i.key ? " selected" : ""
-              }`}>
-              <a onClick={() => handleClick(i)}>
-                {i.icon}
-                <span className="sidebar-item-label">{i.label}</span>
-              </a>
-            </li>
-          ))}
-        </ul>
-      </nav>
+      <Menu
+        mode={isMobile ? "collapsed" : open ? "expanded" : "collapsed"}
+        items={items}
+        value={selectedValue}
+        onChange={handleClick}
+      />
     </aside>
   );
 };

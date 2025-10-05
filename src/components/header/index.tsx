@@ -2,16 +2,29 @@ import "./styles.css";
 import { MenuIcon, SearchIcon, UploadIcon, UserIcon } from "lucide-react";
 import { Input } from "../input";
 import { useSidebar } from "../sidebar";
+import { useDrawer } from "../drawer";
+import { useIsMobile } from "@/hooks/useIsMobile";
+import { useCallback } from "react";
 
 export const Header = () => {
   const { toggleSidebar } = useSidebar();
+  const { openDrawer } = useDrawer();
+  const isMobile = useIsMobile();
+
+  const handleMenuButtonClick = useCallback(() => {
+    if (isMobile) {
+      openDrawer();
+    } else {
+      toggleSidebar();
+    }
+  }, [isMobile, openDrawer, toggleSidebar]);
 
   return (
     <header className="header">
       <div className="header__left">
         <button
           className="header__menu-btn"
-          onClick={toggleSidebar}>
+          onClick={handleMenuButtonClick}>
           <MenuIcon />
         </button>
         <a

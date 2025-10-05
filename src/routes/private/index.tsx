@@ -3,6 +3,7 @@ import "./styles.css";
 import { SidebarProvider, Sidebar } from "@/components/sidebar";
 import { History, Home, TrendingUp } from "lucide-react";
 import { Header } from "@/components/header";
+import { Drawer, DrawerProvider } from "@/components/drawer";
 
 const HOME_SIDEBAR_ITEMS = [
   {
@@ -25,11 +26,14 @@ const HOME_SIDEBAR_ITEMS = [
 export default function MainLayout() {
   return (
     <SidebarProvider>
-      <div className="main">
-        <Sidebar items={HOME_SIDEBAR_ITEMS} />
-        <Header />
-        <Outlet />
-      </div>
+      <DrawerProvider>
+        <div className="main">
+          <Sidebar items={HOME_SIDEBAR_ITEMS} />
+          <Header />
+          <Drawer items={HOME_SIDEBAR_ITEMS} />
+          <Outlet />
+        </div>
+      </DrawerProvider>
     </SidebarProvider>
   );
 }
