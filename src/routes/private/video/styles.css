@@ -1,31 +1,37 @@
 .video {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(6, auto);
+  grid-template-areas: 
+    "player"
+    "title"
+    "details"
+    "description"
+    "related"
+    "comments";
   max-width: 105rem;
-  padding-inline: 2rem;
+  padding-inline: 7rem 2rem;
   column-gap: 1.5rem;
-  margin: var(--header-height) 0 0 5rem;
-
-  .primary {
-    flex: 3;
-  }
-
-  .secondary {
-    flex: 1;
-  }
+  margin-block: var(--header-height) 0;
+  margin-inline: auto;
 }
 
 .video__player {
   width: 100%;
+  grid-area: player;
 }
 
 .video__title {
   font-size: var(--h2);
+  grid-area: title;
 }
 
 .video__details {
   display: flex;
   justify-content: space-between;
+  column-gap: 2rem;
   margin-bottom: 1rem;
+  grid-area: details;
 }
 
 .video__channel {
@@ -35,8 +41,8 @@
 }
 
 .video__channel-avatar {
-  width: 3em;
-  height: 3em;
+  width: 2.5rem;
+  height: 2.5rem;
   border-radius: 50%;
   background-color: var(--primary);
   display: block;
@@ -77,8 +83,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 1em;
-  padding-inline: 1.5em;
+  gap: 0.75rem;
+  padding-inline: 0.875rem;
   border-radius: 1.5em;
   background-color: var(--surface-container-high);
   color: var(--on-surface);
@@ -111,6 +117,11 @@
   background-color: var(--surface-container-high);
   border-radius: 1em;
   margin-bottom: 1.5rem;
+  grid-area: description;
+}
+
+.video__comments {
+  grid-area: comments;
 }
 
 .video__comments-list {
@@ -123,8 +134,30 @@
   }
 }
 
-.video-list {
+.video__related {
+  grid-area: related;
+}
+
+.video__related-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  row-gap: 1rem;
   list-style: none;
   padding: 0;
   margin: 0;
+}
+
+@media screen and (min-width: 64rem) {
+  .video {
+    grid-template-columns: 3fr 1fr;
+    grid-template-rows: repeat(5, auto);
+    grid-template-areas: 
+    "player related"
+    "title related"
+    "details related"
+    "description related"
+    "comments related";
+  }
 }
