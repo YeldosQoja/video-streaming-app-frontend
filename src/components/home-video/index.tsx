@@ -1,34 +1,19 @@
+import { Video } from "@/types/video";
 import "./styles.css";
 import { getRelativeTime } from "@/utils/datetime";
 
-type Author = {
-  id: number;
-  name: string;
-  avatar: string;
-  bio: string;
-};
-
 type Props = {
-  id: number;
-  title: string;
-  desc: string;
-  thumbnailUrl: string;
-  createdAt: string;
-  author: Author;
+  video: Video;
 };
 
 export const HomeVideo = ({
-  id,
-  title,
-  thumbnailUrl,
-  createdAt,
-  author,
+  video: { id, title, thumbnail, createdAt, channel },
 }: Props) => {
   return (
     <article key={id}>
       <div className="video-thumbnail-container">
         <img
-          src={thumbnailUrl}
+          src={thumbnail}
           alt={title}
           width={640}
           height={360}
@@ -38,8 +23,8 @@ export const HomeVideo = ({
       <div className="video-details">
         <a href="">
           <img
-            src={author.avatar}
-            alt={author.name}
+            src={channel.avatar}
+            alt={channel.name}
             width={48}
             height={48}
             className="video-author-avatar"
@@ -52,7 +37,7 @@ export const HomeVideo = ({
           <a
             href=""
             className="video-author-name">
-            {author.name}
+            {channel.name}
           </a>
           <div className="video-meta">
             <span>345k views</span>

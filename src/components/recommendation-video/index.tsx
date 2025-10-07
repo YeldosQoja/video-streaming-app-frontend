@@ -2,28 +2,27 @@ import "./styles.css";
 import { getRelativeTime } from "@/utils/datetime";
 
 type Author = {
-  id: number;
   name: string;
   avatar: string;
   bio: string;
 };
 
 type Props = {
-  id: number;
+  id: string;
   title: string;
   desc: string;
-  thumbnailUrl: string;
+  thumbnail: string;
   createdAt: string;
-  author: Author;
+  channel: Author;
 };
 
-export const RecommendationVideo = ({ title, thumbnailUrl, createdAt, author }: Props) => {
+export const RecommendationVideo = ({ title, thumbnail, createdAt, channel }: Props) => {
   return (
     <div className="video-item">
       <a href="">
         <img
           className="video-item-thumbnail"
-          src={thumbnailUrl}
+          src={thumbnail}
           alt=""
         />
       </a>
@@ -32,7 +31,7 @@ export const RecommendationVideo = ({ title, thumbnailUrl, createdAt, author }: 
         <a
           href=""
           className="video-item-author-name">
-          {author.name}
+          {channel.name}
         </a>
         <div>
           <span>345k views</span>

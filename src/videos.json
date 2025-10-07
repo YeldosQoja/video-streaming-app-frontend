@@ -1,264 +1,227 @@
 [
     {
-      "id": 1,
+      "id": "1",
       "title": "Hidden Villages of the Italian Alps",
       "desc": "Explore untouched mountain towns full of charm and history.",
-      "thumbnailUrl": "https://i.ytimg.com/vi/SEojZwJe7q4/hqdefault.jpg",
+      "thumbnail": "https://i.ytimg.com/vi/SEojZwJe7q4/hqdefault.jpg",
       "createdAt": "2025-05-01T08:15:00Z",
-      "author": {
-        "id": 101,
+      "channel": {
         "name": "Luca Ferraro",
         "avatar": "https://randomuser.me/api/portraits/men/65.jpg",
         "bio": "Travel vlogger with a love for remote landscapes and hidden gems."
-      }
+      },
+      "viewCount": 125000,
+      "duration": 1247,
+      "preview": "https://i.ytimg.com/vi/SEojZwJe7q4/maxresdefault.jpg"
     },
     {
-      "id": 2,
+      "id": "2",
       "title": "How Bread is Made in Morocco",
       "desc": "A look inside traditional Moroccan bakeries and recipes.",
-      "thumbnailUrl": "https://i.ytimg.com/vi/hmkIvCCHhag/hqdefault.jpg",
+      "thumbnail": "https://i.ytimg.com/vi/hmkIvCCHhag/hqdefault.jpg",
       "createdAt": "2025-05-02T11:30:00Z",
-      "author": {
-        "id": 102,
+      "channel": {
         "name": "Fatima El Idrissi",
         "avatar": "https://randomuser.me/api/portraits/women/23.jpg",
         "bio": "Food documentarian focused on North African cuisine and tradition."
-      }
+      },
+      "viewCount": 89000,
+      "duration": 892,
+      "preview": "https://i.ytimg.com/vi/hmkIvCCHhag/maxresdefault.jpg"
     },
     {
-      "id": 3,
+      "id": "3",
       "title": "The Secret Life of Octopuses",
       "desc": "Explore the intelligence and mystery behind these deep-sea creatures.",
-      "thumbnailUrl": "https://i.ytimg.com/vi/SxOHYy1w92c/hqdefault.jpg",
+      "thumbnail": "https://i.ytimg.com/vi/SxOHYy1w92c/hqdefault.jpg",
       "createdAt": "2025-05-03T15:00:00Z",
-      "author": {
-        "id": 103,
+      "channel": {
         "name": "Dr. Hannah Lee",
         "avatar": "https://randomuser.me/api/portraits/women/52.jpg",
         "bio": "Marine biologist and nature educator."
-      }
+      },
+      "viewCount": 156000,
+      "duration": 1456,
+      "preview": "https://i.ytimg.com/vi/SxOHYy1w92c/maxresdefault.jpg"
     },
     {
-      "id": 4,
+      "id": "4",
       "title": "Inside Tokyo’s Anime Cafés",
       "desc": "Take a colorful trip through Japan’s most immersive pop culture cafés.",
-      "thumbnailUrl": "https://i.ytimg.com/vi/5SB0H_xEK8A/hqdefault.jpg",
+      "thumbnail": "https://i.ytimg.com/vi/5SB0H_xEK8A/hqdefault.jpg",
       "createdAt": "2025-05-04T10:20:00Z",
-      "author": {
-        "id": 104,
+      "channel": {
         "name": "Kenji Nakamura",
         "avatar": "https://randomuser.me/api/portraits/men/28.jpg",
         "bio": "Urban explorer and anime culture writer."
-      }
+      },
+      "viewCount": 234000,
+      "duration": 987,
+      "preview": "https://i.ytimg.com/vi/5SB0H_xEK8A/maxresdefault.jpg"
     },
     {
-      "id": 5,
+      "id": "5",
       "title": "Why the Renaissance Changed Everything",
       "desc": "Discover how a period of art and ideas reshaped human history.",
-      "thumbnailUrl": "https://i.ytimg.com/vi/RnB1qiMYdNM/hqdefault.jpg",
+      "thumbnail": "https://i.ytimg.com/vi/RnB1qiMYdNM/hqdefault.jpg",
       "createdAt": "2025-05-05T13:45:00Z",
-      "author": {
-        "id": 105,
+      "channel": {
         "name": "Catherine Ward",
         "avatar": "https://randomuser.me/api/portraits/women/60.jpg",
-        "bio": "Historian passionate about Europe’s golden ages."
-      }
+        "bio": "Historian passionate about Europe's golden ages."
+      },
+      "viewCount": 178000,
+      "duration": 1654,
+      "preview": "https://i.ytimg.com/vi/RnB1qiMYdNM/maxresdefault.jpg"
     },
     {
-      "id": 6,
+      "id": "6",
       "title": "10-Minute Morning Yoga Routine",
       "desc": "Stretch, breathe, and reset before your busy day starts.",
-      "thumbnailUrl": "https://i.ytimg.com/vi/RPF7iw3AYDo/hqdefault.jpg",
+      "thumbnail": "https://i.ytimg.com/vi/RPF7iw3AYDo/hqdefault.jpg",
       "createdAt": "2025-05-06T07:00:00Z",
-      "author": {
-        "id": 106,
+      "channel": {
         "name": "Sophia Raines",
         "avatar": "https://randomuser.me/api/portraits/women/49.jpg",
         "bio": "Yoga instructor helping people start mindful mornings."
-      }
+      },
+      "viewCount": 89000,
+      "duration": 600,
+      "preview": "https://i.ytimg.com/vi/RPF7iw3AYDo/maxresdefault.jpg"
     },
     {
-      "id": 7,
+      "id": "7",
       "title": "How Bees Communicate",
       "desc": "The science behind bee dances, hive roles, and colony intelligence.",
-      "thumbnailUrl": "https://i.ytimg.com/vi/EWlDd7-Yvmk/hqdefault.jpg",
+      "thumbnail": "https://i.ytimg.com/vi/EWlDd7-Yvmk/hqdefault.jpg",
       "createdAt": "2025-05-07T09:30:00Z",
-      "author": {
-        "id": 107,
+      "channel": {
         "name": "Dr. Miguel Torres",
         "avatar": "https://randomuser.me/api/portraits/men/44.jpg",
         "bio": "Wildlife researcher focused on pollinators and ecosystems."
-      }
+      },
+      "viewCount": 145000,
+      "duration": 1123,
+      "preview": "https://i.ytimg.com/vi/EWlDd7-Yvmk/maxresdefault.jpg"
     },
     {
-      "id": 8,
+      "id": "8",
       "title": "What Ancient Egypt Smelled Like",
       "desc": "Historians reconstruct the scents of the past.",
-      "thumbnailUrl": "https://i.ytimg.com/vi/RT9A6TVWefU/hqdefault.jpg",
+      "thumbnail": "https://i.ytimg.com/vi/RT9A6TVWefU/hqdefault.jpg",
       "createdAt": "2025-05-08T14:50:00Z",
-      "author": {
-        "id": 108,
+      "channel": {
         "name": "Layla Mahmoud",
         "avatar": "https://randomuser.me/api/portraits/women/18.jpg",
         "bio": "Cultural historian and museum curator."
-      }
+      },
+      "viewCount": 167000,
+      "duration": 1345,
+      "preview": "https://i.ytimg.com/vi/RT9A6TVWefU/maxresdefault.jpg"
     },
     {
-      "id": 9,
+      "id": "9",
       "title": "How Flamenco Took Over the World",
       "desc": "From Spanish roots to global stages — a story of rhythm and rebellion.",
-      "thumbnailUrl": "https://i.ytimg.com/vi/PBAQTGu7RKk/hqdefault.jpg",
+      "thumbnail": "https://i.ytimg.com/vi/PBAQTGu7RKk/hqdefault.jpg",
       "createdAt": "2025-05-09T16:10:00Z",
-      "author": {
-        "id": 109,
+      "channel": {
         "name": "Carlos Rivera",
         "avatar": "https://randomuser.me/api/portraits/men/12.jpg",
         "bio": "Musician and documentary filmmaker."
-      }
+      },
+      "viewCount": 198000,
+      "duration": 1456,
+      "preview": "https://i.ytimg.com/vi/PBAQTGu7RKk/maxresdefault.jpg"
     },
     {
-      "id": 10,
+      "id": "10",
       "title": "How to Brew the Perfect Cup of Tea",
       "desc": "Master timing, temperature, and tea types.",
-      "thumbnailUrl": "https://i.ytimg.com/vi/glbvLmUFrrs/hqdefault.jpg",
+      "thumbnail": "https://i.ytimg.com/vi/glbvLmUFrrs/hqdefault.jpg",
       "createdAt": "2025-05-10T11:05:00Z",
-      "author": {
-        "id": 110,
+      "channel": {
         "name": "Anna Patel",
         "avatar": "https://randomuser.me/api/portraits/women/10.jpg",
         "bio": "Tea sommelier and wellness blogger."
-      }
+      },
+      "viewCount": 78000,
+      "duration": 987,
+      "preview": "https://i.ytimg.com/vi/glbvLmUFrrs/maxresdefault.jpg"
     },
     {
-      "id": 11,
+      "id": "11",
       "title": "The Art of Bonsai in Modern Japan",
       "desc": "A deep dive into how ancient practices still shape modern aesthetics.",
-      "thumbnailUrl": "https://i.ytimg.com/vi/zRKyBpYnmfA/hqdefault.jpg",
+      "thumbnail": "https://i.ytimg.com/vi/zRKyBpYnmfA/hqdefault.jpg",
       "createdAt": "2025-05-11T12:00:00Z",
-      "author": {
-        "id": 201,
+      "channel": {
         "name": "Author A",
         "avatar": "https://randomuser.me/api/portraits/men/20.jpg",
         "bio": "Expert in Bonsai and cultural storytelling."
-      }
+      },
+      "viewCount": 134000,
+      "duration": 1234,
+      "preview": "https://i.ytimg.com/vi/zRKyBpYnmfA/maxresdefault.jpg"
     },
     {
-      "id": 12,
+      "id": "12",
       "title": "What Makes a Good Horror Film?",
       "desc": "Explore the psychology and storytelling behind cinematic fear.",
-      "thumbnailUrl": "https://i.ytimg.com/vi/ML6XNePkWaM/hqdefault.jpg",
+      "thumbnail": "https://i.ytimg.com/vi/ML6XNePkWaM/hqdefault.jpg",
       "createdAt": "2025-05-12T12:00:00Z",
-      "author": {
-        "id": 202,
+      "channel": {
         "name": "Author B",
         "avatar": "https://randomuser.me/api/portraits/women/21.jpg",
         "bio": "Expert in Horror and cultural storytelling."
-      }
+      },
+      "viewCount": 256000,
+      "duration": 1456,
+      "preview": "https://i.ytimg.com/vi/ML6XNePkWaM/maxresdefault.jpg"
     },
     {
-      "id": 13,
+      "id": "13",
       "title": "Traditional Dance of the Andes Mountains",
       "desc": "Experience the color, sound, and meaning of ancient rituals.",
-      "thumbnailUrl": "https://i.ytimg.com/vi/9zP6yRiGeFo/hqdefault.jpg",
+      "thumbnail": "https://i.ytimg.com/vi/9zP6yRiGeFo/hqdefault.jpg",
       "createdAt": "2025-05-13T12:00:00Z",
-      "author": {
-        "id": 203,
+      "channel": {
         "name": "Author C",
         "avatar": "https://randomuser.me/api/portraits/men/22.jpg",
         "bio": "Expert in Dance and cultural storytelling."
-      }
+      },
+      "viewCount": 189000,
+      "duration": 1345,
+      "preview": "https://i.ytimg.com/vi/9zP6yRiGeFo/maxresdefault.jpg"
     },
     {
-      "id": 14,
+      "id": "14",
       "title": "Why Do People Love True Crime?",
       "desc": "True crime documentaries and podcasts are booming — here's why.",
-      "thumbnailUrl": "https://i.ytimg.com/vi/uUPOdsG1PX0/hqdefault.jpg",
+      "thumbnail": "https://i.ytimg.com/vi/uUPOdsG1PX0/hqdefault.jpg",
       "createdAt": "2025-05-14T12:00:00Z",
-      "author": {
-        "id": 204,
+      "channel": {
         "name": "Author D",
         "avatar": "https://randomuser.me/api/portraits/women/23.jpg",
         "bio": "Expert in Crime and cultural storytelling."
-      }
+      },
+      "viewCount": 312000,
+      "duration": 1123,
+      "preview": "https://i.ytimg.com/vi/uUPOdsG1PX0/maxresdefault.jpg"
     },
     {
-      "id": 15,
+      "id": "15",
       "title": "Inside a Day at the Venice Carnival",
-      "desc": "Behind the masks and mysteries of Europe’s most elegant festival.",
-      "thumbnailUrl": "https://i.ytimg.com/vi/jaZ1Qtom1ns/hqdefault.jpg",
+      "desc": "Behind the masks and mysteries of Europe's most elegant festival.",
+      "thumbnail": "https://i.ytimg.com/vi/jaZ1Qtom1ns/hqdefault.jpg",
       "createdAt": "2025-05-15T12:00:00Z",
-      "author": {
-        "id": 205,
+      "channel": {
         "name": "Author E",
         "avatar": "https://randomuser.me/api/portraits/men/24.jpg",
         "bio": "Expert in Carnival and cultural storytelling."
-      }
-    },
-    {
-        "id": 16,
-        "title": "The Art of Bonsai in Modern Japan",
-        "desc": "A deep dive into how ancient practices still shape modern aesthetics.",
-        "thumbnailUrl": "https://i.ytimg.com/vi/zRKyBpYnmfA/hqdefault.jpg",
-        "createdAt": "2025-05-11T12:00:00Z",
-        "author": {
-          "id": 201,
-          "name": "Author A",
-          "avatar": "https://randomuser.me/api/portraits/men/20.jpg",
-          "bio": "Expert in Bonsai and cultural storytelling."
-        }
       },
-      {
-        "id": 17,
-        "title": "What Makes a Good Horror Film?",
-        "desc": "Explore the psychology and storytelling behind cinematic fear.",
-        "thumbnailUrl": "https://i.ytimg.com/vi/ML6XNePkWaM/hqdefault.jpg",
-        "createdAt": "2025-05-12T12:00:00Z",
-        "author": {
-          "id": 202,
-          "name": "Author B",
-          "avatar": "https://randomuser.me/api/portraits/women/21.jpg",
-          "bio": "Expert in Horror and cultural storytelling."
-        }
-      },
-      {
-        "id": 18,
-        "title": "Traditional Dance of the Andes Mountains",
-        "desc": "Experience the color, sound, and meaning of ancient rituals.",
-        "thumbnailUrl": "https://i.ytimg.com/vi/9zP6yRiGeFo/hqdefault.jpg",
-        "createdAt": "2025-05-13T12:00:00Z",
-        "author": {
-          "id": 203,
-          "name": "Author C",
-          "avatar": "https://randomuser.me/api/portraits/men/22.jpg",
-          "bio": "Expert in Dance and cultural storytelling."
-        }
-      },
-      {
-        "id": 19,
-        "title": "Why Do People Love True Crime?",
-        "desc": "True crime documentaries and podcasts are booming — here's why.",
-        "thumbnailUrl": "https://i.ytimg.com/vi/uUPOdsG1PX0/hqdefault.jpg",
-        "createdAt": "2025-05-14T12:00:00Z",
-        "author": {
-          "id": 204,
-          "name": "Author D",
-          "avatar": "https://randomuser.me/api/portraits/women/23.jpg",
-          "bio": "Expert in Crime and cultural storytelling."
-        }
-      },
-      {
-        "id": 20,
-        "title": "Inside a Day at the Venice Carnival",
-        "desc": "Behind the masks and mysteries of Europe’s most elegant festival.",
-        "thumbnailUrl": "https://i.ytimg.com/vi/jaZ1Qtom1ns/hqdefault.jpg",
-        "createdAt": "2025-05-15T12:00:00Z",
-        "author": {
-          "id": 205,
-          "name": "Author E",
-          "avatar": "https://randomuser.me/api/portraits/men/24.jpg",
-          "bio": "Expert in Carnival and cultural storytelling."
-        }
-      }
+      "viewCount": 223000,
+      "duration": 1456,
+      "preview": "https://i.ytimg.com/vi/jaZ1Qtom1ns/maxresdefault.jpg"
+    }
 ]
-   
-  
