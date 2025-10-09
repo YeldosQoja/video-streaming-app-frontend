@@ -1,7 +1,7 @@
 import "./styles.css";
 import videos from "@/videos.json";
-import { HomeVideo } from "@/components";
 import { useSidebar } from "@/components/sidebar";
+import { VideoCardGrid } from "@/components/video-card/grid";
 
 const Home = () => {
   const { open: sidebarOpen } = useSidebar();
@@ -14,9 +14,9 @@ const Home = () => {
       <section className="video-grid">
         {videos.map((video) => {
           return (
-            <HomeVideo
+            <VideoCardGrid
               key={video.id}
-              {...video}
+              video={video}
             />
           );
         })}
