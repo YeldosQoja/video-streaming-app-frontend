@@ -1,0 +1,27 @@
+.video-card-compact {
+    color: var(--on-surface-variant);
+    display: flex;
+    column-gap: 0.5rem;
+    font-size: 0.75rem;
+}
+
+.video-card-compact .thumbnail {
+    width: 175px;
+    height: 105px;
+}
+
+.video-card-compact .channel-name, .channel-name:visited {
+    color: inherit;
+}
+
+.video-card-compact .title {
+    color: var(--on-surface);
+    margin-block: 0;
+    font-size: var(--caption);
+    line-height: 1.5;
+}
+
+.video-card-compact .meta {
+    display: flex;
+    gap: 0.25rem;
+}

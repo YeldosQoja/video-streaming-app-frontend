@@ -2,8 +2,9 @@ import "./styles.css";
 import { useParams } from "react-router-dom";
 import { Share2, Star, ThumbsDown, ThumbsUp } from "lucide-react";
 import comments from "@/comments.json";
-import { Button, Comment, RecommendationVideo } from "@/components";
+import { Button, Comment } from "@/components";
 import videos from "@/videos.json";
+import { VideoCardCompact } from "@/components/video-card/compact";
 
 export default function Video() {
   const { videoId } = useParams();
@@ -107,7 +108,7 @@ export default function Video() {
         <ul className="video__related-list">
           {videos.map((video) => (
             <li key={video.id}>
-              <RecommendationVideo {...video} />
+              <VideoCardCompact video={video} />
             </li>
           ))}
         </ul>

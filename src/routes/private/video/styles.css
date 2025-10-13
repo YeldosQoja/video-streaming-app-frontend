@@ -151,7 +151,7 @@
 
 @media screen and (min-width: 64rem) {
   .video {
-    grid-template-columns: 3fr 1fr;
+    grid-template-columns: 3fr minmax(400px, 1fr);
     grid-template-rows: repeat(5, auto);
     grid-template-areas: 
     "player related"
@@ -159,5 +159,9 @@
     "details related"
     "description related"
     "comments related";
+  }
+
+  .video__related-list {
+    row-gap: 0.75rem;
   }
 }
