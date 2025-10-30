@@ -1,27 +1,39 @@
 .video-card-compact {
-    color: var(--on-surface-variant);
-    display: flex;
-    column-gap: 0.5rem;
-    font-size: 0.75rem;
+  display: block;
+  color: var(--on-surface-variant);
+  font-size: 0.75rem;
 }
 
 .video-card-compact .thumbnail {
-    width: 175px;
-    height: 105px;
+  width: none;
+  height: none;
 }
 
-.video-card-compact .channel-name, .channel-name:visited {
-    color: inherit;
+.video-card-compact .channel-name,
+.channel-name:visited {
+  color: inherit;
 }
 
 .video-card-compact .title {
-    color: var(--on-surface);
-    margin-block: 0;
-    font-size: var(--caption);
-    line-height: 1.5;
+  color: var(--on-surface);
+  margin-block: 0;
+  font-size: var(--caption);
+  line-height: 1.5;
 }
 
 .video-card-compact .meta {
+  display: flex;
+  gap: 0.25rem;
+}
+
+@media screen and (min-width: 72rem) {
+  .video-card-compact {
     display: flex;
-    gap: 0.25rem;
+    column-gap: 0.5rem;
+  }
+
+  .video-card-compact .thumbnail {
+    width: 175px;
+    height: 105px;
+  }
 }

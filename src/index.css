@@ -41,6 +41,7 @@
 
   --header-height: 4rem;
   --search-input-width: 28rem;
+  --sidebar-collapsed-width: 5rem;
 }
 
 *,
@@ -71,6 +72,10 @@ a {
 
 a:visited {
   color: #3ea6ff;
+}
+
+img {
+  display: block;
 }
 
 button {

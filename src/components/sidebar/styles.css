@@ -3,7 +3,7 @@
   position: fixed;
   left: 0;
   top: var(--header-height);
-  height: calc(100vh - var(--header-height));
+  bottom: 0;
   width: 5rem;
   background: var(--surface-container);
 }

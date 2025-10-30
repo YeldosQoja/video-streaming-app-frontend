@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import "./styles.css";
 import { SidebarProvider, Sidebar } from "@/components/sidebar";
 import { History, Home, TrendingUp } from "lucide-react";
@@ -24,11 +24,16 @@ const HOME_SIDEBAR_ITEMS = [
 ];
 
 export default function MainLayout() {
+  const location = useLocation();
+
+  const hideLayout = location.pathname.startsWith("/watch/");
+  // console.log({ location });
+
   return (
     <SidebarProvider>
       <DrawerProvider>
         <div className="main">
-          <Sidebar items={HOME_SIDEBAR_ITEMS} />
+          {!hideLayout && <Sidebar items={HOME_SIDEBAR_ITEMS} />}
           <Header />
           <Drawer items={HOME_SIDEBAR_ITEMS} />
           <Outlet />
