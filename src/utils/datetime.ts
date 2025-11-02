@@ -9,7 +9,5 @@ export const getRelativeTime = (date: string | Date) => dayjs(date).fromNow();
 
 export const formatDuration = (seconds: number) =>
   dayjs
-    .duration({
-      seconds,
-    })
+    .duration(seconds, "seconds")
     .format("HH:mm:ss");
