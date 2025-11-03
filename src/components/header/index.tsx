@@ -1,10 +1,16 @@
 import "./styles.css";
-import { MenuIcon, SearchIcon, UploadIcon, UserIcon } from "lucide-react";
+import {
+  ArrowLeft,
+  MenuIcon,
+  SearchIcon,
+  UploadIcon,
+  UserIcon,
+} from "lucide-react";
 import { Input } from "../input";
 import { useSidebar } from "../sidebar";
 import { useDrawer } from "../drawer";
 import { useIsMobile } from "@/hooks/useIsMobile";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 export const Header = () => {
@@ -12,6 +18,7 @@ export const Header = () => {
   const { openDrawer } = useDrawer();
   const isMobile = useIsMobile();
   const location = useLocation();
+  const [overlayOpen, setOverlayOpen] = useState(false);
 
   const handleMenuButtonClick = useCallback(() => {
     const parts = location.pathname.split("/");
@@ -22,6 +29,14 @@ export const Header = () => {
       toggleSidebar();
     }
   }, [isMobile, openDrawer, toggleSidebar, location]);
+
+  const handleSearchButtonClick = useCallback(() => {
+    setOverlayOpen(true);
+  }, []);
+
+  const handleCloseOverlay = useCallback(() => {
+    setOverlayOpen(false);
+  }, []);
 
   return (
     <header className="header">
@@ -44,6 +59,7 @@ export const Header = () => {
       <div className="header__center">
         <div className="header__search-bar">
           <Input
+            name="search"
             type="search"
             className="header__search-input"
           />
@@ -53,6 +69,11 @@ export const Header = () => {
         </div>
       </div>
       <div className="header__right">
+        <button
+          className="header__icon-btn"
+          onClick={handleSearchButtonClick}>
+          <SearchIcon />
+        </button>
         <a
           href=""
           className="header__upload-btn">
@@ -62,6 +83,25 @@ export const Header = () => {
         <button className="header__profile-btn">
           <UserIcon size={24} />
         </button>
+      </div>
+      <div
+        className="header__overlay"
+        data-state={overlayOpen ? "open" : "hidden"}>
+        <button
+          className="header__icon-btn"
+          onClick={handleCloseOverlay}>
+          <ArrowLeft size={28} />
+        </button>
+        <div className="header__search-bar">
+          <Input
+            name="search"
+            type="search"
+            className="header__search-input"
+          />
+          <button className="header__search-btn">
+            <SearchIcon />
+          </button>
+        </div>
       </div>
     </header>
   );

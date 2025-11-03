@@ -38,10 +38,11 @@
   --h4: 1rem;
   --body: 1rem;
   --caption: 0.875rem;
-
+  
   --header-height: 4rem;
   --search-input-width: 28rem;
   --sidebar-collapsed-width: 5rem;
+  --spacer: 1rem;
 }
 
 *,
