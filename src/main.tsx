@@ -8,8 +8,9 @@ import SignUp from "@/routes/public/auth/signup";
 import MainLayout from "@/routes/private";
 import Video from "@/routes/private/video";
 import Home from "@/routes/private/home";
-import ChannelLayout from "./routes/private/channel";
-import Dashboard from "./routes/private/channel/dashboard";
+import ChannelLayout from "@/routes/private/channel";
+import Dashboard from "@/routes/private/channel/dashboard";
+import Search from "@/routes/private/search";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
         path: "watch/:videoId",
         Component: Video,
       },
+      {
+        path: "results",
+        Component: Search,
+      }
     ],
   },
   {

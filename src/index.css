@@ -118,6 +118,8 @@ textarea,
   font-family: inherit;
 }
 
+/* utility classes */
+
 .hidden {
   display: none;
 }
@@ -125,4 +127,8 @@ textarea,
 .flex-row {
   display: flex;
   flex-direction: row;
+}
+
+.flow-content > * + * {
+  margin-top: var(--spacer);
 }
