@@ -53,10 +53,10 @@ const Upload = () => {
     videoInputRef.current?.click();
   };
 
-  const removeSelectedVideo = () => {
-    setSelectedVideo(null);
-    setSelectedThumbnail(null);
-  };
+  // const removeSelectedVideo = () => {
+  //   setSelectedVideo(null);
+  //   setSelectedThumbnail(null);
+  // };
 
   const pickThumbnailFromComputer: React.ChangeEventHandler<
     HTMLInputElement
