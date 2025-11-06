@@ -10,8 +10,8 @@ import { Input } from "../input";
 import { useSidebar } from "../sidebar";
 import { useDrawer } from "../drawer";
 import { useIsMobile } from "@/hooks/useIsMobile";
-import { useCallback, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export const Header = () => {
   const { toggleSidebar } = useSidebar();
@@ -19,6 +19,30 @@ export const Header = () => {
   const isMobile = useIsMobile();
   const location = useLocation();
   const [overlayOpen, setOverlayOpen] = useState(false);
+  const searchInputRef = useRef<HTMLInputElement>(null);
+  const [isSearchInputFocused, setIsSearchInputFocused] = useState(false);
+  const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const navigateToSearchResults = useCallback(() => {
+    navigate(`results?query=${searchQuery}`);
+  }, [navigate, searchQuery]);
+
+  const handleEnterKeyDown = useCallback(
+    (event: KeyboardEvent) => {
+      if (event.key === "Enter" && isSearchInputFocused) {
+        navigateToSearchResults();
+      }
+    },
+    [isSearchInputFocused, navigateToSearchResults]
+  );
+
+  useEffect(() => {
+    document.addEventListener("keydown", handleEnterKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleEnterKeyDown);
+    };
+  }, [handleEnterKeyDown]);
 
   const handleMenuButtonClick = useCallback(() => {
     const parts = location.pathname.split("/");
@@ -59,11 +83,15 @@ export const Header = () => {
       <div className="header__center">
         <div className="header__search-bar">
           <Input
+            ref={searchInputRef}
             name="search"
             type="search"
             className="header__search-input"
+            onChange={(event) => setSearchQuery(event.target.value)}
+            onFocus={() => setIsSearchInputFocused(true)}
+            onBlur={() => setIsSearchInputFocused(false)}
           />
-          <button className="header__search-btn">
+          <button className="header__search-btn" onClick={navigateToSearchResults}>
             <SearchIcon />
           </button>
         </div>

@@ -1,15 +1,16 @@
 import "./styles.css";
-import { InputHTMLAttributes } from "react";
+import { forwardRef, InputHTMLAttributes } from "react";
 
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
   dummy?: string;
 }
 
-export const Input = ({ className, ...rest }: Props) => {
+export const Input = forwardRef<HTMLInputElement, Props>(({ className, ...rest }, ref) => {
   return (
     <input
+      ref={ref}
       className={`input ${className ?? ""}`}
       {...rest}
     />
   );
-};
+});

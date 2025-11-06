@@ -2,6 +2,7 @@ import "./styles.css";
 import videos from "@/videos.json";
 import { useSidebar } from "@/components/sidebar";
 import { VideoCardGrid } from "@/components/video-card/grid";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   const { open: sidebarOpen } = useSidebar();
@@ -14,10 +15,12 @@ const Home = () => {
       <section className="video-grid">
         {videos.map((video) => {
           return (
-            <VideoCardGrid
-              key={video.id}
-              video={video}
-            />
+            <Link to={`watch/${video.id}`}>
+              <VideoCardGrid
+                key={video.id}
+                video={video}
+              />
+            </Link>
           );
         })}
       </section>
