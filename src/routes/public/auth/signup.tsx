@@ -1,10 +1,28 @@
 import "./styles.css";
+import { useCallback, useState } from "react";
+import type { FormEventHandler } from "react";
 import { Link } from "react-router-dom";
 import { Label } from "@/components/label";
 import { Input } from "@/components/input";
 import { Button } from "@/components/button";
+import { useSignup } from "@/api";
 
 export default function SignUp() {
+  const { mutate, isPending, isSuccess, isError } = useSignup();
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const submitCredentials: FormEventHandler<HTMLFormElement> = useCallback(
+    (e) => {
+      e.preventDefault();
+      mutate({ firstName, lastName, email, username, password });
+    },
+    [firstName, lastName, email, username, password, mutate]
+  );
+
   return (
     <>
       <div className="auth-form-container">
@@ -13,9 +31,8 @@ export default function SignUp() {
         </div>
         <div className="auth-body">
           <form
-            action="#"
-            method="POST"
-            className="auth-form">
+            className="auth-form"
+            onSubmit={submitCredentials}>
             <div>
               <Label htmlFor="firstName">First name</Label>
               <div>
@@ -23,6 +40,9 @@ export default function SignUp() {
                   type="text"
                   name="firstName"
                   id="firstName"
+                  required
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
                 />
               </div>
             </div>
@@ -33,23 +53,40 @@ export default function SignUp() {
                   type="text"
                   name="lastName"
                   id="lastName"
+                  required
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
                 />
               </div>
             </div>
-
             <div>
-              <Label htmlFor="email">Username</Label>
+              <Label htmlFor="email">Email</Label>
+              <div>
+                <Input
+                  id="email"
+                  name="email"
+                  type="email"
+                  required
+                  autoComplete="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
+            </div>
+            <div>
+              <Label htmlFor="username">Username</Label>
               <div>
                 <Input
                   id="username"
                   name="username"
                   type="text"
                   required
-                  autoComplete="email"
+                  autoComplete="username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
                 />
               </div>
             </div>
-
             <div>
               <Label htmlFor="password">Password</Label>
               <div>
@@ -58,11 +95,12 @@ export default function SignUp() {
                   name="password"
                   type="password"
                   required
-                  autoComplete="current-password"
+                  autoComplete="new-password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
             </div>
-
             <div>
               <Button
                 type="submit"
