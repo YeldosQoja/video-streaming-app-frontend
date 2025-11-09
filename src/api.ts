@@ -31,7 +31,7 @@ window.fetch = async (...args) => {
     // console.log('Response data:', data);
 
     const clonedResponse = response.clone();
-    const data = await clonedResponse.json();
+    const data = await response.json();
     console.log("Response data:", data);
     return clonedResponse;
   } catch (error) {
@@ -53,15 +53,13 @@ export const useSignin = () =>
     mutationFn: async ({ username, password }: SigninRequestData) => {
       const response = await fetch("auth/signin", {
         method: "POST",
+        credentials: "include",
         body: JSON.stringify({ username, password }),
       });
-
       if (!response.ok) {
         throw new Error("Response status: " + response.status);
       }
-
-      const result = await response.json();
-      return result;
+      return await response.json();
     },
   });
 
@@ -80,12 +78,24 @@ export const useSignup = () =>
         method: "POST",
         body: JSON.stringify(data),
       });
-
       if (!response.ok) {
         throw new Error("Response status: " + response.status);
       }
-
-      const result = await response.json();
-      return result;
+      return await response.json();
     },
+  });
+
+export const useAuth = () =>
+  useQuery({
+    queryKey: ["auth"],
+    queryFn: async () => {
+      const response = await fetch("auth/me", {
+        credentials: "include",
+      });
+      if (!response.ok) {
+        throw new Error("Not authenticated!");
+      }
+      return await response.json();
+    },
+    retry: false,
   });

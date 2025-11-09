@@ -13,11 +13,16 @@ import Dashboard from "@/routes/private/channel/dashboard";
 import Search from "@/routes/private/search";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "./api";
+import { ProtectedRoute } from "./routes/ProtectedRoute";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    Component: MainLayout,
+    element: (
+      <ProtectedRoute>
+        <MainLayout />
+      </ProtectedRoute>
+    ),
     children: [
       {
         index: true,
@@ -35,7 +40,11 @@ const router = createBrowserRouter([
   },
   {
     path: "channel/:channelId",
-    Component: ChannelLayout,
+    element: (
+      <ProtectedRoute>
+        <ChannelLayout />
+      </ProtectedRoute>
+    ),
     children: [
       {
         index: true,
