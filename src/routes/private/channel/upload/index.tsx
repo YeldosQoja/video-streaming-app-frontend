@@ -4,6 +4,7 @@ import { Checkbox, Dialog, Tabs } from "radix-ui";
 import { Check, EyeOff, Globe, Image, Lock, UploadIcon } from "lucide-react";
 import { Button, Input, Label, Select } from "@/components";
 import { SelectedFileCard } from "@/components/selected-file-card";
+import { useStartMulipartUpload } from "@/api";
 
 const categories = [
   { id: 1, label: "Entertainment" },
@@ -25,16 +26,14 @@ const categories = [
 
 const Upload = () => {
   const [uploadDialogOpen, setUploadDialogOpen] = useState(false);
-
   const videoInputRef = useRef<HTMLInputElement | null>(null);
   const [selectedVideo, setSelectedVideo] = useState<File | null>(null);
-
   const [selectedCategory, setSelectedCategory] = useState<string>("5");
-
   const [selectedThumbnail, setSelectedThumbnail] = useState<File | null>(null);
   const thumbnailInputRef = useRef<HTMLInputElement | null>(null);
-
   const [selectedPrivacy, setSelectedPrivacy] = useState<string>("public");
+
+  const { mutate: startUpload } = useStartMulipartUpload();
 
   const handleUploadFile = () => {
     setUploadDialogOpen(true);
@@ -73,6 +72,15 @@ const Upload = () => {
 
   const removeThumbnail = () => {
     setSelectedThumbnail(null);
+  };
+
+  const uploadVideo = () => {
+    if (selectedVideo === null) {
+      return;
+    }
+    startUpload({
+      videoFile: selectedVideo,
+    });
   };
 
   return (
@@ -287,6 +295,7 @@ const Upload = () => {
               <Button
                 title="Upload"
                 className="upload-btn"
+                onClick={uploadVideo}
               />
             </>
           )}
