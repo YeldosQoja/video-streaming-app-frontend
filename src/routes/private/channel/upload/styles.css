@@ -1,14 +1,27 @@
 .upload-content {
+  --bg: var(--surface-container-low);
   position: fixed;
   left: 20vw;
   top: 10vh;
   right: 20vw;
   bottom: 10vh;
-  background: var(--surface-container-low);
+  background: var(--bg);
   display: flex;
   flex-direction: column;
   padding: 1rem;
   border-radius: 1.125rem;
+
+  div[role="tabpanel"] {
+    flex: 1;
+    overflow-y: auto;
+  }
+}
+
+.upload-content > div {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow-y: hidden;
 }
 
 .upload-overlay {
@@ -76,6 +89,7 @@
 .upload-content {
   .tabs-list {
     display: flex;
+    flex: none;
     background: var(--surface-container-high);
     border-radius: 0.375rem;
     margin-bottom: 1rem;
@@ -95,6 +109,14 @@
 
   .tab-trigger[data-state="active"] {
     background: var(--surface-container);
+  }
+
+  > .upload-btn {
+    flex: none;
+    margin-block: 0.75rem;
+    width: 100%;
+    font-size: 1rem;
+    padding-block: 0.5rem;
   }
 }
 
@@ -120,13 +142,6 @@
 .textarea__desc:focus {
   outline: 2px solid var(--primary);
   outline-offset: -2px;
-}
-
-.upload-content .upload-btn {
-  margin-block: 0.75rem;
-  width: 100%;
-  font-size: 1rem;
-  padding-block: 0.5rem;
 }
 
 .upload-dropzone__video {

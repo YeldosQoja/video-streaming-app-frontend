@@ -5,6 +5,7 @@ import { Check, EyeOff, Globe, Image, Lock, UploadIcon } from "lucide-react";
 import { Button, Input, Label, Select } from "@/components";
 import { SelectedFileCard } from "@/components/selected-file-card";
 import { useStartMulipartUpload } from "@/api";
+import { RadioGroup } from "@/components/radio-group";
 
 const categories = [
   { id: 1, label: "Entertainment" },
@@ -28,10 +29,13 @@ const Upload = () => {
   const [uploadDialogOpen, setUploadDialogOpen] = useState(false);
   const videoInputRef = useRef<HTMLInputElement | null>(null);
   const [selectedVideo, setSelectedVideo] = useState<File | null>(null);
-  const [selectedCategory, setSelectedCategory] = useState<string>("5");
-  const [selectedThumbnail, setSelectedThumbnail] = useState<File | null>(null);
+  const [category, setCategory] = useState<string>("5");
+  const [thumbnail, setThumbnail] = useState<File | null>(null);
   const thumbnailInputRef = useRef<HTMLInputElement | null>(null);
-  const [selectedPrivacy, setSelectedPrivacy] = useState<string>("public");
+  const [privacy, setPrivacy] = useState<string>("public");
+  const [playlist, setPlaylist] = useState<string>();
+  const [isForKids, setIsForKids] = useState<string>();
+  const [ageRestriction, setAgeRestriction] = useState<string>();
 
   const { mutate: startUpload } = useStartMulipartUpload();
 
@@ -54,7 +58,7 @@ const Upload = () => {
 
   // const removeSelectedVideo = () => {
   //   setSelectedVideo(null);
-  //   setSelectedThumbnail(null);
+  //   setThumbnail(null);
   // };
 
   const pickThumbnailFromComputer: React.ChangeEventHandler<
@@ -62,7 +66,7 @@ const Upload = () => {
   > = (event) => {
     const file = event.target.files?.[0];
     if (file) {
-      setSelectedThumbnail(file);
+      setThumbnail(file);
     }
   };
 
@@ -71,7 +75,7 @@ const Upload = () => {
   };
 
   const removeThumbnail = () => {
-    setSelectedThumbnail(null);
+    setThumbnail(null);
   };
 
   const uploadVideo = () => {
@@ -170,6 +174,21 @@ const Upload = () => {
                         placeholder="Tell viewers about your video"
                       />
                     </div>
+                    <div>
+                      <Label htmlFor="playlist">Playlist</Label>
+                      <Select
+                        options={[
+                          { label: "My playlists", value: "1" },
+                          { label: "Fun", value: "2" },
+                          { label: "Programming", value: "3" },
+                        ]}
+                        selectedValue={playlist}
+                        onValueChange={setPlaylist}
+                        triggerStyle={{
+                          width: "50%",
+                        }}
+                      />
+                    </div>
                     <div className="flex-row">
                       <div>
                         <Label htmlFor="category">Category</Label>
@@ -178,8 +197,8 @@ const Upload = () => {
                             ...c,
                             value: c.id.toString(),
                           }))}
-                          selectedValue={selectedCategory}
-                          onValueChange={setSelectedCategory}
+                          selectedValue={category}
+                          onValueChange={setCategory}
                         />
                       </div>
                       <div>
@@ -192,6 +211,37 @@ const Upload = () => {
                         />
                       </div>
                     </div>
+                    <div>
+                      <span>Audience</span>
+                      <RadioGroup
+                        items={[
+                          { id: "for-kids", value: "Yes, it's for kids" },
+                          {
+                            id: "not-for-kids",
+                            value: "No, it's not for kids",
+                          },
+                        ]}
+                        value={isForKids}
+                        onValueChange={setIsForKids}
+                      />
+                    </div>
+                    <div>
+                      <span>Age restriction</span>
+                      <RadioGroup
+                        items={[
+                          {
+                            id: "age-restriction",
+                            value: "Yes, restrict my video to viewers over 18",
+                          },
+                          {
+                            id: "no-age-restriction",
+                            value: "No, allow access to anyone",
+                          },
+                        ]}
+                        value={ageRestriction}
+                        onValueChange={setAgeRestriction}
+                      />
+                    </div>
                   </form>
                 </Tabs.Content>
                 <Tabs.Content value="thumbnail">
@@ -199,7 +249,7 @@ const Upload = () => {
                   <p className="upload-text-secondary">
                     Upload a custom thumbnail that represents your video
                   </p>
-                  {!selectedThumbnail ? (
+                  {!thumbnail ? (
                     <div className="upload-dropzone">
                       <button
                         onClick={handleSelectThumbnail}
@@ -223,8 +273,8 @@ const Upload = () => {
                     </div>
                   ) : (
                     <SelectedFileCard
-                      filename={selectedThumbnail.name}
-                      size={selectedThumbnail.size}
+                      filename={thumbnail.name}
+                      size={thumbnail.size}
                       renderIcon={() => <Image className="file-card__icon" />}
                       style="outlined"
                       iconContainerStyle="gray"
@@ -253,8 +303,8 @@ const Upload = () => {
                           icon: <Lock size={18} />,
                         },
                       ]}
-                      selectedValue={selectedPrivacy}
-                      onValueChange={setSelectedPrivacy}
+                      selectedValue={privacy}
+                      onValueChange={setPrivacy}
                     />
                   </div>
                   <fieldset
