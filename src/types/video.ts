@@ -1,6 +1,6 @@
 import { Channel } from "./channel";
 
-export interface Video {
+export type Video = {
   id: string;
   title: string;
   desc: string;
@@ -10,4 +10,19 @@ export interface Video {
   createdAt: string | Date;
   duration: number;
   preview: string;
+};
+
+export interface UploadVideoForm {
+  title: string;
+  desc: string;
+  videoId: string;
+  thumbnailId: string;
+  playlist: string;
+  category: string;
+  isForKids: boolean;
+  isAgeRestricted: boolean;
+  privacy: string;
+  allowComments: boolean;
+  allowDownloads: boolean;
+  tags: string;
 }

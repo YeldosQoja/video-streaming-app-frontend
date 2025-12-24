@@ -1,11 +1,13 @@
 import "./styles.css";
 import React, { useRef, useState } from "react";
 import { Checkbox, Dialog, Tabs } from "radix-ui";
+import { useForm } from "react-hook-form";
 import { Check, EyeOff, Globe, Image, Lock, UploadIcon } from "lucide-react";
 import { Button, Input, Label, Select } from "@/components";
 import { SelectedFileCard } from "@/components/selected-file-card";
-import { useStartMulipartUpload } from "@/api";
+import { useCreateVideo, useStartMulipartUpload } from "@/api";
 import { RadioGroup } from "@/components/radio-group";
+import { UploadVideoForm } from "@/types/video";
 
 const categories = [
   { id: 1, label: "Entertainment" },
@@ -37,7 +39,24 @@ const Upload = () => {
   const [isForKids, setIsForKids] = useState<string>();
   const [ageRestriction, setAgeRestriction] = useState<string>();
 
+  const { mutate: createVideo } = useCreateVideo();
   const { mutate: startUpload } = useStartMulipartUpload();
+
+  const { register, handleSubmit } = useForm<UploadVideoForm>({
+    defaultValues: {
+      title: "",
+      desc: "",
+      videoId: "",
+      thumbnailId: "",
+      playlist: "",
+      category: "",
+      isForKids: false,
+      isAgeRestricted: false,
+      allowComments: false,
+      allowDownloads: false,
+      tags: "",
+    },
+  });
 
   const handleUploadFile = () => {
     setUploadDialogOpen(true);
@@ -85,6 +104,11 @@ const Upload = () => {
     startUpload({
       videoFile: selectedVideo,
     });
+  };
+
+  const submitVideo = (values: UploadVideoForm) => {
+    console.log({ values });
+    createVideo(values);
   };
 
   return (
@@ -155,23 +179,25 @@ const Upload = () => {
                 <Tabs.Content value="details">
                   <form
                     id="upload-form"
-                    className="upload-form">
+                    className="upload-form"
+                    onSubmit={handleSubmit(submitVideo)}>
                     <div>
                       <Label htmlFor="title">Title</Label>
                       <Input
                         id="title"
                         type="text"
                         defaultValue={selectedVideo.name}
+                        {...register("title")}
                       />
                     </div>
                     <div>
                       <Label htmlFor="description">Description</Label>
                       <textarea
                         id="description"
-                        name="description"
                         maxLength={5000}
                         className="textarea__desc"
                         placeholder="Tell viewers about your video"
+                        {...register("desc")}
                       />
                     </div>
                     <div>
@@ -187,6 +213,7 @@ const Upload = () => {
                         triggerStyle={{
                           width: "50%",
                         }}
+                        {...register("playlist")}
                       />
                     </div>
                     <div className="flex-row">
@@ -199,15 +226,16 @@ const Upload = () => {
                           }))}
                           selectedValue={category}
                           onValueChange={setCategory}
+                          {...register("category")}
                         />
                       </div>
                       <div>
                         <Label htmlFor="tags">Tags</Label>
                         <Input
                           id="tags"
-                          name="tags"
                           type="text"
                           placeholder="Add tags separated by commas"
+                          {...register("tags")}
                         />
                       </div>
                     </div>
@@ -223,6 +251,7 @@ const Upload = () => {
                         ]}
                         value={isForKids}
                         onValueChange={setIsForKids}
+                        {...register("isForKids")}
                       />
                     </div>
                     <div>
@@ -240,6 +269,7 @@ const Upload = () => {
                         ]}
                         value={ageRestriction}
                         onValueChange={setAgeRestriction}
+                        {...register("isAgeRestricted")}
                       />
                     </div>
                   </form>
@@ -305,6 +335,7 @@ const Upload = () => {
                       ]}
                       selectedValue={privacy}
                       onValueChange={setPrivacy}
+                      {...register("privacy")}
                     />
                   </div>
                   <fieldset
@@ -315,7 +346,8 @@ const Upload = () => {
                       <Checkbox.Root
                         className="upload-checkbox-root"
                         form="upload-form"
-                        id="allow-comments">
+                        id="allow-comments"
+                        {...register("allowComments")}>
                         <Checkbox.Indicator asChild>
                           <Check
                             size={18}
@@ -329,7 +361,8 @@ const Upload = () => {
                       <Checkbox.Root
                         className="upload-checkbox-root"
                         form="upload-form"
-                        id="allow-downloads">
+                        id="allow-downloads"
+                        {...register("allowDownloads")}>
                         <Checkbox.Indicator asChild>
                           <Check
                             size={18}

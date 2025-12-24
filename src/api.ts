@@ -1,5 +1,6 @@
 import { QueryClient, useQuery, useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
+import { UploadVideoForm } from "./types/video";
 
 const originalFetch = window.fetch;
 
@@ -129,7 +130,7 @@ export const useStartMulipartUpload = () => {
     mutationFn: async ({
       videoFile,
     }: StartMulipartUploadRequest): Promise<StartMulipartUploadResponse> => {
-      const response = await fetch("videos/start-multipart-upload", {
+      const response = await fetch("upload/multipart/start", {
         method: "POST",
         body: JSON.stringify({
           contentType: videoFile.type,
@@ -185,7 +186,7 @@ type CompleteMulipartUploadRequest = {
 export const useCompleteMulipartUpload = () => {
   return useMutation({
     mutationFn: async (data: CompleteMulipartUploadRequest) => {
-      const response = await fetch("videos/complete-multipart-upload", {
+      const response = await fetch("upload/multipart/complete", {
         method: "POST",
         body: JSON.stringify(data),
       });
@@ -230,7 +231,7 @@ type AbortMulipartUploadRequest = {
 export const useAbortMulipartUpload = () => {
   return useMutation({
     mutationFn: async (data: AbortMulipartUploadRequest) => {
-      const response = await fetch("videos/abort-multipart-upload", {
+      const response = await fetch("upload/multipart/abort", {
         method: "POST",
         body: JSON.stringify(data),
       });
@@ -241,3 +242,20 @@ export const useAbortMulipartUpload = () => {
     },
   });
 };
+
+
+
+export const useCreateVideo = () => {
+  return useMutation({
+    mutationFn: async (values: UploadVideoForm) => {
+      const response = await fetch("videos/create", {
+        method: "POST",
+        body: JSON.stringify(values),
+      });
+      if (!response.ok) {
+        throw new Error("something gone wrong");
+      }
+      return await response.json();
+    }
+  });
+}
