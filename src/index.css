@@ -118,6 +118,14 @@ textarea,
   font-family: inherit;
 }
 
+fieldset {
+  border-width: 0;
+}
+
+fieldset, legend {
+  padding: 0;
+}
+
 /* utility classes */
 
 .hidden {
