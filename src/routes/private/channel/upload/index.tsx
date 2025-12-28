@@ -1,13 +1,14 @@
 import "./styles.css";
 import React, { useRef, useState } from "react";
-import { Checkbox, Dialog, Tabs } from "radix-ui";
-import { useForm } from "react-hook-form";
-import { Check, EyeOff, Globe, Image, Lock, UploadIcon } from "lucide-react";
+import { Dialog, Tabs } from "radix-ui";
+import { useForm, Controller } from "react-hook-form";
+import { EyeOff, Globe, Image, Lock, UploadIcon } from "lucide-react";
 import { Button, Input, Label, Select } from "@/components";
 import { SelectedFileCard } from "@/components/selected-file-card";
 import { useCreateVideo, useStartMulipartUpload } from "@/api";
 import { RadioGroup } from "@/components/radio-group";
 import { UploadVideoForm } from "@/types/video";
+import { Checkbox } from "@/components/checkbox";
 
 const categories = [
   { id: 1, label: "Entertainment" },
@@ -31,18 +32,13 @@ const Upload = () => {
   const [uploadDialogOpen, setUploadDialogOpen] = useState(false);
   const videoInputRef = useRef<HTMLInputElement | null>(null);
   const [selectedVideo, setSelectedVideo] = useState<File | null>(null);
-  const [category, setCategory] = useState<string>("5");
   const [thumbnail, setThumbnail] = useState<File | null>(null);
   const thumbnailInputRef = useRef<HTMLInputElement | null>(null);
-  const [privacy, setPrivacy] = useState<string>("public");
-  const [playlist, setPlaylist] = useState<string>();
-  const [isForKids, setIsForKids] = useState<string>();
-  const [ageRestriction, setAgeRestriction] = useState<string>();
 
   const { mutate: createVideo } = useCreateVideo();
   const { mutate: startUpload } = useStartMulipartUpload();
 
-  const { register, handleSubmit } = useForm<UploadVideoForm>({
+  const { register, control, handleSubmit } = useForm<UploadVideoForm>({
     defaultValues: {
       title: "",
       desc: "",
@@ -50,8 +46,8 @@ const Upload = () => {
       thumbnailId: "",
       playlist: "",
       category: "",
-      isForKids: false,
-      isAgeRestricted: false,
+      audience: "",
+      ageRestriction: "",
       allowComments: false,
       allowDownloads: false,
       tags: "",
@@ -185,48 +181,53 @@ const Upload = () => {
                       <Label htmlFor="title">Title</Label>
                       <Input
                         id="title"
-                        type="text"
-                        defaultValue={selectedVideo.name}
-                        {...register("title")}
+                        {...register("title", { required: true, max: 60 })}
                       />
                     </div>
                     <div>
                       <Label htmlFor="description">Description</Label>
                       <textarea
                         id="description"
-                        maxLength={5000}
                         className="textarea__desc"
                         placeholder="Tell viewers about your video"
-                        {...register("desc")}
+                        {...register("desc", { required: true, max: 1000 })}
                       />
                     </div>
                     <div>
                       <Label htmlFor="playlist">Playlist</Label>
-                      <Select
-                        options={[
-                          { label: "My playlists", value: "1" },
-                          { label: "Fun", value: "2" },
-                          { label: "Programming", value: "3" },
-                        ]}
-                        selectedValue={playlist}
-                        onValueChange={setPlaylist}
-                        triggerStyle={{
-                          width: "50%",
-                        }}
-                        {...register("playlist")}
+                      <Controller
+                        name="playlist"
+                        control={control}
+                        render={({ field }) => (
+                          <Select
+                            {...field}
+                            options={[
+                              { label: "My playlists", value: "1" },
+                              { label: "Fun", value: "2" },
+                              { label: "Programming", value: "3" },
+                            ]}
+                            triggerStyle={{
+                              width: "50%",
+                            }}
+                          />
+                        )}
                       />
                     </div>
                     <div className="flex-row">
                       <div>
                         <Label htmlFor="category">Category</Label>
-                        <Select
-                          options={categories.map((c) => ({
-                            ...c,
-                            value: c.id.toString(),
-                          }))}
-                          selectedValue={category}
-                          onValueChange={setCategory}
-                          {...register("category")}
+                        <Controller
+                          name="category"
+                          control={control}
+                          render={({ field }) => (
+                            <Select
+                              {...field}
+                              options={categories.map((c) => ({
+                                ...c,
+                                value: c.id.toString(),
+                              }))}
+                            />
+                          )}
                         />
                       </div>
                       <div>
@@ -241,35 +242,47 @@ const Upload = () => {
                     </div>
                     <div>
                       <span>Audience</span>
-                      <RadioGroup
-                        items={[
-                          { id: "for-kids", value: "Yes, it's for kids" },
-                          {
-                            id: "not-for-kids",
-                            value: "No, it's not for kids",
-                          },
-                        ]}
-                        value={isForKids}
-                        onValueChange={setIsForKids}
-                        {...register("isForKids")}
+                      <Controller
+                        name="audience"
+                        control={control}
+                        render={({ field }) => (
+                          <RadioGroup
+                            {...field}
+                            items={[
+                              {
+                                value: "for-kids",
+                                label: "Yes, it's for kids",
+                              },
+                              {
+                                value: "not-for-kids",
+                                label: "No, it's not for kids",
+                              },
+                            ]}
+                          />
+                        )}
                       />
                     </div>
                     <div>
                       <span>Age restriction</span>
-                      <RadioGroup
-                        items={[
-                          {
-                            id: "age-restriction",
-                            value: "Yes, restrict my video to viewers over 18",
-                          },
-                          {
-                            id: "no-age-restriction",
-                            value: "No, allow access to anyone",
-                          },
-                        ]}
-                        value={ageRestriction}
-                        onValueChange={setAgeRestriction}
-                        {...register("isAgeRestricted")}
+                      <Controller
+                        name="ageRestriction"
+                        control={control}
+                        render={({ field }) => (
+                          <RadioGroup
+                            {...field}
+                            items={[
+                              {
+                                value: "age-restriction",
+                                label:
+                                  "Yes, restrict my video to viewers over 18",
+                              },
+                              {
+                                value: "no-age-restriction",
+                                label: "No, allow access to anyone",
+                              },
+                            ]}
+                          />
+                        )}
                       />
                     </div>
                   </form>
@@ -312,66 +325,66 @@ const Upload = () => {
                     />
                   )}
                 </Tabs.Content>
-                <Tabs.Content value="settings">
-                  <div className="upload-privacy-field">
+                <Tabs.Content
+                  value="settings"
+                  className="flow-content">
+                  <div>
                     <Label htmlFor="privacy">Privacy</Label>
-                    <Select
-                      options={[
-                        {
-                          label: "Public - Anyone can watch",
-                          value: "public",
-                          icon: <Globe size={18} />,
-                        },
-                        {
-                          label: "Unlisted - Only people with link",
-                          value: "unlisted",
-                          icon: <EyeOff size={18} />,
-                        },
-                        {
-                          label: "Private - Only you can watch",
-                          value: "private",
-                          icon: <Lock size={18} />,
-                        },
-                      ]}
-                      selectedValue={privacy}
-                      onValueChange={setPrivacy}
-                      {...register("privacy")}
+                    <Controller
+                      name="privacy"
+                      control={control}
+                      render={({ field }) => (
+                        <Select
+                          {...field}
+                          options={[
+                            {
+                              label: "Public - Anyone can watch",
+                              value: "public",
+                              icon: <Globe size={18} />,
+                            },
+                            {
+                              label: "Unlisted - Only people with link",
+                              value: "unlisted",
+                              icon: <EyeOff size={18} />,
+                            },
+                            {
+                              label: "Private - Only you can watch",
+                              value: "private",
+                              icon: <Lock size={18} />,
+                            },
+                          ]}
+                        />
+                      )}
                     />
                   </div>
-                  <fieldset
-                    className="interaction-settings__fieldset"
-                    form="upload-form">
+                  <fieldset form="upload-form">
                     <legend>Interaction Settings</legend>
-                    <div className="upload-checkbox-field">
-                      <Checkbox.Root
-                        className="upload-checkbox-root"
-                        form="upload-form"
-                        id="allow-comments"
-                        {...register("allowComments")}>
-                        <Checkbox.Indicator asChild>
-                          <Check
-                            size={18}
-                            className="checkbox-indicator-icon"
-                          />
-                        </Checkbox.Indicator>
-                      </Checkbox.Root>
-                      <label htmlFor="allow-comments">Allow comments</label>
-                    </div>
-                    <div className="upload-checkbox-field">
-                      <Checkbox.Root
-                        className="upload-checkbox-root"
-                        form="upload-form"
-                        id="allow-downloads"
-                        {...register("allowDownloads")}>
-                        <Checkbox.Indicator asChild>
-                          <Check
-                            size={18}
-                            className="checkbox-indicator-icon"
-                          />
-                        </Checkbox.Indicator>
-                      </Checkbox.Root>
-                      <label htmlFor="allow-downloads">Allow downloads</label>
-                    </div>
+                    <Controller
+                      name="allowComments"
+                      control={control}
+                      render={({ field }) => (
+                        <Checkbox
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                          form="upload-form"
+                          id="allow-comments"
+                          label="Allow comments"
+                        />
+                      )}
+                    />
+                    <Controller
+                      name="allowDownloads"
+                      control={control}
+                      render={({ field }) => (
+                        <Checkbox
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                          form="upload-form"
+                          id="allow-downloads"
+                          label="Allow downloads"
+                        />
+                      )}
+                    />
                   </fieldset>
                 </Tabs.Content>
               </Tabs.Root>

@@ -4,34 +4,35 @@ import { Label } from "../label";
 
 type RadioGroupItem = {
   value: string;
-  id: string;
+  label: string;
 };
 
 type Props = {
   items: RadioGroupItem[];
   value?: string;
-  onValueChange?: (value: string) => void;
+  onChange?: (value: string) => void;
 };
 
-export const RadioGroup = ({ items, value, onValueChange }: Props) => {
-  const handleValueChange = (value: string) => {
-    if (onValueChange) onValueChange(value);
+export const RadioGroup = ({ items, value, onChange }: Props) => {
+  const handleChange = (value: string) => {
+    console.log({ value });
+    if (onChange) onChange(value);
   };
 
   return (
     <RadixRadioGroup.Root
       className="radio-group"
       value={value}
-      onValueChange={handleValueChange}>
-      {items.map(({ id, value }) => (
-        <div key={id}>
+      onValueChange={handleChange}>
+      {items.map(({ label, value }) => (
+        <div key={value}>
           <RadixRadioGroup.Item
             value={value}
-            id={id}
+            id={value}
             className="item">
             <RadixRadioGroup.Indicator className="indicator" />
           </RadixRadioGroup.Item>
-          <Label htmlFor={id}>{value}</Label>
+          <Label htmlFor={value}>{label}</Label>
         </div>
       ))}
     </RadixRadioGroup.Root>

@@ -19,8 +19,8 @@ export interface UploadVideoForm {
   thumbnailId: string;
   playlist: string;
   category: string;
-  isForKids: boolean;
-  isAgeRestricted: boolean;
+  audience: string;
+  ageRestriction: string;
   privacy: string;
   allowComments: boolean;
   allowDownloads: boolean;

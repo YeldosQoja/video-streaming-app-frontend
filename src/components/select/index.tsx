@@ -1,7 +1,7 @@
-import type { CSSProperties, ReactNode, SelectHTMLAttributes } from "react";
+import "./styles.css";
+import type { ReactNode, CSSProperties } from "react";
 import { Select as RadixSelect } from "radix-ui";
 import { Check, ChevronDown } from "lucide-react";
-import "./styles.css";
 
 type Option = {
   value: string;
@@ -9,20 +9,25 @@ type Option = {
   icon?: ReactNode;
 };
 
-interface Props extends SelectHTMLAttributes<HTMLSelectElement> {
+type Props = {
   options: Option[];
-  selectedValue?: string;
-  onValueChange?: (value: string) => void;
+  value?: string;
+  onChange?: (value: string) => void;
   triggerStyle?: CSSProperties;
-}
+};
 
-export const Select = ({ selectedValue, options, onValueChange, triggerStyle }: Props) => {
-  const selectedOption = options.find((o) => o.value === selectedValue);
+export const Select = ({
+  value,
+  options,
+  onChange,
+  triggerStyle,
+}: Props) => {
+  const selectedOption = options.find((o) => o.value === value);
 
   return (
     <RadixSelect.Root
-      value={selectedValue}
-      onValueChange={onValueChange}>
+      value={value}
+      onValueChange={onChange}>
       <RadixSelect.Trigger
         className="select-trigger"
         style={triggerStyle}
@@ -61,9 +66,7 @@ export const Select = ({ selectedValue, options, onValueChange, triggerStyle }: 
                   />
                 </RadixSelect.ItemIndicator>
                 {o.icon}
-                <RadixSelect.ItemText>
-                  {o.label}
-                </RadixSelect.ItemText>
+                <RadixSelect.ItemText>{o.label}</RadixSelect.ItemText>
               </RadixSelect.Item>
             ))}
           </RadixSelect.Viewport>
