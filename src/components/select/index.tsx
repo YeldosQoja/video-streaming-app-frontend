@@ -14,6 +14,7 @@ type Props = {
   value?: string;
   onChange?: (value: string) => void;
   triggerStyle?: CSSProperties;
+  placeholder?: string;
 };
 
 export const Select = ({
@@ -21,6 +22,7 @@ export const Select = ({
   options,
   onChange,
   triggerStyle,
+  placeholder,
 }: Props) => {
   const selectedOption = options.find((o) => o.value === value);
 
@@ -29,16 +31,11 @@ export const Select = ({
       value={value}
       onValueChange={onChange}>
       <RadixSelect.Trigger
+        value={selectedOption?.label}
         className="select-trigger"
         style={triggerStyle}
         aria-label="Select option">
-        <RadixSelect.Value asChild>
-          <span className="label">
-            {selectedOption === undefined
-              ? "Select an option"
-              : selectedOption.label}
-          </span>
-        </RadixSelect.Value>
+        <RadixSelect.Value placeholder={placeholder} />
         <RadixSelect.Icon asChild>
           <ChevronDown
             className="icon"

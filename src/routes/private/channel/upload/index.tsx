@@ -38,21 +38,22 @@ const Upload = () => {
   const { mutate: createVideo } = useCreateVideo();
   const { mutate: startUpload } = useStartMulipartUpload();
 
-  const { register, control, handleSubmit } = useForm<UploadVideoForm>({
-    defaultValues: {
-      title: "",
-      desc: "",
-      videoId: "",
-      thumbnailId: "",
-      playlist: "",
-      category: "",
-      audience: "",
-      ageRestriction: "",
-      allowComments: false,
-      allowDownloads: false,
-      tags: "",
-    },
-  });
+  const { register, control, handleSubmit, setValue } =
+    useForm<UploadVideoForm>({
+      defaultValues: {
+        title: "",
+        desc: "",
+        videoId: "",
+        thumbnailId: "",
+        playlist: "",
+        category: "",
+        audience: "",
+        ageRestriction: "",
+        allowComments: false,
+        allowDownloads: false,
+        tags: "",
+      },
+    });
 
   const handleUploadFile = () => {
     setUploadDialogOpen(true);
@@ -64,6 +65,7 @@ const Upload = () => {
     const file = event.target.files?.[0];
     if (file) {
       setSelectedVideo(file);
+      setValue("title", file.name.split(".")[0]);
     }
   };
 
@@ -209,6 +211,7 @@ const Upload = () => {
                             triggerStyle={{
                               width: "50%",
                             }}
+                            placeholder="Select playlist"
                           />
                         )}
                       />
@@ -226,6 +229,7 @@ const Upload = () => {
                                 ...c,
                                 value: c.id.toString(),
                               }))}
+                              placeholder="Select category"
                             />
                           )}
                         />
@@ -353,6 +357,7 @@ const Upload = () => {
                               icon: <Lock size={18} />,
                             },
                           ]}
+                          placeholder="Select privacy level"
                         />
                       )}
                     />
