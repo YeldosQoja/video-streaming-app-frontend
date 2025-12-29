@@ -1,6 +1,6 @@
 :root[data-theme="dark"] {
   --surface: #0b0f19;
-  --primary: #007bff;
+  --primary: #4154ef;
   --secondary-clr: #7c3aed;
   --surface-clr: #1e293b;
   --on-surface: #f9fafb;
@@ -105,12 +105,10 @@ h3 {
 input,
 textarea,
 .select-trigger {
-  border-width: 0;
+  border: 0.75px solid var(--outline);
   border-radius: 0.375rem;
   padding-inline: 0.75rem;
   background: var(--surface);
-  outline: 0.75px solid var(--outline);
-  outline-offset: -0.75px;
   color: var(--on-surface);
   line-height: inherit;
   font-size: inherit;

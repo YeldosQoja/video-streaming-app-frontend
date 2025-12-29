@@ -71,8 +71,8 @@
   background: var(--surface-container);
   padding-inline: 1.5rem;
   border-radius: 0 1rem 1rem 0;
-  outline: 0.75px solid var(--outline);
-  outline-offset: -0.75px;
+  border: 0.75px solid var(--outline);
+  margin-left: -0.75px;
 }
 
 .header__upload-btn {

@@ -9,6 +9,7 @@ import { useCreateVideo, useStartMulipartUpload } from "@/api";
 import { RadioGroup } from "@/components/radio-group";
 import { UploadVideoForm } from "@/types/video";
 import { Checkbox } from "@/components/checkbox";
+import { Progress } from "@/components/progress";
 
 const categories = [
   { id: 1, label: "Entertainment" },
@@ -34,6 +35,7 @@ const Upload = () => {
   const [selectedVideo, setSelectedVideo] = useState<File | null>(null);
   const [thumbnail, setThumbnail] = useState<File | null>(null);
   const thumbnailInputRef = useRef<HTMLInputElement | null>(null);
+  const [uploadProgress, setUploadProgress] = useState(60);
 
   const { mutate: createVideo } = useCreateVideo();
   const { mutate: startUpload } = useStartMulipartUpload();
@@ -156,7 +158,9 @@ const Upload = () => {
             </>
           ) : (
             <>
-              <Tabs.Root defaultValue="details">
+              <Tabs.Root
+                className="upload__tabs"
+                defaultValue="details">
                 <Tabs.List className="tabs-list">
                   <Tabs.Trigger
                     value="details"
@@ -393,11 +397,20 @@ const Upload = () => {
                   </fieldset>
                 </Tabs.Content>
               </Tabs.Root>
-              <Button
-                title="Upload"
-                className="upload-btn"
-                onClick={uploadVideo}
-              />
+              <div className="upload__footer">
+                <div className="upload__progress">
+                  <Progress
+                    max={100}
+                    value={uploadProgress}
+                  />
+                  <span className="upload__progress-label">{`Uploading... ${uploadProgress}%`}</span>
+                </div>
+                <Button
+                  title="Upload"
+                  className="upload-btn"
+                  onClick={uploadVideo}
+                />
+              </div>
             </>
           )}
         </Dialog.Content>
