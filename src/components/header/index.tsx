@@ -1,10 +1,11 @@
 import "./styles.css";
 import {
   ArrowLeft,
+  BellIcon,
   MenuIcon,
   SearchIcon,
   UploadIcon,
-  UserIcon,
+  UserCircle,
 } from "lucide-react";
 import { Input } from "../input";
 import { useSidebar } from "../sidebar";
@@ -43,6 +44,8 @@ export const Header = () => {
       document.removeEventListener("keydown", handleEnterKeyDown);
     };
   }, [handleEnterKeyDown]);
+
+  const handleNotificationClick = useCallback(() => {}, []);
 
   const handleMenuButtonClick = useCallback(() => {
     const parts = location.pathname.split("/");
@@ -91,25 +94,44 @@ export const Header = () => {
             onFocus={() => setIsSearchInputFocused(true)}
             onBlur={() => setIsSearchInputFocused(false)}
           />
-          <button className="header__search-btn" onClick={navigateToSearchResults}>
-            <SearchIcon />
+          <button
+            className="header__search-btn"
+            onClick={navigateToSearchResults}>
+            <SearchIcon
+              size={22}
+              strokeWidth={1.75}
+            />
           </button>
         </div>
       </div>
       <div className="header__right">
         <button
-          className="header__icon-btn"
+          className="header__icon-btn header__mobile-btn"
           onClick={handleSearchButtonClick}>
-          <SearchIcon />
+          <SearchIcon
+            size={22}
+            strokeWidth={1.75}
+          />
         </button>
         <a
           href=""
           className="header__upload-btn">
           Upload
-          <UploadIcon />
+          <UploadIcon
+            size={20}
+            strokeWidth={1.75}
+          />
         </a>
-        <button className="header__profile-btn">
-          <UserIcon size={24} />
+        <button
+          className="header__icon-btn"
+          onClick={handleNotificationClick}>
+          <BellIcon size={24} />
+        </button>
+        <button className="header__icon-btn">
+          <UserCircle
+            size={28}
+            strokeWidth={1.5}
+          />
         </button>
       </div>
       <div
@@ -118,16 +140,24 @@ export const Header = () => {
         <button
           className="header__icon-btn"
           onClick={handleCloseOverlay}>
-          <ArrowLeft size={28} />
+          <ArrowLeft size={24} />
         </button>
         <div className="header__search-bar">
           <Input
             name="search"
             type="search"
             className="header__search-input"
+            onChange={(event) => setSearchQuery(event.target.value)}
+            onFocus={() => setIsSearchInputFocused(true)}
+            onBlur={() => setIsSearchInputFocused(false)}
           />
-          <button className="header__search-btn">
-            <SearchIcon />
+          <button
+            className="header__search-btn"
+            onClick={navigateToSearchResults}>
+            <SearchIcon
+              size={22}
+              strokeWidth={1.75}
+            />
           </button>
         </div>
       </div>

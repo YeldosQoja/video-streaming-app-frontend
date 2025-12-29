@@ -9,10 +9,10 @@
 }
 
 :root {
-  --primary: rgb(0, 123, 255);
+  --primary: #4154ef;
   --on-primary: #ffffff;
-  --primary-container: rgb(0, 123, 255, 0.1);
-  --on-primary-container: rgb(0, 123, 255);
+  --primary-container: #4155ef22;
+  --on-primary-container: #4154ef;
 
   --secondary: rgb(16, 185, 129);
   --on-secondary: #ffffff;
@@ -39,7 +39,7 @@
   --body: 1rem;
   --caption: 0.875rem;
   
-  --header-height: 4rem;
+  --header-height: 4.25rem;
   --search-input-width: 28rem;
   --sidebar-collapsed-width: 5rem;
   --spacer: 1rem;
@@ -109,8 +109,8 @@ textarea,
   border-radius: 0.375rem;
   padding: 0.375rem 0.75rem;
   background: var(--surface);
-  outline: 1px solid var(--outline);
-  outline-offset: -1px;
+  outline: 0.75px solid var(--outline);
+  outline-offset: -0.75px;
   color: var(--on-surface);
   line-height: inherit;
   font-size: inherit;
