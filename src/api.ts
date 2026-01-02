@@ -1,6 +1,13 @@
 import { QueryClient, useQuery, useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { UploadVideoForm } from "./types/video";
+import { MultipartUploadDTO, UploadPart, UploadURL } from "./types/upload";
+import {
+  abortMultipartUpload,
+  completeMultipartUpload,
+  startMultipartUpload,
+  uploadPart,
+} from "./api/upload";
 
 const originalFetch = window.fetch;
 
@@ -11,15 +18,14 @@ window.fetch = async (...args) => {
     const headers = new Headers();
     headers.append("Content-Type", "application/json");
 
-    const url = resource.toString().includes("https")
-      ? resource
-      : import.meta.env.VITE_API_BASE_URL + resource;
-
-    const response = await originalFetch(url, {
-      headers,
-      credentials: "include",
-      ...config,
-    });
+    const response = await originalFetch(
+      import.meta.env.VITE_API_BASE_URL + resource,
+      {
+        headers,
+        credentials: "include",
+        ...config,
+      }
+    );
 
     // Response interception logic
     // Example: Global error handling
@@ -35,10 +41,8 @@ window.fetch = async (...args) => {
     // console.log('Response data:', data);
 
     const clonedResponse = response.clone();
-    if (response.headers.get("Content-Type") === "application/json") {
-      const data = await response.json();
-      console.log("Response data:", data);
-    }
+    const data = await response.json();
+    console.log("Response data:", data);
     return clonedResponse;
   } catch (error) {
     // Error interception logic
@@ -111,130 +115,76 @@ export const useAuth = () =>
     retry: false,
   });
 
-type StartMulipartUploadRequest = {
-  videoFile: File;
-};
-
-type StartMulipartUploadResponse = {
-  uploadId: string;
-  videoId: string;
-  urls: { url: string; partNumber: number }[];
-};
-
-export const useStartMulipartUpload = () => {
+export const useUpload = () => {
+  const { mutateAsync: startUpload } = useStartMulipartUpload();
   const { mutateAsync: uploadPart } = useUploadPart();
   const { mutateAsync: completeUpload } = useCompleteMulipartUpload();
-  const { mutateAsync: abortUpload } = useAbortMulipartUpload();
 
   return useMutation({
-    mutationFn: async ({
-      videoFile,
-    }: StartMulipartUploadRequest): Promise<StartMulipartUploadResponse> => {
-      const response = await fetch("upload/multipart/start", {
-        method: "POST",
-        body: JSON.stringify({
-          contentType: videoFile.type,
-          fileSize: videoFile.size,
-        }),
+    mutationFn: async (videoFile: File) => {
+      const { urls, videoId, uploadId } = await startUpload(videoFile);
+      const bytes = await videoFile.arrayBuffer();
+      const partSize = 20_000_000;
+
+      const uploadPromises = urls.map((url, idx: number) =>
+        uploadPart({
+          ...url,
+          body: bytes.slice(idx * partSize, idx * partSize + partSize),
+        })
+      );
+
+      const results = await Promise.all(uploadPromises);
+
+      await completeUpload({
+        uploadId,
+        videoId,
+        parts: results,
       });
-      if (!response.ok) {
-        throw new Error("Not authenticated!");
-      }
-      return await response.json();
-    },
-    onSuccess: async (data, { videoFile }) => {
-      const { urls, videoId, uploadId } = data;
-      try {
-        const bytes = await videoFile.arrayBuffer();
-        const partSize = 20_000_000;
-
-        const promises = urls.map(({ url, partNumber }, idx: number) =>
-          uploadPart({
-            url,
-            body: bytes.slice(idx * partSize, idx * partSize + partSize),
-            partNumber,
-          })
-        );
-
-        const results = await Promise.all(promises);
-
-        console.log({ results });
-
-        const response = await completeUpload({
-          contentType: videoFile.type,
-          uploadId,
-          videoId,
-          parts: results,
-        });
-
-        console.log({ response });
-      } catch (err) {
-        abortUpload({ uploadId, videoId });
-        console.log(err);
-      }
     },
   });
 };
 
-type CompleteMulipartUploadRequest = {
-  contentType: string;
-  uploadId: string;
-  videoId: string;
-  parts: { PartNumber: number; ETag: string }[];
-};
+export const useStartMulipartUpload = () =>
+  useMutation({
+    mutationFn: async (videoFile: File) => {
+      const response = await startMultipartUpload(videoFile);
+      if (!response.ok) {
+        throw new Error("Not authenticated!");
+      }
+      return (await response.json()) as MultipartUploadDTO & {
+        urls: UploadURL[];
+      };
+    },
+  });
 
 export const useCompleteMulipartUpload = () => {
   return useMutation({
-    mutationFn: async (data: CompleteMulipartUploadRequest) => {
-      const response = await fetch("upload/multipart/complete", {
-        method: "POST",
-        body: JSON.stringify(data),
-      });
+    mutationFn: async (data: MultipartUploadDTO & { parts: UploadPart[] }) => {
+      const response = await completeMultipartUpload(data);
       if (!response.ok) {
         throw new Error("Not authenticated!");
       }
       return await response.json();
     },
   });
-};
-
-type UploadPartRequest = {
-  url: string;
-  body: ArrayBuffer | Uint8Array<ArrayBuffer>;
-  partNumber: number;
 };
 
 export const useUploadPart = () =>
   useMutation({
-    mutationFn: async ({ url, body, partNumber }: UploadPartRequest) => {
-      const response = await fetch(url, {
-        method: "PUT",
-        body,
-      });
-      if (!response.ok) {
-        throw new Error("Not authenticated!");
-      }
-
-      const ETag = response.headers.get("Etag") as string;
-      return { ETag, PartNumber: partNumber };
+    mutationFn: async (
+      data: UploadURL & { body: ArrayBuffer | Uint8Array<ArrayBuffer> }
+    ) => {
+      return await uploadPart(data);
     },
     onSuccess: (data, variables) => {
       console.log(`Request to ${variables.url} was successful!`, data);
     },
   });
 
-type AbortMulipartUploadRequest = {
-  uploadId: string;
-  videoId: string;
-};
-
 export const useAbortMulipartUpload = () => {
   return useMutation({
-    mutationFn: async (data: AbortMulipartUploadRequest) => {
-      const response = await fetch("upload/multipart/abort", {
-        method: "POST",
-        body: JSON.stringify(data),
-      });
+    mutationFn: async (data: MultipartUploadDTO) => {
+      const response = await abortMultipartUpload(data);
       if (!response.ok) {
         throw new Error("Not authenticated!");
       }
@@ -242,8 +192,6 @@ export const useAbortMulipartUpload = () => {
     },
   });
 };
-
-
 
 export const useCreateVideo = () => {
   return useMutation({
@@ -256,6 +204,6 @@ export const useCreateVideo = () => {
         throw new Error("something gone wrong");
       }
       return await response.json();
-    }
+    },
   });
-}
+};
