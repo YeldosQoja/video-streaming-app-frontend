@@ -8,12 +8,13 @@ import SignUp from "@/routes/public/auth/signup";
 import MainLayout from "@/routes/private";
 import Video from "@/routes/private/video";
 import Home from "@/routes/private/home";
-import ChannelLayout from "@/routes/private/channel";
-import Dashboard from "@/routes/private/channel/dashboard";
+import CreatorLayout from "@/routes/private/creator";
+import Dashboard from "@/routes/private/creator/dashboard";
 import Search from "@/routes/private/search";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "./api";
 import { ProtectedRoute } from "./routes/ProtectedRoute";
+import { Channel } from "./routes/private/channel";
 
 const router = createBrowserRouter([
   {
@@ -36,13 +37,17 @@ const router = createBrowserRouter([
         path: "results",
         Component: Search,
       },
+      {
+        path: ":channelName",
+        Component: Channel,
+      }
     ],
   },
   {
-    path: "channel/:channelId",
+    path: "creator/:channelId",
     element: (
       <ProtectedRoute>
-        <ChannelLayout />
+        <CreatorLayout />
       </ProtectedRoute>
     ),
     children: [

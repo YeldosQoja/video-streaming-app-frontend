@@ -1,7 +1,29 @@
 .channel {
-    background: var(--surface);
 }
 
-.outlet-container {
-    margin-left: 240px;
+.channel__cover {
+  width: 100%;
+  aspect-ratio: 4 / 1;
+  background: gold;
+}
+
+.header-top {
+  display: flex;
+  align-items: center;
+  column-gap: 1rem;
+
+  .channel__links {
+    display: none;
+  }
+
+  .channel__sub-btn {
+    display: none;
+  }
+}
+
+.channel__avatar {
+  width: 90px;
+  height: 90px;
+  border-radius: 9999px;
+  background: aquamarine;
 }

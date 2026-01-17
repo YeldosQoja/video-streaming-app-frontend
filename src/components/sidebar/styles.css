@@ -8,7 +8,7 @@
   background: var(--surface-container);
 }
 
-@media screen and (min-width: 40rem) {
+@media screen and (min-width: 50rem) {
   .sidebar {
     display: block;
   }
