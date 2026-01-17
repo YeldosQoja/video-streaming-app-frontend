@@ -110,12 +110,12 @@
   .tab-trigger[data-state="active"] {
     background: var(--surface-container);
   }
+}
 
-  > .upload-btn {
-    margin: 0.75rem 0;
-    font-size: 1rem;
-    padding-block: 0.5rem;
-  }
+.save-btn {
+  margin: 0.75rem 0;
+  font-size: 1rem;
+  padding-block: 0.5rem;
 }
 
 .upload-form {

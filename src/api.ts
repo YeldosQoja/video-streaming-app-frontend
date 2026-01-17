@@ -115,10 +115,37 @@ export const useAuth = () =>
     retry: false,
   });
 
+const MAX_UPLOAD_RETRIES = 3;
+
 export const useUpload = () => {
   const { mutateAsync: startUpload } = useStartMulipartUpload();
-  const { mutateAsync: uploadPart } = useUploadPart();
   const { mutateAsync: completeUpload } = useCompleteMulipartUpload();
+  const uploadPartMutation = useMutation({
+    mutationFn: async (
+      data: UploadURL & { body: ArrayBuffer | Uint8Array<ArrayBuffer> }
+    ) => {
+      return await uploadPart(data);
+    },
+    onSuccess: (data, variables) => {
+      console.log(`Request to ${variables.url} was successful!`, data);
+    },
+    retry: false,
+  });
+
+  const uploadWithRetry = async (
+    data: UploadURL & { body: ArrayBuffer | Uint8Array<ArrayBuffer> }
+  ) => {
+    for (let attempt = 1; attempt <= MAX_UPLOAD_RETRIES; attempt++) {
+      try {
+        const response = await uploadPartMutation.mutateAsync(data);
+        return response;
+      } catch (err) {
+        if (attempt === MAX_UPLOAD_RETRIES) {
+          throw err;
+        }
+      }
+    }
+  };
 
   return useMutation({
     mutationFn: async (videoFile: File) => {
@@ -127,7 +154,7 @@ export const useUpload = () => {
       const partSize = 20_000_000;
 
       const uploadPromises = urls.map((url, idx: number) =>
-        uploadPart({
+        uploadWithRetry({
           ...url,
           body: bytes.slice(idx * partSize, idx * partSize + partSize),
         })
@@ -157,6 +184,11 @@ export const useStartMulipartUpload = () =>
     },
   });
 
+// Here goes a condition on which upload part should be retried
+
+// After exausting all retry count or terminal failure
+// we should cancel all other parts uploading
+
 export const useCompleteMulipartUpload = () => {
   return useMutation({
     mutationFn: async (data: MultipartUploadDTO & { parts: UploadPart[] }) => {
@@ -168,18 +200,6 @@ export const useCompleteMulipartUpload = () => {
     },
   });
 };
-
-export const useUploadPart = () =>
-  useMutation({
-    mutationFn: async (
-      data: UploadURL & { body: ArrayBuffer | Uint8Array<ArrayBuffer> }
-    ) => {
-      return await uploadPart(data);
-    },
-    onSuccess: (data, variables) => {
-      console.log(`Request to ${variables.url} was successful!`, data);
-    },
-  });
 
 export const useAbortMulipartUpload = () => {
   return useMutation({

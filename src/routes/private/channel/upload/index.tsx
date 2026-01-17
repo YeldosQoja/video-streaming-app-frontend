@@ -5,7 +5,7 @@ import { useForm, Controller } from "react-hook-form";
 import { EyeOff, Globe, Image, Lock, UploadIcon } from "lucide-react";
 import { Button, Input, Label, Select } from "@/components";
 import { SelectedFileCard } from "@/components/selected-file-card";
-import { useCreateVideo, useStartMulipartUpload } from "@/api";
+import { useCreateVideo, useUpload } from "@/api";
 import { RadioGroup } from "@/components/radio-group";
 import { UploadVideoForm } from "@/types/video";
 import { Checkbox } from "@/components/checkbox";
@@ -38,7 +38,7 @@ const Upload = () => {
   const [uploadProgress, setUploadProgress] = useState(60);
 
   const { mutate: createVideo } = useCreateVideo();
-  const { mutate: startUpload } = useStartMulipartUpload();
+  const { mutate: startUpload } = useUpload();
 
   const { register, control, handleSubmit, setValue } =
     useForm<UploadVideoForm>({
@@ -97,13 +97,11 @@ const Upload = () => {
     setThumbnail(null);
   };
 
-  const uploadVideo = () => {
+  const saveVideo = () => {
     if (selectedVideo === null) {
       return;
     }
-    startUpload({
-      videoFile: selectedVideo,
-    });
+    startUpload(selectedVideo);
   };
 
   const submitVideo = (values: UploadVideoForm) => {
@@ -406,9 +404,9 @@ const Upload = () => {
                   <span className="upload__progress-label">{`Uploading... ${uploadProgress}%`}</span>
                 </div>
                 <Button
-                  title="Upload"
-                  className="upload-btn"
-                  onClick={uploadVideo}
+                  title="Save"
+                  className="save-btn"
+                  onClick={saveVideo}
                 />
               </div>
             </>
