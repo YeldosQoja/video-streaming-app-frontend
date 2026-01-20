@@ -10,14 +10,14 @@ export const Channel = () => {
         src=""
         alt="Channel cover image"
       />
-      <div className="channel__header">
+      <div className="channel__header flow-content">
         <div className="header-top">
           <img
             className="channel__avatar"
             src=""
             alt=""
           />
-          <div className="header__info">
+          <div className="header__info flow-content">
             <h1 className="channel__name">Beyond coding</h1>
             <div className="channel__info">
               <strong className="channel__handle">@BeyondCoding</strong>
@@ -42,7 +42,7 @@ export const Channel = () => {
             />
           </div>
         </div>
-        <div className="header-bottom">
+        <div className="header-bottom flow-content">
           <div className="channel__links">
             <a href="">linkedin.com/in/yeldos-kozhabay/</a>
             <span className="more-links-btn">and 3 more links</span>

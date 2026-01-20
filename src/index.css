@@ -38,7 +38,7 @@
   --h4: 1rem;
   --body: 1rem;
   --caption: 0.875rem;
-  
+
   --header-height: 4.25rem;
   --search-input-width: 28rem;
   --sidebar-collapsed-width: 5rem;
@@ -120,7 +120,8 @@ fieldset {
   border-width: 0;
 }
 
-fieldset, legend {
+fieldset,
+legend {
   padding: 0;
 }
 
@@ -136,5 +137,5 @@ fieldset, legend {
 }
 
 .flow-content > * + * {
-  margin-top: var(--spacer);
+  margin-top: var(--gap, var(--spacer));
 }
