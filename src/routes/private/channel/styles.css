@@ -73,3 +73,38 @@
 .channel__sub-btn {
   margin-inline: auto;
 }
+
+.channel__tabs {
+  position: relative;
+}
+
+.channel__tab-btn {
+  background: transparent;
+  color: var(--on-surface-variant);
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0.75rem 0;
+}
+
+.channel__tab-btn[data-state="active"] {
+  color: var(--on-surface);
+}
+
+.tab-underline {
+  position: absolute;
+  background: var(--on-surface);
+  width: 50px;
+  height: 2px;
+  margin: 0;
+  left: 0;
+  bottom: 0;
+  transition: transform 300ms;
+}
+
+.channel__tab-btn:first-child[data-state="active"] ~ .tab-underline {
+  transform: translateX(0);
+}
+
+.channel__tab-btn:nth-child(2)[data-state="active"] ~ .tab-underline {
+  transform: translateX(calc(50px + var(--spacer)));
+}

@@ -54,9 +54,18 @@ export const Channel = () => {
         </div>
       </div>
       <Tabs.Root>
-        <Tabs.List>
-          <Tabs.Trigger value="videos">Videos</Tabs.Trigger>
-          <Tabs.Trigger value="playlists">Playlists</Tabs.Trigger>
+        <Tabs.List className="channel__tabs flow-content--inline">
+          <Tabs.Trigger
+            className="channel__tab-btn"
+            value="videos">
+            Videos
+          </Tabs.Trigger>
+          <Tabs.Trigger
+            className="channel__tab-btn"
+            value="playlists">
+            Playlists
+          </Tabs.Trigger>
+          <div className="tab-underline"></div>
         </Tabs.List>
         <Tabs.Content value="videos"></Tabs.Content>
         <Tabs.Content value="playlists"></Tabs.Content>

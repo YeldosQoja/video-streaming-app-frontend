@@ -139,3 +139,7 @@ legend {
 .flow-content > * + * {
   margin-top: var(--gap, var(--spacer));
 }
+
+.flow-content--inline > * + * {
+  margin-left: var(--gap, var(--spacer));
+}
