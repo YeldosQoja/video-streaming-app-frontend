@@ -1,8 +1,47 @@
 import "./styles.css";
-import { Button } from "@/components";
+import { useCallback, useLayoutEffect, useRef } from "react";
 import { Tabs } from "radix-ui";
+import { Button } from "@/components";
+
+const TAB_ITEMS = [
+  {
+    value: "videos",
+    label: "Videos",
+  },
+  {
+    value: "playlists",
+    label: "Playlists",
+  },
+];
 
 export const Channel = () => {
+  const tabListRef = useRef<HTMLDivElement>(null);
+
+  const handleTabChange = useCallback(() => {
+    console.log("tab changed");
+    const tabList = tabListRef.current;
+    if (!tabList) return;
+
+    const activeTab = tabList.querySelector(
+      '.channel__tab-btn[data-state="active"]'
+    );
+
+    const tabUnderline = tabList.querySelector(
+      ".tab-underline"
+    ) as HTMLDivElement;
+
+    if (!activeTab) return;
+    if (!tabUnderline) return;
+
+    const { offsetLeft, offsetWidth } = activeTab as HTMLButtonElement;
+    tabUnderline.style.transform = `translateX(${offsetLeft}px)`;
+    tabUnderline.style.width = `${offsetWidth}px`;
+  }, []);
+
+  useLayoutEffect(() => {
+    handleTabChange();
+  }, [handleTabChange]);
+
   return (
     <div className="channel">
       <img
@@ -53,18 +92,20 @@ export const Channel = () => {
           />
         </div>
       </div>
-      <Tabs.Root>
-        <Tabs.List className="channel__tabs flow-content--inline">
-          <Tabs.Trigger
-            className="channel__tab-btn"
-            value="videos">
-            Videos
-          </Tabs.Trigger>
-          <Tabs.Trigger
-            className="channel__tab-btn"
-            value="playlists">
-            Playlists
-          </Tabs.Trigger>
+      <Tabs.Root
+        defaultValue="videos"
+        onValueChange={handleTabChange}>
+        <Tabs.List
+          ref={tabListRef}
+          className="channel__tabs flow-content--inline">
+          {TAB_ITEMS.map((tab) => (
+            <Tabs.Trigger
+              key={tab.value}
+              className="channel__tab-btn"
+              value={tab.value}>
+              {tab.label}
+            </Tabs.Trigger>
+          ))}
           <div className="tab-underline"></div>
         </Tabs.List>
         <Tabs.Content value="videos"></Tabs.Content>
