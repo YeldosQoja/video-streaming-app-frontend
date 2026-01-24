@@ -1,16 +1,11 @@
 import "./styles.css";
 import videos from "@/videos.json";
-import { useSidebar } from "@/components/sidebar";
 import { VideoCardGrid } from "@/components/video-card/grid";
 import { Link } from "react-router-dom";
 
 const Home = () => {
-  const { open: sidebarOpen } = useSidebar();
-
   return (
-    <div
-      className="home"
-      data-sidebar-state={sidebarOpen ? "expanded" : "collapsed"}>
+    <div className="home">
       <h1>Browse</h1>
       <section className="video-grid">
         {videos.map((video) => {

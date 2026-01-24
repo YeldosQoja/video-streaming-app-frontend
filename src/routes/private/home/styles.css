@@ -15,25 +15,9 @@
   }
 }
 
-@media screen and (min-width: 50rem) {
-  .home {
-    margin-left: 5rem;
-  }
-}
-
 @media screen and (min-width: 64rem) {
   .video-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-}
-
-@media screen and (min-width: 80rem) {
-  .home[data-sidebar-state="expanded"] {
-    margin-left: 15rem;
-  }
-
-  .home[data-sidebar-state="collapsed"] {
-    margin-left: 5rem;
   }
 }
 
