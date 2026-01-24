@@ -1,10 +1,39 @@
-.channel {
+/* resets */
+h1,
+h2,
+p {
+  margin-block: 0;
+}
+
+.channel .container {
+  max-width: 30rem;
+  margin: 0 auto;
+  margin-top: var(--header-height);
+}
+
+@media screen and (min-width: 42rem) {
+  .channel .container {
+    max-width: 42rem;
+  }
+}
+
+@media screen and (min-width: 60rem) {
+  .channel .container {
+    max-width: 60rem;
+  }
+}
+
+@media screen and (min-width: 72rem) {
+  .channel .container {
+    max-width: 72rem;
+  }
 }
 
 .channel__cover {
   width: 100%;
-  aspect-ratio: 4 / 1;
+  aspect-ratio: 6 / 1;
   background: gold;
+  border-radius: 1.125rem;
 }
 
 .channel__header {
@@ -26,6 +55,13 @@
   }
 }
 
+.channel__header .header-bottom {
+  display: block;
+  .channel__sub-btn {
+    width: 100%;
+  }
+}
+
 .header__info {
   overflow: hidden;
 }
@@ -38,10 +74,6 @@
   .channel__handle {
     color: var(--on-surface);
   }
-}
-
-.channel__name {
-  margin-block: 0;
 }
 
 .channel__desc {
@@ -71,7 +103,29 @@
 }
 
 .channel__sub-btn {
-  margin-inline: auto;
+  border-radius: 999px;
+  padding: 0.5rem 1rem;
+}
+
+@media screen and (min-width: 54rem) {
+  .channel__header .header-top {
+    .channel__links {
+      display: block;
+    }
+
+    .channel__sub-btn {
+      display: inline-block;
+    }
+  }
+
+  .channel__header .header-bottom {
+    display: none;
+  }
+
+  .channel__avatar {
+    width: 160px;
+    height: 160px;
+  }
 }
 
 .channel__tabs {

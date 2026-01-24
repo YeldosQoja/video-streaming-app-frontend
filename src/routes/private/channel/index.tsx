@@ -44,33 +44,45 @@ export const Channel = () => {
 
   return (
     <div className="channel">
-      <img
-        className="channel__cover"
-        src=""
-        alt="Channel cover image"
-      />
-      <div className="channel__header flow-content">
-        <div className="header-top">
-          <img
-            className="channel__avatar"
-            src=""
-            alt=""
-          />
-          <div className="header__info flow-content">
-            <h1 className="channel__name">Beyond coding</h1>
-            <div className="channel__info">
-              <strong className="channel__handle">@BeyondCoding</strong>
-              <span>•</span>
-              <span>54.5K subscribers</span>
-              <span>•</span>
-              <span>892 videos</span>
+      <div className="container">
+        <img
+          className="channel__cover"
+          src=""
+          alt="Channel cover image"
+        />
+        <div className="channel__header flow-content">
+          <div className="header-top">
+            <img
+              className="channel__avatar"
+              src=""
+              alt=""
+            />
+            <div className="header__info flow-content">
+              <h1 className="channel__name">Beyond coding</h1>
+              <div className="channel__info">
+                <strong className="channel__handle">@BeyondCoding</strong>
+                <span>•</span>
+                <span>54.5K subscribers</span>
+                <span>•</span>
+                <span>892 videos</span>
+              </div>
+              <p className="channel__desc">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Explicabo, id qui ea officia, rem sed quis impedit veritatis
+                sunt iure consequuntur, accusamus nulla quod minus at nesciunt!
+                Debitis, aspernatur ullam?
+              </p>
+              <div className="channel__links">
+                <a href="">linkedin.com/in/yeldos-kozhabay/</a>
+                <span className="more-links-btn">and 3 more links</span>
+              </div>
+              <Button
+                title="Subscribe"
+                className="channel__sub-btn"
+              />
             </div>
-            <p className="channel__desc">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Explicabo, id qui ea officia, rem sed quis impedit veritatis sunt
-              iure consequuntur, accusamus nulla quod minus at nesciunt!
-              Debitis, aspernatur ullam?
-            </p>
+          </div>
+          <div className="header-bottom flow-content">
             <div className="channel__links">
               <a href="">linkedin.com/in/yeldos-kozhabay/</a>
               <span className="more-links-btn">and 3 more links</span>
@@ -81,36 +93,26 @@ export const Channel = () => {
             />
           </div>
         </div>
-        <div className="header-bottom flow-content">
-          <div className="channel__links">
-            <a href="">linkedin.com/in/yeldos-kozhabay/</a>
-            <span className="more-links-btn">and 3 more links</span>
-          </div>
-          <Button
-            title="Subscribe"
-            className="channel__sub-btn"
-          />
-        </div>
+        <Tabs.Root
+          defaultValue="videos"
+          onValueChange={handleTabChange}>
+          <Tabs.List
+            ref={tabListRef}
+            className="channel__tabs flow-content--inline">
+            {TAB_ITEMS.map((tab) => (
+              <Tabs.Trigger
+                key={tab.value}
+                className="channel__tab-btn"
+                value={tab.value}>
+                {tab.label}
+              </Tabs.Trigger>
+            ))}
+            <div className="tab-underline"></div>
+          </Tabs.List>
+          <Tabs.Content value="videos"></Tabs.Content>
+          <Tabs.Content value="playlists"></Tabs.Content>
+        </Tabs.Root>
       </div>
-      <Tabs.Root
-        defaultValue="videos"
-        onValueChange={handleTabChange}>
-        <Tabs.List
-          ref={tabListRef}
-          className="channel__tabs flow-content--inline">
-          {TAB_ITEMS.map((tab) => (
-            <Tabs.Trigger
-              key={tab.value}
-              className="channel__tab-btn"
-              value={tab.value}>
-              {tab.label}
-            </Tabs.Trigger>
-          ))}
-          <div className="tab-underline"></div>
-        </Tabs.List>
-        <Tabs.Content value="videos"></Tabs.Content>
-        <Tabs.Content value="playlists"></Tabs.Content>
-      </Tabs.Root>
     </div>
   );
 };
