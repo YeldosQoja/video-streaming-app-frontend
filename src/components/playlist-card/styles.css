@@ -1,0 +1,23 @@
+.playlist-card {
+  --gap: 0.5rem;
+}
+
+.playlist-card .thumbnail {
+  position: relative;
+
+  .thumbnail__img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+  }
+
+  .thumbnail__foreground {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 33%;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+  }
+}
