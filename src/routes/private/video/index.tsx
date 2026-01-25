@@ -5,14 +5,14 @@ import comments from "@/comments.json";
 import { Button, Comment } from "@/components";
 import videos from "@/videos.json";
 import { VideoCardCompact } from "@/components/video-card/compact";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 export default function Video() {
   const { videoId } = useParams();
-
-  console.log({ videoId });
+  const isMobile = useIsMobile(1152);
 
   return (
-    <div className="video">
+    <div className="video flow-content">
       <video
         className="video__player"
         controls
@@ -108,7 +108,10 @@ export default function Video() {
         <ul className="video__related-list">
           {videos.map((video) => (
             <li key={video.id}>
-              <VideoCardCompact video={video} />
+              <VideoCardCompact
+                video={video}
+                thumbnailLeft={!isMobile}
+              />
             </li>
           ))}
         </ul>

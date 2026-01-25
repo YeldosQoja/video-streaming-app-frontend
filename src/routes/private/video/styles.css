@@ -75,7 +75,6 @@
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 1rem 2rem;
-  margin-bottom: 1rem;
 }
 
 .video__channel {
@@ -160,7 +159,6 @@
   padding: 0.5rem;
   background-color: var(--surface-container-high);
   border-radius: 1em;
-  margin-bottom: 1.5rem;
   grid-area: description;
 }
 

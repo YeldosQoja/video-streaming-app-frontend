@@ -2,6 +2,9 @@ import "./styles.css";
 import { useCallback, useLayoutEffect, useRef } from "react";
 import { Tabs } from "radix-ui";
 import { Button } from "@/components";
+import videos from "@/videos.json";
+import { Link } from "react-router-dom";
+import { VideoCardCompact } from "@/components/video-card/compact";
 
 const TAB_ITEMS = [
   {
@@ -44,7 +47,7 @@ export const Channel = () => {
 
   return (
     <div className="channel">
-      <div className="container">
+      <div className="container flow-content">
         <img
           className="channel__cover"
           src=""
@@ -109,8 +112,21 @@ export const Channel = () => {
             ))}
             <div className="tab-underline"></div>
           </Tabs.List>
-          <Tabs.Content value="videos"></Tabs.Content>
-          <Tabs.Content value="playlists"></Tabs.Content>
+          <Tabs.Content value="videos">
+            <div className="channel__videos">
+              {videos.map((video) => (
+                <Link to={`watch/${video.id}`}>
+                  <VideoCardCompact
+                    video={video}
+                    displaysChannel={false}
+                  />
+                </Link>
+              ))}
+            </div>
+          </Tabs.Content>
+          <Tabs.Content value="playlists">
+            <div className="channel__playlists"></div>
+          </Tabs.Content>
         </Tabs.Root>
       </div>
     </div>

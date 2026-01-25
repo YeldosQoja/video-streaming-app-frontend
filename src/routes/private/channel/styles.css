@@ -9,6 +9,7 @@ p {
   max-width: 30rem;
   margin: 0 auto;
   margin-top: var(--header-height);
+  padding: 0 1rem 1rem 1rem;
 }
 
 @media screen and (min-width: 42rem) {
@@ -25,13 +26,13 @@ p {
 
 @media screen and (min-width: 72rem) {
   .channel .container {
-    max-width: 72rem;
+    max-width: 84rem;
   }
 }
 
 .channel__cover {
   width: 100%;
-  aspect-ratio: 6 / 1;
+  aspect-ratio: 7 / 1;
   background: gold;
   border-radius: 1.125rem;
 }
@@ -155,4 +156,29 @@ p {
   width: 0;
   transform: translateX(0);
   transition: transform 300ms ease, width 300ms ease;
+}
+
+.channel__videos {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+@media screen and (min-width: 42rem) {
+  .channel__videos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media screen and (min-width: 60rem) {
+  .channel__videos {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media screen and (min-width: 72rem) {
+  .channel__videos {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
 }

@@ -5,12 +5,21 @@ import { VideoThumbnail } from "../video-thumbnail";
 
 type Props = {
   video: Video;
+  displaysChannel?: boolean;
+  thumbnailLeft?: boolean;
 };
 
-export const VideoCardCompact = ({ video }: Props) => {
+export const VideoCardCompact = ({
+  video,
+  displaysChannel,
+  thumbnailLeft,
+}: Props) => {
   const { thumbnail, duration, channel, title, createdAt, viewCount } = video;
   return (
-    <div className="video-card-compact">
+    <div
+      className={`video-card-compact${
+        thumbnailLeft ? " video-card--row" : ""
+      }`}>
       <VideoThumbnail
         src={thumbnail}
         className="thumbnail"
@@ -20,11 +29,13 @@ export const VideoCardCompact = ({ video }: Props) => {
         <h3 className="title">
           {title} {title} {title}
         </h3>
-        <a
-          href=""
-          className="channel-name">
-          {channel.name}
-        </a>
+        {displaysChannel || displaysChannel === undefined ? (
+          <a
+            href=""
+            className="channel-name">
+            {channel.name}
+          </a>
+        ) : null}
         <div className="meta">
           <span>{viewCount} views</span>
           <span>•</span>
