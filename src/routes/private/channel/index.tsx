@@ -2,9 +2,11 @@ import "./styles.css";
 import { useCallback, useLayoutEffect, useRef } from "react";
 import { Tabs } from "radix-ui";
 import { Button } from "@/components";
-import videos from "@/videos.json";
 import { Link } from "react-router-dom";
 import { VideoCardCompact } from "@/components/video-card/compact";
+import { PlaylistCard } from "@/components/playlist-card";
+import videos from "@/videos.json";
+import playlists from "@/playlists.json";
 
 const TAB_ITEMS = [
   {
@@ -125,7 +127,13 @@ export const Channel = () => {
             </div>
           </Tabs.Content>
           <Tabs.Content value="playlists">
-            <div className="channel__playlists"></div>
+            <div className="channel__playlists">
+              {playlists.map((playlist) => (
+                <Link to={`watch/${playlist.title}`}>
+                  <PlaylistCard playlist={playlist} />
+                </Link>
+              ))}
+            </div>
           </Tabs.Content>
         </Tabs.Root>
       </div>

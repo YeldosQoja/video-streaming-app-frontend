@@ -1,8 +1,14 @@
-import { getRelativeTime } from "@/utils/datetime";
 import "./styles.css";
 import { ListVideoIcon } from "lucide-react";
+import { getRelativeTime } from "@/utils/datetime";
+import { Playlist } from "@/types/playlist";
 
-export const PlaylistCard = () => {
+type Props = {
+  playlist: Playlist;
+};
+
+export const PlaylistCard = ({ playlist }: Props) => {
+  const { title, lastUpdatedAt } = playlist;
   return (
     <div className="playlist-card flow-content">
       <div className="thumbnail">
@@ -16,9 +22,9 @@ export const PlaylistCard = () => {
           <span>54</span>
         </div>
       </div>
-      <h3>Lorem ipsum dolor sit amet.</h3>
+      <h3 className="playlist-card__title">{title}</h3>
       <span className="playlist-card__updated-time">
-        {getRelativeTime(new Date())}
+        {getRelativeTime(lastUpdatedAt)}
       </span>
     </div>
   );

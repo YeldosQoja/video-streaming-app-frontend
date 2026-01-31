@@ -1,5 +1,14 @@
 .playlist-card {
   --gap: 0.5rem;
+  font-size: 0.75rem;
+  color: var(--on-surface-variant);
+}
+
+.playlist-card__title {
+  color: var(--on-surface);
+  margin-block: 0;
+  font-size: var(--caption);
+  line-height: 1.5;
 }
 
 .playlist-card .thumbnail {
@@ -19,5 +28,10 @@
     width: 33%;
     background: rgba(0, 0, 0, 0.7);
     color: white;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 }
