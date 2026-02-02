@@ -22,7 +22,10 @@ const sleep = (ms: number) =>
     setTimeout(resolve, ms);
   });
 
-export function useRetry<T>(request: Promise<T>, options?: RetryOptions): () => Promise<T>;
+export function useRetry<T>(
+  request: Promise<T>,
+  options?: RetryOptions
+): () => Promise<T>;
 export function useRetry<T, Args extends unknown[]>(
   request: (...args: Args) => Promise<T>,
   options?: RetryOptions
@@ -47,11 +50,6 @@ export function useRetry<T, Args extends unknown[]>(
 
   const runWithRetry = useCallback(
     async (...args: Args) => {
-      const call = () =>
-        typeof request === "function"
-          ? (request as (...innerArgs: Args) => Promise<T>)(...args)
-          : request;
-
       const getOpts = () => optionsRef.current ?? {};
       const retries = getOpts().retries ?? 3;
 
@@ -61,7 +59,11 @@ export function useRetry<T, Args extends unknown[]>(
       while (attempt < retries) {
         attempt += 1;
         try {
-          return await call();
+          if (typeof request === "function") {
+            return await request(...args);
+          } else {
+            return await request;
+          }
         } catch (error) {
           if (cancelledRef.current) throw error;
 
@@ -73,7 +75,7 @@ export function useRetry<T, Args extends unknown[]>(
           if (!shouldRetry) throw error;
 
           const delayMs =
-            opts.getDelayMs?.(attempt, error) ?? (opts.delayMs ?? 0);
+            opts.getDelayMs?.(attempt, error) ?? opts.delayMs ?? 0;
           if (delayMs > 0) await sleep(delayMs);
         }
       }

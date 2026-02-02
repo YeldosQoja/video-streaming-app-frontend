@@ -27,11 +27,14 @@ export const abortMultipartUpload = async (data: MultipartUploadDTO) => {
   });
 };
 
-export const uploadPart = async ({
-  url,
-  PartNumber,
-  body,
-}: UploadURL & { body: ArrayBuffer | Uint8Array<ArrayBuffer> }) => {
+export const uploadPart = async (
+  {
+    url,
+    PartNumber,
+    body,
+  }: UploadURL & { body: ArrayBuffer | Uint8Array<ArrayBuffer> },
+  onProgress?: (partNumber: number, loaded: number, total: number) => void
+) => {
   const { ETag } = await new Promise<{ ETag: string }>((resolve, reject) => {
     const xhr = new XMLHttpRequest();
 
@@ -51,13 +54,13 @@ export const uploadPart = async ({
       reject(error);
     };
 
-    xhr.upload.onloadstart = () => {};
+    xhr.upload.onprogress = (event) => {
+      if (onProgress) onProgress(PartNumber, event.loaded, event.total);
+    };
 
-    xhr.upload.onprogress = () => {};
-
-    xhr.upload.onload = () => {
-      console.log(xhr.response);
-      resolve({ ETag: xhr.getResponseHeader("Etag") as string });
+    xhr.onload = () => {
+      const value = xhr.getResponseHeader("etag") as string;
+      resolve({ ETag: JSON.parse(value) });
     };
 
     xhr.open("PUT", url, true);

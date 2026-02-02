@@ -35,10 +35,9 @@ const Upload = () => {
   const [selectedVideo, setSelectedVideo] = useState<File | null>(null);
   const [thumbnail, setThumbnail] = useState<File | null>(null);
   const thumbnailInputRef = useRef<HTMLInputElement | null>(null);
-  const [uploadProgress, setUploadProgress] = useState(60);
 
   const { mutate: createVideo } = useCreateVideo();
-  const { mutate: startUpload } = useUpload();
+  const [{ mutate: startUpload }, progress] = useUpload();
 
   const { register, control, handleSubmit, setValue } =
     useForm<UploadVideoForm>({
@@ -399,9 +398,9 @@ const Upload = () => {
                 <div className="upload__progress">
                   <Progress
                     max={100}
-                    value={uploadProgress}
+                    value={progress}
                   />
-                  <span className="upload__progress-label">{`Uploading... ${uploadProgress}%`}</span>
+                  <span className="upload__progress-label">{`Uploading... ${progress}%`}</span>
                 </div>
                 <Button
                   title="Save"

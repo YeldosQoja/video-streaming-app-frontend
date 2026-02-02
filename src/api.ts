@@ -1,4 +1,9 @@
-import { QueryClient, useQuery, useMutation } from "@tanstack/react-query";
+import {
+  QueryClient,
+  useQuery,
+  useMutation,
+  UseMutationResult,
+} from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { UploadVideoForm } from "./types/video";
 import { MultipartUploadDTO, UploadURL } from "./types/upload";
@@ -8,6 +13,7 @@ import {
   uploadPart,
 } from "./api/upload";
 import { useRetry } from "./hooks/useRetry";
+import { useCallback, useRef, useState } from "react";
 
 const originalFetch = window.fetch;
 
@@ -115,11 +121,29 @@ export const useAuth = () =>
     retry: false,
   });
 
-export const useUpload = () => {
-  const uploadPartWithRetry = useRetry(uploadPart);
+export const useUpload = (): [
+  UseMutationResult<void, Error, File, unknown>,
+  number
+] => {
+  const [progress, setProgress] = useState(0);
+  const totalBytes = useRef(0);
+  const uploadedBytes = useRef<number[] | null>(null);
 
-  return useMutation({
+  const onProgress = useCallback((partNumber: number, loaded: number) => {
+    if (!uploadedBytes.current) return;
+    uploadedBytes.current[partNumber - 1] = loaded;
+    const totalUpload = uploadedBytes.current.reduce(
+      (acc, cur) => acc + cur,
+      0
+    );
+    setProgress(Math.floor((totalUpload / totalBytes.current) * 100));
+  }, []);
+
+  const uploadPartWithRetry = useRetry(uploadPart);
+  const mutation = useMutation({
     mutationFn: async (videoFile: File) => {
+      totalBytes.current = videoFile.size;
+
       const response = await startMultipartUpload(videoFile);
       if (!response.ok) {
         throw new Error("Not authenticated!");
@@ -132,11 +156,16 @@ export const useUpload = () => {
       const bytes = await videoFile.arrayBuffer();
       const partSize = 20_000_000;
 
+      uploadedBytes.current = urls.map(() => 0);
+
       const uploadPromises = urls.map((url, idx: number) =>
-        uploadPartWithRetry({
-          ...url,
-          body: bytes.slice(idx * partSize, idx * partSize + partSize),
-        })
+        uploadPartWithRetry(
+          {
+            ...url,
+            body: bytes.slice(idx * partSize, idx * partSize + partSize),
+          },
+          onProgress
+        )
       );
 
       const results = await Promise.all(uploadPromises);
@@ -148,6 +177,8 @@ export const useUpload = () => {
       });
     },
   });
+
+  return [mutation, progress];
 };
 
 export const useCreateVideo = () => {
