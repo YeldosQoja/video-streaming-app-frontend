@@ -1,9 +1,8 @@
 import { QueryClient, useQuery, useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { UploadVideoForm } from "./types/video";
-import { MultipartUploadDTO, UploadPart, UploadURL } from "./types/upload";
+import { MultipartUploadDTO, UploadURL } from "./types/upload";
 import {
-  abortMultipartUpload,
   completeMultipartUpload,
   startMultipartUpload,
   uploadPart,
@@ -117,14 +116,19 @@ export const useAuth = () =>
   });
 
 export const useUpload = () => {
-  const { mutateAsync: startUpload } = useStartMulipartUpload();
-  const { mutateAsync: uploadPart } = useUploadPart();
   const uploadPartWithRetry = useRetry(uploadPart);
-  const { mutateAsync: completeUpload } = useCompleteMulipartUpload();
 
   return useMutation({
     mutationFn: async (videoFile: File) => {
-      const { urls, videoId, uploadId } = await startUpload(videoFile);
+      const response = await startMultipartUpload(videoFile);
+      if (!response.ok) {
+        throw new Error("Not authenticated!");
+      }
+      const { urls, videoId, uploadId } =
+        (await response.json()) as MultipartUploadDTO & {
+          urls: UploadURL[];
+        };
+
       const bytes = await videoFile.arrayBuffer();
       const partSize = 20_000_000;
 
@@ -137,66 +141,11 @@ export const useUpload = () => {
 
       const results = await Promise.all(uploadPromises);
 
-      await completeUpload({
+      await completeMultipartUpload({
         uploadId,
         videoId,
         parts: results,
       });
-    },
-  });
-};
-
-export const useStartMulipartUpload = () =>
-  useMutation({
-    mutationFn: async (videoFile: File) => {
-      const response = await startMultipartUpload(videoFile);
-      if (!response.ok) {
-        throw new Error("Not authenticated!");
-      }
-      return (await response.json()) as MultipartUploadDTO & {
-        urls: UploadURL[];
-      };
-    },
-  });
-
-const useUploadPart = () =>
-  useMutation({
-    mutationFn: async (
-      data: UploadURL & { body: ArrayBuffer | Uint8Array<ArrayBuffer> }
-    ) => {
-      const response = await uploadPart(data);
-      return response;
-    },
-    onSuccess: (data, variables) => {
-      console.log(`Request to ${variables.url} was successful!`, data);
-    },
-  });
-
-// Here goes a condition on which upload part should be retried
-
-// After exausting all retry count or terminal failure
-// we should cancel all other parts uploading
-
-export const useCompleteMulipartUpload = () => {
-  return useMutation({
-    mutationFn: async (data: MultipartUploadDTO & { parts: UploadPart[] }) => {
-      const response = await completeMultipartUpload(data);
-      if (!response.ok) {
-        throw new Error("Not authenticated!");
-      }
-      return await response.json();
-    },
-  });
-};
-
-export const useAbortMulipartUpload = () => {
-  return useMutation({
-    mutationFn: async (data: MultipartUploadDTO) => {
-      const response = await abortMultipartUpload(data);
-      if (!response.ok) {
-        throw new Error("Not authenticated!");
-      }
-      return await response.json();
     },
   });
 };
