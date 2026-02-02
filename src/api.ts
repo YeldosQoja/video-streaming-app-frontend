@@ -8,6 +8,7 @@ import {
   startMultipartUpload,
   uploadPart,
 } from "./api/upload";
+import { useRetry } from "./hooks/useRetry";
 
 const originalFetch = window.fetch;
 
@@ -115,37 +116,11 @@ export const useAuth = () =>
     retry: false,
   });
 
-const MAX_UPLOAD_RETRIES = 3;
-
 export const useUpload = () => {
   const { mutateAsync: startUpload } = useStartMulipartUpload();
+  const { mutateAsync: uploadPart } = useUploadPart();
+  const uploadPartWithRetry = useRetry(uploadPart);
   const { mutateAsync: completeUpload } = useCompleteMulipartUpload();
-  const uploadPartMutation = useMutation({
-    mutationFn: async (
-      data: UploadURL & { body: ArrayBuffer | Uint8Array<ArrayBuffer> }
-    ) => {
-      return await uploadPart(data);
-    },
-    onSuccess: (data, variables) => {
-      console.log(`Request to ${variables.url} was successful!`, data);
-    },
-    retry: false,
-  });
-
-  const uploadWithRetry = async (
-    data: UploadURL & { body: ArrayBuffer | Uint8Array<ArrayBuffer> }
-  ) => {
-    for (let attempt = 1; attempt <= MAX_UPLOAD_RETRIES; attempt++) {
-      try {
-        const response = await uploadPartMutation.mutateAsync(data);
-        return response;
-      } catch (err) {
-        if (attempt === MAX_UPLOAD_RETRIES) {
-          throw err;
-        }
-      }
-    }
-  };
 
   return useMutation({
     mutationFn: async (videoFile: File) => {
@@ -154,7 +129,7 @@ export const useUpload = () => {
       const partSize = 20_000_000;
 
       const uploadPromises = urls.map((url, idx: number) =>
-        uploadWithRetry({
+        uploadPartWithRetry({
           ...url,
           body: bytes.slice(idx * partSize, idx * partSize + partSize),
         })
@@ -181,6 +156,19 @@ export const useStartMulipartUpload = () =>
       return (await response.json()) as MultipartUploadDTO & {
         urls: UploadURL[];
       };
+    },
+  });
+
+const useUploadPart = () =>
+  useMutation({
+    mutationFn: async (
+      data: UploadURL & { body: ArrayBuffer | Uint8Array<ArrayBuffer> }
+    ) => {
+      const response = await uploadPart(data);
+      return response;
+    },
+    onSuccess: (data, variables) => {
+      console.log(`Request to ${variables.url} was successful!`, data);
     },
   });
 
