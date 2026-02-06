@@ -8,7 +8,7 @@ import { Button } from "@/components/button";
 import { useSignup } from "@/api";
 
 export default function SignUp() {
-  const { mutate, isPending, isSuccess, isError } = useSignup();
+  const { mutate } = useSignup();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");

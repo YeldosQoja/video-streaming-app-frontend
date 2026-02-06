@@ -28,11 +28,7 @@ export const abortMultipartUpload = async (data: MultipartUploadDTO) => {
 };
 
 export const uploadPart = async (
-  {
-    url,
-    PartNumber,
-    body,
-  }: UploadURL & { body: ArrayBuffer | Uint8Array<ArrayBuffer> },
+  { url, PartNumber, body }: UploadURL & { body: ArrayBuffer | Uint8Array },
   onProgress?: (partNumber: number, loaded: number, total: number) => void
 ) => {
   const { ETag } = await new Promise<{ ETag: string }>((resolve, reject) => {

@@ -8,7 +8,7 @@ import { Button } from "@/components/button";
 import { useSignin } from "@/api";
 
 export default function SignIn() {
-  const { mutate, isPending, isSuccess, isError } = useSignin();
+  const { mutate } = useSignin();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 

@@ -1,5 +1,4 @@
 import "./styles.css";
-import { useParams } from "react-router-dom";
 import { Share2, Star, ThumbsDown, ThumbsUp } from "lucide-react";
 import comments from "@/comments.json";
 import { Button, Comment } from "@/components";
@@ -8,7 +7,6 @@ import { VideoCardCompact } from "@/components/video-card/compact";
 import { useIsMobile } from "@/hooks/useIsMobile";
 
 export default function Video() {
-  const { videoId } = useParams();
   const isMobile = useIsMobile(1152);
 
   return (
