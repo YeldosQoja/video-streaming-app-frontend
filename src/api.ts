@@ -5,11 +5,12 @@ import {
   UseMutationResult,
 } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
-import { UploadVideoForm } from "./types/video";
 import { MultipartUploadDTO, UploadURL } from "./types/upload";
 import {
   completeMultipartUpload,
+  simpleUploadFile,
   startMultipartUpload,
+  startSimpleUpload,
   uploadPart,
 } from "./api/upload";
 import { useRetry } from "./hooks/useRetry";
@@ -121,8 +122,8 @@ export const useAuth = () =>
     retry: false,
   });
 
-export const useUpload = (): [
-  UseMutationResult<void, Error, File, unknown>,
+export const useMultipartUpload = (): [
+  UseMutationResult<string, Error, File, unknown>,
   number
 ] => {
   const [progress, setProgress] = useState(0);
@@ -175,6 +176,38 @@ export const useUpload = (): [
         videoId,
         parts: results,
       });
+
+      return videoId;
+    },
+  });
+
+  return [mutation, progress];
+};
+
+export const useSimpleUpload = (): [
+  UseMutationResult<string, Error, File, unknown>,
+  number
+] => {
+  const [progress, setProgress] = useState(0);
+
+  const onProgress = useCallback((loaded: number, total: number) => {
+    setProgress(Math.floor((loaded / total) * 100));
+  }, []);
+
+  const mutation = useMutation({
+    mutationFn: async (file: File) => {
+      const response = await startSimpleUpload(file);
+      if (!response.ok) {
+        throw new Error("Not authenticated!");
+      }
+      const { url, key } = (await response.json()) as {
+        url: string;
+        key: string;
+      };
+
+      await simpleUploadFile(url, file, onProgress);
+
+      return key;
     },
   });
 
@@ -183,7 +216,7 @@ export const useUpload = (): [
 
 export const useCreateVideo = () => {
   return useMutation({
-    mutationFn: async (values: UploadVideoForm) => {
+    mutationFn: async (values: object) => {
       const response = await fetch("videos/create", {
         method: "POST",
         body: JSON.stringify(values),
@@ -195,3 +228,15 @@ export const useCreateVideo = () => {
     },
   });
 };
+
+export const useGetVideoByKey = (key: string) =>
+  useQuery({
+    queryKey: ["videos", key],
+    queryFn: async ({ queryKey }) => {
+      const response = await fetch(`videos/${queryKey[1]}`);
+      if (!response.ok) {
+        throw new Error(`Couldn't get a video with key ${key}`);
+      }
+      return await response.json();
+    },
+  });

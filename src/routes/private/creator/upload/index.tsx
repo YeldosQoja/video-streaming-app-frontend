@@ -5,7 +5,7 @@ import { useForm, Controller } from "react-hook-form";
 import { EyeOff, Globe, Image, Lock, UploadIcon } from "lucide-react";
 import { Button, Input, Label, Select } from "@/components";
 import { SelectedFileCard } from "@/components/selected-file-card";
-import { useCreateVideo, useUpload } from "@/api";
+import { useCreateVideo, useMultipartUpload, useSimpleUpload } from "@/api";
 import { RadioGroup } from "@/components/radio-group";
 import { UploadVideoForm } from "@/types/video";
 import { Checkbox } from "@/components/checkbox";
@@ -37,15 +37,17 @@ const Upload = () => {
   const thumbnailInputRef = useRef<HTMLInputElement | null>(null);
 
   const { mutate: createVideo } = useCreateVideo();
-  const [{ mutate: startUpload }, progress] = useUpload();
+  const [
+    { mutate: startMultipartUpload, data: thumbnailKey },
+    videoUploadProgress,
+  ] = useMultipartUpload();
+  const [{ mutate: startSimpleUpload, data: videoKey }] = useSimpleUpload();
 
   const { register, control, handleSubmit, setValue } =
     useForm<UploadVideoForm>({
       defaultValues: {
         title: "",
         desc: "",
-        videoId: "",
-        thumbnailId: "",
         playlist: "",
         category: "",
         audience: "",
@@ -65,6 +67,7 @@ const Upload = () => {
   ) => {
     const file = event.target.files?.[0];
     if (file) {
+      startMultipartUpload(file);
       setSelectedVideo(file);
       setValue("title", file.name.split(".")[0]);
     }
@@ -84,6 +87,7 @@ const Upload = () => {
   > = (event) => {
     const file = event.target.files?.[0];
     if (file) {
+      startSimpleUpload(file);
       setThumbnail(file);
     }
   };
@@ -96,16 +100,12 @@ const Upload = () => {
     setThumbnail(null);
   };
 
-  const saveVideo = () => {
-    if (selectedVideo === null) {
-      return;
-    }
-    startUpload(selectedVideo);
-  };
-
   const submitVideo = (values: UploadVideoForm) => {
-    console.log({ values });
-    createVideo(values);
+    createVideo({
+      storageKey: videoKey,
+      thumbnailStorageKey: thumbnailKey,
+      ...values,
+    });
   };
 
   return (
@@ -398,14 +398,15 @@ const Upload = () => {
                 <div className="upload__progress">
                   <Progress
                     max={100}
-                    value={progress}
+                    value={videoUploadProgress}
                   />
-                  <span className="upload__progress-label">{`Uploading... ${progress}%`}</span>
+                  <span className="upload__progress-label">{`Uploading... ${videoUploadProgress}%`}</span>
                 </div>
                 <Button
+                  form="upload-form"
+                  type="submit"
                   title="Save"
                   className="save-btn"
-                  onClick={saveVideo}
                 />
               </div>
             </>

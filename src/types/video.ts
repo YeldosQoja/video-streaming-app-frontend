@@ -15,8 +15,6 @@ export type Video = {
 export interface UploadVideoForm {
   title: string;
   desc: string;
-  videoId: string;
-  thumbnailId: string;
   playlist: string;
   category: string;
   audience: string;
